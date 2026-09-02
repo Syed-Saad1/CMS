@@ -34,13 +34,13 @@ export const LoginScreen = () => {
     email: "",
     password: "",
   };
-  const url = "https://courses-system-three.vercel.app/api/auth/login";
+  const url = "http://192.168.100.22:3000/api/auth/login";
 
   const onSubmit = async (values, { resetForm }) => {
     try {
       setLoading(true);
       const response = await axios.post(url, values);
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.accessToken);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data?.message || "Server error occurred");

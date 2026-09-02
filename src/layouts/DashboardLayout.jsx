@@ -5,11 +5,11 @@ import React from "react";
 function DashboardLayout() {
   return (
     <div className="h-screen w-full flex">
-      <div className=" w-56 shrink-0 bg-[#180289] h-full">
+      <div className=" w-56 shrink-0 text-primary-foreground bg-sidebar h-full">
         <SideBar />
       </div>
-      <div className=" flex h-full w-full flex-col">
-        <div className=" h-16 w-full border-b border-b-gray-300">
+      <div className=" flex h-full w-full flex-col bg-dashboard-main">
+        <div className=" h-16 w-full border-b border-b-border">
           <DashboardHeader />
         </div>
         <div className=" size-full flex justify-center items-center text-2xl">

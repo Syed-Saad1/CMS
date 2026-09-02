@@ -1,24 +1,24 @@
 export const SidebarNavigation = [
   {
-    id: "1",
+    id: "Dashboard",
     label: "Dashboard",
     link: "/dashboard",
     icon: "boxicons:dashboard",
   },
   {
-    id: "2",
+    id: "Users2",
     label: "Users",
     link: "/dashboard",
     icon: "ci:users",
   },
   {
-    id: "3",
+    id: "Courses",
     label: "Courses",
     link: "/dashboard",
-    icon: "fa:graduation-cap",
+    icon: "flowbite:graduation-cap-outline",
   },
   {
-    id: "4",
+    id: "Enrollments",
     label: "Enrollments",
     link: "/dashboard",
     icon: "cil:contact",

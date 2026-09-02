@@ -6,6 +6,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
+
 import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
 import React, { useState } from "react";
@@ -17,6 +18,8 @@ import { Icon } from "@iconify/react";
 import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+
 const ValidationScheme = Yup.object({
   firstName: Yup.string()
     .max(8, "firstName is maximum 8 letters")
@@ -40,21 +43,23 @@ const ValidationScheme = Yup.object({
 export const SignupScreen = () => {
   const [isloading, setIsLoading] = useState(false);
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confrimpassword: "",
+    firstName: "anas",
+    lastName: "raza",
+    email: "anas0.0@gmail.com",
+    password: "Anas@123",
+    confrimpassword: "Anas@123",
   };
 
-  const url = "https://courses-system-three.vercel.app/api/auth/register";
+  const url = "http://192.168.100.22:3000/api/auth/register";
 
   const onSubmit = async (values, { resetForm }) => {
     try {
       setIsLoading(true);
 
       const response = await axios.post(url, values);
-      localStorage.setItem("token", response.data.token);
+      console.log(response);
+      console.log("token", response?.data?.data?.accessToken);
+      Cookies.set("token", response?.data?.data?.accessToken);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data || "Server error occurred");

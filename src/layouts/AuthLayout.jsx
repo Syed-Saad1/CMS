@@ -1,7 +1,11 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import { useTheme } from "next-themes";
 
 export function AuthLayout() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <div className=" h-screen w-full overflow-hidden lg:grid lg:grid-cols-2 justify-center items-center rounded-xl">
       {" "}
