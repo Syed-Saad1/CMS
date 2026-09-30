@@ -1,42 +1,40 @@
-export const SidebarNavigation = [
-  {
-    id: "Dashboard",
-    label: "Dashboard",
-    link: "/dashboard",
-    icon: "boxicons:dashboard",
-  },
-  {
-    id: "Users2",
-    label: "Users",
-    link: "/dashboard",
-    icon: "ci:users",
-  },
-  {
-    id: "Courses",
-    label: "Courses",
-    link: "/dashboard",
-    icon: "flowbite:graduation-cap-outline",
-  },
-  {
-    id: "Enrollments",
-    label: "Enrollments",
-    link: "/dashboard",
-    icon: "cil:contact",
-  },
-];
+export default function SidebarNavigation(role) {
+  return [
+    {
+      id: "Dashboard",
+      label: "Dashboard",
+      link: "/admin/dashboard",
+      icon: "boxicons:dashboard",
+      isNavigate: role === "admin" ? true : false,
+    },
+    {
+      id: "Users2",
+      label: "Users",
+      link: "/admin/users",
+      icon: "ci:users",
+      isNavigate: role === "admin" ? true : false,
+    },
+    {
+      id: "Courses",
+      label: "Courses",
+      link: "/admin/courses",
+      icon: "flowbite:graduation-cap-outline",
+      isNavigate: true,
+    },
 
-export const LinkSidebar = [
-  {
-    id: "profile",
-    label: "Profile",
-    link: "/dashboard",
-    icon: "iconamoon:profile",
-  },
-  {
-    id: "logout",
-    label: "Logout",
-    link: "/dashboard",
-    icon: "ic:baseline-logout",
-    class: "bg-red-500 opacity-60",
-  },
-];
+    {
+      id: "profile",
+      label: "Profile",
+      link: "/admin/profile",
+      icon: "iconamoon:profile",
+      isNavigate: role === "admin" ? true : false,
+    },
+    {
+      id: "profile",
+      label: "Profile",
+      link: "/user/profile",
+      icon: "iconamoon:profile",
+      isNavigate: role === "user" ? true : false,
+    },
+  ];
+}

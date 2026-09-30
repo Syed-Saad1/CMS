@@ -6,11 +6,10 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-
 import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { cn } from "@/lib/utils";
 
 const ValidationScheme = Yup.object({
   firstName: Yup.string()
@@ -43,32 +43,55 @@ const ValidationScheme = Yup.object({
 export const SignupScreen = () => {
   const [isloading, setIsLoading] = useState(false);
   const initialValues = {
-    firstName: "anas",
-    lastName: "raza",
-    email: "anas0.0@gmail.com",
-    password: "Anas@123",
-    confrimpassword: "Anas@123",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confrimpassword: "",
   };
-
-  const url = "http://192.168.100.22:3000/api/auth/register";
-
+  const url = `${import.meta.env.VITE_API_URL}/auth/register`;
+  const token = Cookies.get("token");
+  if (token) {
+    return <Navigate to={"/admin/dashboard"} replace />;
+  }
+  const navigate = useNavigate();
   const onSubmit = async (values, { resetForm }) => {
     try {
       setIsLoading(true);
+      const payload = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+      };
 
       const response = await axios.post(url, values);
-      console.log(response);
-      console.log("token", response?.data?.data?.accessToken);
-      Cookies.set("token", response?.data?.data?.accessToken);
+      if (response?.data?.success === false) {
+        toast.error(response?.data?.message || "Registration failed");
+        return;
+      }
+      const accessToken = response?.data?.data?.accessToken;
+      const role = response?.data?.data?.user?.role;
+      if (accessToken) {
+        Cookies.set("token", accessToken);
+      }
+      if (role) {
+        Cookies.set("role", role);
+      }
+      toast.success(response?.data?.message || "Account created successfully");
+      resetForm();
+      navigate("/user/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data || "Server error occurred");
+        const message =
+          error?.response?.data?.message || "Something went wrong";
+
+        toast.error(message);
       } else {
         toast.error("Something went wrong");
       }
     } finally {
       setIsLoading(false);
-      resetForm();
     }
   };
 
@@ -81,8 +104,12 @@ export const SignupScreen = () => {
   });
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center items-center">
-        <Card>
+      <div className="bg-background lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center ">
+        <Card
+          className={cn(
+            "min-w-90 md:w-110 flex flex-col  p-6! border-red-600!",
+          )}
+        >
           <CardHeader>
             <Link
               className="lg:hidden flex justify-center items-center mb-4"
@@ -95,7 +122,7 @@ export const SignupScreen = () => {
                 alt=""
               />
             </Link>
-            <CardTitle className="font-inter text-3xl font-bold">
+            <CardTitle className=" text-3xl font-bold">
               Create Account{" "}
             </CardTitle>
             <CardDescription className="mt-1 text-base">
@@ -107,7 +134,7 @@ export const SignupScreen = () => {
               <Field>
                 <Label>First Name</Label>
                 <Input
-                  className="mt-1"
+                  className=" h-9!"
                   name="firstName"
                   placeholder="Enter Your firstName"
                   type="text"
@@ -122,6 +149,7 @@ export const SignupScreen = () => {
               <Field>
                 <Label>Last Name</Label>
                 <Input
+                  className="h-9!"
                   name="lastName"
                   placeholder="Enter Your lastName"
                   type="text"
@@ -136,7 +164,7 @@ export const SignupScreen = () => {
             <Field className="mt-4">
               <Label>Institutional Email </Label>
               <Input
-                className="mt-1"
+                className="mt-1 h-9!"
                 name="email"
                 placeholder="Enter Your Email"
                 type="email"
@@ -150,7 +178,7 @@ export const SignupScreen = () => {
             <Field className="mt-4">
               <Label>Password</Label>
               <Input
-                className="mt-1"
+                className="mt-1 h-9!"
                 showTogglePassword={true}
                 name="password"
                 placeholder="Enter Your Password"
@@ -165,7 +193,7 @@ export const SignupScreen = () => {
             <Field className="mt-4">
               <Label>Confirm Password</Label>
               <Input
-                className="mt-1"
+                className="mt-1 h-9!"
                 showTogglePassword={true}
                 name="confrimpassword"
                 placeholder="Re-type Your Password"

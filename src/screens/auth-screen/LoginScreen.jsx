@@ -10,15 +10,17 @@ import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
 
 import { Icon } from "@iconify/react";
+import Cookies from "js-cookie";
 
 const ValidationScheme = Yup.object({
   email: Yup.string()
@@ -34,16 +36,38 @@ export const LoginScreen = () => {
     email: "",
     password: "",
   };
-  const url = "http://192.168.100.22:3000/api/auth/login";
+  const url = `${import.meta.env.VITE_API_URL}/auth/login`;
+  const token = Cookies.get("token");
+  const role = Cookies.get("role");
+  const userId = Cookies.get("userId");
 
+  const navigate = useNavigate();
+  if (token && role === "admin") {
+    return <Navigate to={"/admin/dashboard"} replace />;
+  }
   const onSubmit = async (values, { resetForm }) => {
     try {
       setLoading(true);
       const response = await axios.post(url, values);
-      localStorage.setItem("token", response.data.accessToken);
+      console.log("Res", response);
+      const role = response?.data?.data?.user?.role;
+      const UserId = response?.data?.data?.user?._id;
+
+      console.log("login-role", role);
+      Cookies.set("token", response?.data?.data?.accessToken);
+      Cookies.set("role", role);
+      Cookies.set("userId", UserId);
+
+      if (response.status === 200) {
+        if (role === "admin") {
+          navigate("/admin/dashboard", { replace: true });
+        } else if (role === "user") {
+          navigate("/user/dashboard", { replace: true });
+        }
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Server error occurred");
+        toast.error(error?.message || "Server error occurred");
       } else {
         toast.error("Something went wrong");
       }
@@ -64,10 +88,8 @@ export const LoginScreen = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <div className=" lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center">
-          <Card
-            className={` ${errors.email || errors.password ? "h-110!" : "h-100!"} min-w-90 md:w-110 lg:px-0 px-4`}
-          >
+        <div className="bg-background lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center">
+          <Card className={cn("min-w-90 md:w-110 flex flex-col px-6! py-6!")}>
             <CardHeader>
               <Link
                 className="lg:hidden flex justify-center items-center mb-4"
@@ -80,7 +102,7 @@ export const LoginScreen = () => {
                   alt=""
                 />
               </Link>
-              <CardTitle className="font-inter text-3xl font-bold">
+              <CardTitle className="font-DmSans text-3xl font-bold">
                 Welcome back
               </CardTitle>
               <CardDescription className="mt-1 text-base">

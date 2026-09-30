@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,11 +7,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-inter: "Inter", sans-serif;
-  --font-sans: "Geist Variable", sans-serif;
+  --font-DmSans: "DM Sans", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-dashboard-main: var(--dashboard-main);
+  --color-dashboard-foreground-heading: var(
+    --color-dashboard-foreground-heading
+  );
 
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,14 +57,16 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --dashboard-main: #f5f7fa;
+  --dashboard-foreground-heading: black;
+
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(21.891% 0.00155 16.394);
+  --secondary-foreground: white;
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -91,14 +95,14 @@
   --background: oklch(14.28% 0.0482 255.698);
   --foreground: oklch(0.985 0 0);
   --dashboard-main: #171616;
-
-  --card: oklch(0.205 0 0);
+  --dashboard-foreground-heading: white;
+  --card: oklch(27.79% 0.00146 16.053);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary-foreground: white;
+  --secondary: oklch(38.666% 0.00004 271.152);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
@@ -131,6 +135,6 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-inter;
+    @apply font-DmSans;
   }
 }
