@@ -48,7 +48,9 @@ export const LoginScreen = () => {
   const onSubmit = async (values, { resetForm }) => {
     try {
       setLoading(true);
-      const response = await axios.post(url, values);
+      const response = await axios.post(url, values, {
+        withCredentials: true,
+      });
       console.log("Res", response);
       const role = response?.data?.data?.user?.role;
       const UserId = response?.data?.data?.user?._id;
@@ -153,13 +155,13 @@ export const LoginScreen = () => {
                   </Label>
                 </div>
                 <div>
-                  <Link className="text-[#180289] font-semibold text-xs md:text-sm">
+                  <Link className="text-primary font-semibold text-xs md:text-sm">
                     Forgot password?
                   </Link>
                 </div>
               </div>
               <Button
-                className="mt-6 w-full bg-[#180289] text-base hover:bg-blue-900 h-12!"
+                className="mt-6 w-full bg-primary text-base hover:bg-primary/90 h-12!"
                 type="submit"
                 variant={"default"}
                 disabled={isloading}
@@ -168,7 +170,7 @@ export const LoginScreen = () => {
               </Button>
               <p className="text-center text-xs md:text-sm text-gray-500 font-medium mt-4 cursor-pointer">
                 Don't have an account?{" "}
-                <Link to={"/auth/signup"} className="text-[#180289]">
+                <Link to={"/auth/signup"} className="text-primary">
                   Contact Administrator
                 </Link>
               </p>

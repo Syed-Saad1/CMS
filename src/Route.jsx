@@ -5,16 +5,15 @@ import HomeScreen from "./screens/HomeScreen";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { LoginScreen } from "./screens/auth-screen/LoginScreen";
 import DashboardLayout from "./layouts/DashboardLayout";
-// import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
 import AdminUsers from "./screens/admin-dashboard/AdminUsers";
 import AdminCourses from "./screens/CourseScreen";
 import AdminEnroll from "./screens/admin-dashboard/AdminEnroll";
 import AdminProfile from "./screens/admin-dashboard/AdminProfile";
 import UserView from "./screens/admin-dashboard/UserView";
 import AdminCreateCourse from "./screens/admin-dashboard/AdminCreateCourse";
-import UserDashboard from "./user/UserDashboard";
+import UserDashboard from "./screens/user/UserDashboard";
 import CourseDetail from "./container/courses/CourseDetail";
-import UserProfile from "./user/UserProfile";
+import UserProfile from "./screens/user/UserProfile";
 import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
 function RoutePack() {
   return (

@@ -64,7 +64,7 @@ export const UserDashboard = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant={"secondary"} className="text-[13px]  py-4">
+          <Button variant={"button"} className="text-[13px]  py-4">
             {" "}
             <ListSortAscending /> Filter
           </Button>
@@ -91,13 +91,13 @@ export const UserDashboard = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>USER</TableHead>
-              <TableHead>ROLE</TableHead>
-              <TableHead>STATUS</TableHead>
-              <TableHead>RATING</TableHead>
-              <TableHead>SOCAIL PROFILE</TableHead>
-              <TableHead>CREATED AT</TableHead>
-              <TableHead>ACTION</TableHead>
+              <TableHead>User</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Rating</TableHead>
+              <TableHead>Socail Profile</TableHead>
+              <TableHead>Created at</TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -194,14 +194,14 @@ export const UserDashboard = () => {
                         <div className="flex items-center gap-3">
                           <Icon icon="logos:twitter" />
                           <Icon icon="logos:facebook" />
-                          <Icon icon="basil:instagram-outline" />
+                          <img className="size-4" src="/instagram.png" alt="" />
                         </div>
                       </TableCell>
 
                       <TableCell>21-Sep-2026</TableCell>
                       <TableCell>
                         <Link
-                          className="hover:border-b-[#1F108E] text-xs text-accent-foreground"
+                          className="hover:border-b-primary hover:border-b-2 text-xs text-accent-foreground"
                           to={`/admin/users/${item?._id}`}
                         >
                           {" "}

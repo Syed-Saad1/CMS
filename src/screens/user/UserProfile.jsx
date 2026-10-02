@@ -12,6 +12,7 @@ import PriviewProfileCard from "@/components/AllUserPriviewProfileCard";
 
 import toast from "react-hot-toast";
 import DeleteUserAccount from "@/components/DeleteUserAccount";
+import UpdatePassword from "@/container/UpdatePassword";
 
 function AdminProfile() {
   const userId = Cookies.get("userId");
@@ -88,7 +89,7 @@ function AdminProfile() {
             isUpdating={isUpdating}
           />
         </form>
-        {/* <DeleteUserAccount /> */}
+        <UpdatePassword />{" "}
       </div>
     </div>
   );

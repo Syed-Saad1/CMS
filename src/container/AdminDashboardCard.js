@@ -1,8 +1,12 @@
 import {
+  Award,
+  Calendar,
   CircleCheckBig,
   CopyCheck,
+  FileEdit,
   FileText,
   FolderPlus,
+  GraduationCap,
   IdCard,
   NotebookPen,
   User,

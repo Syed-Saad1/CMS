@@ -12,6 +12,7 @@ import PriviewProfileCard from "@/components/AllUserPriviewProfileCard";
 
 import toast from "react-hot-toast";
 import DeleteUserAccount from "@/components/DeleteUserAccount";
+import UpdatePassword from "@/container/UpdatePassword";
 
 function AdminProfile() {
   const [selectItem, setselectItem] = useState(null);
@@ -85,6 +86,7 @@ function AdminProfile() {
             IsLoading={IsLoading}
           />
         </form>
+        <UpdatePassword />
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardTitle } from "./ui/card";
-import { ArrowRight, BadgeCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -16,39 +16,35 @@ import { RoleBadge } from "./RoleBadge";
 import { Icon } from "@iconify/react";
 import { StatusBadge } from "./ui/status";
 
-function RecentlyAddedUsers({ ProfileData, UserLoading, userData }) {
+function RecentlyAddedUsers({ UserLoading, userData }) {
   return (
     <div>
       {" "}
-      <Card className="block! h-82 w-full rounded-xl p-4">
+      <Card className="block! h-88! w-full rounded-xl p-4 mb-5">
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
-          <h1 className="flex gap-1 text-lg font-semibold text-muted-foreground">
-            <BadgeCheck className="text-[#0246FB]!" strokeWidth={1.4} />
+          <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
+            <User className="text-primary size-6" strokeWidth={1.4} />
             Recently Added Users
           </h1>
           <Link
             to={"/admin/users"}
-            className="flex items-center gap-2 text-[#0246FB]! text-sm font-normal "
+            className="flex items-center gap-2 text-primary! text-sm font-normal "
           >
             View All
             <ArrowRight className="size-4" strokeWidth={1.6} />
           </Link>
         </div>
         <hr className="mt-2" />
-        <ScrollArea className={"w-full"}>
+        <ScrollArea orientation="horizontal" className={"w-full max-w-full"}>
           {" "}
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>USER</TableHead>
-                <TableHead>ROLE</TableHead>
-                <TableHead>STATUS</TableHead>
-                <TableHead>RATING</TableHead>
-                <TableHead>SOCAIL PROFILE</TableHead>
-                <TableHead>CREATED AT</TableHead>
-                <TableHead>ACTION</TableHead>
+                <TableHead>User</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
             {UserLoading ? (
@@ -75,7 +71,7 @@ function RecentlyAddedUsers({ ProfileData, UserLoading, userData }) {
               </TableBody>
             ) : (
               <TableBody>
-                {userData?.slice(0, 4).map((item) => {
+                {userData?.slice(0, 6).map((item) => {
                   const IntialFirst = item?.firstName
                     ?.trim()
                     .charAt(0)
@@ -140,33 +136,13 @@ function RecentlyAddedUsers({ ProfileData, UserLoading, userData }) {
                       <TableCell>
                         <StatusBadge status="active" />
                       </TableCell>
-
-                      <TableCell>4.6</TableCell>
-
-                      <TableCell className="cursor-pointer align-middle">
-                        <div className="flex items-center gap-3">
-                          <Icon icon="logos:twitter" />
-                          <Icon icon="logos:facebook" />
-                          <Icon icon="basil:instagram-outline" />
-                        </div>
-                      </TableCell>
-
-                      <TableCell>21-Sep-2026</TableCell>
-
-                      <TableCell>
-                        <Link
-                          className="hover:border-b-[#1F108E] text-xs text-accent-foreground"
-                          to={`/admin/users/${item?._id}`}
-                        >
-                          View Profile
-                        </Link>
-                      </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             )}
           </Table>
+          <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </Card>
     </div>

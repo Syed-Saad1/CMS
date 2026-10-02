@@ -3,6 +3,13 @@ export default function SidebarNavigation(role) {
     {
       id: "Dashboard",
       label: "Dashboard",
+      link: "/user/dashboard",
+      icon: "boxicons:dashboard",
+      isNavigate: role === "user" ? true : false,
+    },
+    {
+      id: "Dashboard",
+      label: "Dashboard",
       link: "/admin/dashboard",
       icon: "boxicons:dashboard",
       isNavigate: role === "admin" ? true : false,
@@ -29,6 +36,7 @@ export default function SidebarNavigation(role) {
       icon: "iconamoon:profile",
       isNavigate: role === "admin" ? true : false,
     },
+
     {
       id: "profile",
       label: "Profile",

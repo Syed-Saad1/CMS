@@ -20,7 +20,7 @@ export function AuthLayout() {
             </Link>
           </div>
           <div className="w-full mb-10 ">
-            <h1 className="text-4xl max-w-100! font-DmSans font-extrabold text-[#180289]">
+            <h1 className="text-4xl max-w-100! font-DmSans font-extrabold   text-primary">
               Empower Your Academic Journey
             </h1>
             <p className="max-w-112.5! text-md font-DmSans mt-5 text-gray-600">

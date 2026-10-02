@@ -123,14 +123,14 @@ export const CourseDetail = () => {
                 alt=""
               />
 
-              <div className="cursor-pointer absolute bottom-4 left-4 text-[14px] px-12 py-1 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-[#4570e7]! text-white">
+              <div className="cursor-pointer absolute bottom-4 left-4 text-[14px] px-12 py-1 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-primary text-primary-foreground">
                 {data?.data?.tags}
               </div>
 
               <DialogTrigger
                 className="absolute top-0 right-0 z-50
                group-hover:opacity-100 opacity-0
-               bg-red-300
+               bg-destructive hover:bg-destructive/90
                inline-flex items-center gap-2
                rounded-md px-4 py-2
                text-sm font-medium"
@@ -260,7 +260,7 @@ export const CourseDetail = () => {
                 Build Your Future
               </CardTitle>
               <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
-                <span className="pr-2 text-[#4570e7]!">$</span>299.99
+                <span className="pr-2 text-primary">$</span>299.99
               </CardTitle>
               <div className="border border-border w-full" />
               <div className="grid grid-cols-2 gap-2 items-center w-full">
@@ -268,7 +268,7 @@ export const CourseDetail = () => {
                   variant="button"
                   onClick={handleEnroll}
                   disabled={isPending}
-                  className="w-full h-10 hover:bg-[#2a5bc9]"
+                  className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
                 >
                   {" "}
                   {isPending ? (
@@ -285,7 +285,7 @@ export const CourseDetail = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full h-10 hover:shadow-md hover:bg-[#4e464600] hover:text-accent-foreground"
+                  className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
                 >
                   Try ForFree
                 </Button>
@@ -310,7 +310,7 @@ export const CourseDetail = () => {
               className="h-58 flex flex-col gap-4 pt-4
          px-6"
             >
-              <Label className="text-xs font-semibold text-[#4570e7]">
+              <Label className="text-xs font-semibold text-primary">
                 COURSE INSTRUCTOR
               </Label>
               <div className="grid grid-cols-[32%_65%] gap-3">
@@ -333,7 +333,7 @@ export const CourseDetail = () => {
                     teaching advanced computer science concepts to bridge the
                     gap between academic theory and industry practice.
                   </CardDescription>
-                  <Link className="mt-1 h-10 flex items-center gap-2 text-[#4570e7]">
+                  <Link className="mt-1 h-10 flex items-center gap-2 text-primary">
                     View Profile <ArrowRight size={18} />
                   </Link>
                 </div>

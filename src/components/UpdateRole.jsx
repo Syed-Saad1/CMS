@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { useUpdateRole } from "@/mutations/updateRole";
 import { useParams } from "react-router-dom";
 import { Check, Loader } from "lucide-react";
-import { Skeleton } from "./ui/skeleton";
 
 function UpdateRole({ userRole }) {
   const { id } = useParams();
@@ -72,7 +71,7 @@ function UpdateRole({ userRole }) {
             ${
               isSelected
                 ? `
-                  border-2 border-[#0246FB]
+                  border-2 border-primary
                   bg-accent
                   shadow-sm
                 `
@@ -85,7 +84,7 @@ function UpdateRole({ userRole }) {
           `}
                   >
                     {isSelected && (
-                      <div className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full bg-[#0246FB]">
+                      <div className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full bg-primary">
                         <Check className="size-3 text-white" strokeWidth={3} />
                       </div>
                     )}
@@ -93,7 +92,7 @@ function UpdateRole({ userRole }) {
                     <div
                       className={`
               flex size-10 items-center justify-center rounded-full
-              ${isSelected ? "bg-[#0246FB]" : "bg-[#0246FB]"}
+              ${isSelected ? "bg-primary" : "bg-primary"}
             `}
                     >
                       <Icon
