@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,28 +10,33 @@ function UpdatePassword() {
   return (
     <Card className={"p-4 flex flex-col"}>
       <CardTitle className={"text-xl font-bold"}>Update Password</CardTitle>
-
-      <div className="grid grid-cols-2 mt-4 gap-4">
-        <Field>
+      <CardDescription>
+        Ensure your account is using a long, random password to stay secure{" "}
+      </CardDescription>
+      <hr className="mt-2" />
+      <div className="mt-4 grid grid-cols-1 gap-4">
+        {" "}
+        <div>
           {" "}
-          <Label>Email :</Label>
-          <Input placeholder="Enter Your Account Email" />
-        </Field>
-        <Field>
+          <Field>
+            {" "}
+            <Label>Old Password :</Label>
+            <Input placeholder="Enter Your Old Password" />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 w-full gap-4">
           {" "}
-          <Label>Old Password :</Label>
-          <Input placeholder="Enter Your Old Password" />
-        </Field>
-        <Field>
-          {" "}
-          <Label>New Password :</Label>
-          <Input placeholder="Enter Your Old Password" />
-        </Field>
-        <Field>
-          {" "}
-          <Label>Confirm Password :</Label>
-          <Input placeholder="Enter Your Old Password" />
-        </Field>
+          <Field>
+            {" "}
+            <Label>New Password :</Label>
+            <Input placeholder="Enter Your Old Password" />
+          </Field>
+          <Field>
+            {" "}
+            <Label>Confirm Password :</Label>
+            <Input placeholder="Enter Your Old Password" />
+          </Field>
+        </div>
       </div>
       <div className="flex justify-end mt-4">
         <Button variant="button">
