@@ -18,7 +18,6 @@ function RecentlyActivites({ UserLoading }) {
     <div className=" mt-10">
       {UserLoading ? (
         <Card className="block! h-106! w-full rounded-xl p-4 mb-5">
-          {/* Header */}
           <div className="w-full flex justify-between items-center">
             <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
               Recently Activities
@@ -32,25 +31,20 @@ function RecentlyActivites({ UserLoading }) {
 
           <hr className="mt-2" />
 
-          {/* Loading */}
           {UserLoading ? (
             <div className="space-y-0">
               {Array.from({ length: 5 }).map((_, index) => (
                 <React.Fragment key={index}>
                   <div className="flex justify-between gap-4 items-center py-3">
-                    {/* Left */}
                     <div className="flex gap-4 items-center min-w-0">
-                      {/* Icon */}
                       <Skeleton className="size-10 shrink-0 rounded-lg" />
 
-                      {/* Content */}
                       <div className="space-y-1.5 min-w-0">
                         <Skeleton className="h-4 w-36 rounded-sm" />
                         <Skeleton className="h-3 w-24 rounded-sm" />
                       </div>
                     </div>
 
-                    {/* Time */}
                     <Skeleton className="h-3 w-20 shrink-0 rounded-sm" />
                   </div>
 
@@ -59,9 +53,8 @@ function RecentlyActivites({ UserLoading }) {
               ))}
             </div>
           ) : (
-            /* Activities */
             <>
-              <div className="flex justify-between gap-4 items-center hover:bg-accent rounded-md px-1">
+              <div className="flex justify-between gap-4 items-center px-2 hover:bg-accent rounded-md ">
                 <div className="flex gap-4 items-center mt-4">
                   <div className="flex gap-2 items-center bg-primary/10 p-2 rounded-lg w-fit text-primary">
                     <User />
@@ -170,7 +163,7 @@ function RecentlyActivites({ UserLoading }) {
         <Card className="block! h-106! w-full rounded-xl p-4 mb-5">
           <div className="w-full flex justify-between items-center">
             {" "}
-            <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
+            <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted pl-5">
               Recently Activities
             </h1>
             <Link className="flex items-center gap-2 text-primary! text-sm font-normal ">
@@ -179,8 +172,8 @@ function RecentlyActivites({ UserLoading }) {
             </Link>
           </div>
           <hr className="mt-2" />
-          <div className="flex justify-between gap-4 items-center hover:bg-accent">
-            <div className="flex gap-4 items-center mt-4">
+          <div className="flex justify-between gap-4 px-4 items-center hover:bg-accent">
+            <div className="flex gap-4 items-center mt-4 mb-4">
               <div className="flex gap-2 items-center  bg-primary/10 p-2 rounded-lg w-fit text-primary">
                 <User />
               </div>
@@ -195,9 +188,9 @@ function RecentlyActivites({ UserLoading }) {
               </CardDescription>
             </div>
           </div>
-          <hr className="mt-4" />
-          <div className="flex justify-between gap-4 items-center hover:bg-accent">
-            <div className="flex gap-4 items-center mt-4">
+          <hr />
+          <div className="flex justify-between gap-4 px-4  items-center hover:bg-accent">
+            <div className="flex gap-4 items-center  mb-4  mt-4">
               <div className="flex gap-2 items-center  bg-primary/10 p-2 rounded-lg w-fit text-primary">
                 <GraduationCap />
               </div>
@@ -214,9 +207,9 @@ function RecentlyActivites({ UserLoading }) {
               </CardDescription>
             </div>
           </div>
-          <hr className="mt-4" />
-          <div className="flex justify-between gap-4 items-center hover:bg-accent">
-            <div className="flex gap-4 items-center mt-4">
+          <hr />
+          <div className="flex justify-between gap-4 px-4  items-center hover:bg-accent">
+            <div className="flex gap-4 items-center mb-4 mt-4">
               <div className="flex gap-2 items-center  bg-primary/10 p-2 rounded-lg w-fit text-primary">
                 <FileIcon />
               </div>
@@ -233,9 +226,9 @@ function RecentlyActivites({ UserLoading }) {
               </CardDescription>
             </div>
           </div>
-          <hr className="mt-4" />
-          <div className="flex justify-between gap-4 items-center hover:bg-accent">
-            <div className="flex gap-4 items-center mt-4">
+          <hr />
+          <div className="flex justify-between gap-4 px-4  items-center hover:bg-accent">
+            <div className="flex gap-4 items-center mb-4 mt-4">
               <div className="flex gap-2 items-center  bg-primary/10 p-2 rounded-lg w-fit text-primary">
                 <User />
               </div>
@@ -252,9 +245,9 @@ function RecentlyActivites({ UserLoading }) {
               </CardDescription>
             </div>
           </div>
-          <hr className="mt-4" />
-          <div className="flex justify-between gap-4 items-center hover:bg-accent">
-            <div className="flex gap-4 items-center mt-4">
+          <hr />
+          <div className="flex justify-between gap-4 px-4  items-center hover:bg-accent">
+            <div className="flex gap-4 items-center mb-4 mt-4">
               <div className="flex gap-2 items-center  bg-primary/10 p-2 rounded-lg w-fit text-primary">
                 <Megaphone />
               </div>

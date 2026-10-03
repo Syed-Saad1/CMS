@@ -20,7 +20,7 @@ function SideBar() {
     <aside className="flex flex-col h-full border border-r-border">
       <div className="flex justify-start items-start">
         <img
-          className="h-14 w-44 object-contain mt-3 text-primary! cursor-pointer"
+          className="h-14 w-44 ml-2 object-contain mt-3 text-primary! cursor-pointer"
           src={theme === "light" ? "/lightlogo.png" : "/darklogo.png"}
         />
       </div>
@@ -46,7 +46,7 @@ function SideBar() {
           ) : null;
         })}
       </div>
-      <div className="mt-auto ml-3 mb-4 mr-2">
+      <div className="mt-auto ml-1 mb-4 mr-2">
         {" "}
         <button
           onClick={() => {
@@ -54,7 +54,7 @@ function SideBar() {
             Cookies.remove("role");
             navigation("/auth/login");
           }}
-          className="text-foreground w-full flex items-center gap-2 px-2 py-1 rounded-sm hover:text-red-400 hover:bg-accent"
+          className="text-foreground w-full flex items-center gap-2 px-4 py-2 rounded-sm hover:text-white hover:bg-red-400/60 transition-2s"
         >
           <Icon className="size-5" icon="ic:baseline-logout" />
           Logout

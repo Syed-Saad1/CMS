@@ -1,14 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
-import Cookies from "js-cookie";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Field, FieldDescription } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,15 +8,7 @@ import MultiSelect from "@/container/MultiSelect";
 import { createCourse } from "@/mutations/createCourse";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  ChevronDown,
-  Cross,
-  ImagePlus,
-  Loader,
-  Plus,
-  Upload,
-  X,
-} from "lucide-react";
+import { ImagePlus, Loader, Plus, Upload, X } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -195,7 +178,6 @@ function AdminCreateCourse() {
           </p>
         </div>
       </div>
-
       <div className="w-full grid grid-cols-[68%_30%] gap-6 mt-4">
         <Card className="flex flex-col w-full py-6 px-4">
           <CardTitle className="text-xl">Course Information</CardTitle>
@@ -277,7 +259,19 @@ function AdminCreateCourse() {
               )}
             </Field>
           </Card>
+          <div>
+            <Field className={"mt-7"}>
+              <Label htmlFor="tags">
+                Course Overview <span className="text-blue-500">*</span>
+              </Label>
 
+              <Input className={"h-10 "} />
+
+              {errors.tags && (
+                <FieldDescription>{errors.tags}</FieldDescription>
+              )}
+            </Field>
+          </div>
           <div className="flex items-center justify-end gap-4 mt-4">
             <Link to="/admin/courses">
               <Button type="button" variant="outline" className="text-sm px-4">

@@ -61,7 +61,7 @@ function StudentRecentResult() {
       {" "}
       <Card className="block! h-72! w-full rounded-xl p-4 mb-5">
         {" "}
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full px-2 flex justify-between items-center">
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
             Recent Results
@@ -76,42 +76,30 @@ function StudentRecentResult() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Course</TableHead>
-                <TableHead>Exam Type</TableHead>
-                <TableHead>Grade</TableHead>
-                <TableHead>Score</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead className={"text-sm font-semibold"}>
+                  Course
+                </TableHead>
+                <TableHead className={"text-sm font-semibold"}>
+                  Exam Type
+                </TableHead>
+                <TableHead className={"text-sm font-semibold"}>Grade</TableHead>
+                <TableHead className={"text-sm font-semibold"}>Score</TableHead>
+                <TableHead className={"text-sm font-semibold"}>Date</TableHead>
               </TableRow>
             </TableHeader>
-            {/* <TableBody>
-                {[...Array(5)].map((_, index) => (
-                  <TableRow key={index} className="animate-pulse">
-                    <TableCell>
-                      <div className="h-4 w-28 bg-muted/80 rounded" />
-                    </TableCell>
 
-                    <TableCell>
-                      <div className="h-4 w-24 bg-muted/50 rounded" />
-                    </TableCell>
-
-                    <TableCell>
-                      <div className="h-6 w-16 bg-muted/60 rounded-full" />
-                    </TableCell>
-
-                    <TableCell>
-                      <div className="h-4 w-8 bg-muted/40 rounded" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody> */}
             <TableBody>
-              {RecentResult?.slice(0, 6).map((item) => {
+              {RecentResult?.slice(0, 4).map((item) => {
                 return (
                   <TableRow key={item?._id}>
                     <TableCell>{item?.Subject}</TableCell>
                     <TableCell>{item?.ExamType}</TableCell>
 
-                    <TableCell>{item?.Grade}</TableCell>
+                    <TableCell>
+                      <div className="bg-success/20  flex items-center justify-center rounded-full size-6 p-4 dark:bg-success/30 text-success/60 ">
+                        {item?.Grade}
+                      </div>
+                    </TableCell>
                     <TableCell>{item?.Score}</TableCell>
                     <TableCell>{item?.Date}</TableCell>
                   </TableRow>

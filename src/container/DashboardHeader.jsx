@@ -94,24 +94,10 @@ function DashboardHeader() {
         />
       </div>
 
-      {/* Right Side */}
-      <div className="flex gap-4 justify-center items-center shrink-0 md:gap-3 sm:gap-2">
-        {/* Notification */}
-        <Icon
-          className="size-4.5 cursor-pointer shrink-0"
-          icon="clarity:notification-outline-badged"
-        />
-
-        {/* Settings */}
-        <Icon
-          className="size-4.5 cursor-pointer shrink-0"
-          icon="ant-design:setting-outlined"
-        />
-
-        {/* Theme */}
+      <div className="flex lg:gap-4 justify-center items-center shrink-0 ">
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          className="shrink-0"
+          className="shrink-0 bg-accent size-10 rounded-full flex justify-center items-center"
         >
           <Icon
             className="size-4.5 cursor-pointer"
@@ -119,7 +105,6 @@ function DashboardHeader() {
           />
         </button>
 
-        {/* Profile */}
         <div className="flex items-center gap-2 cursor-pointer min-w-0">
           <div className="flex size-8 shrink-0 justify-center items-center">
             {UserProfileData?.avatar ? (
@@ -136,7 +121,6 @@ function DashboardHeader() {
             )}
           </div>
 
-          {/* User Information */}
           <div className="flex flex-col min-w-0 md:hidden lg:flex">
             <TableCell className="py-0 pl-0 whitespace-nowrap">
               {UserProfileData?.firstName}

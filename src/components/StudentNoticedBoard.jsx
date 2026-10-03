@@ -51,7 +51,7 @@ function StudentNoticedBoard() {
           {Annoucment?.slice(0, 3)?.map((item) => {
             return (
               <div key={item?.id} className="flex gap-3 items-center">
-                <div className="size-16 bg-primary/40 rounded-xl flex justify-center items-center">
+                <div className="size-16 bg-primary/15 rounded-xl flex justify-center items-center">
                   {" "}
                   <Megaphone className="size-7 text-primary" />
                 </div>
