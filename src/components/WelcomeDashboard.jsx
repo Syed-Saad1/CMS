@@ -65,7 +65,7 @@ function WelcomeDashboard() {
                 Here's Whats happening with your course managment system today.
                 keep up the great work!{" "}
               </CardDescription>{" "}
-              <Link to="/admin/courses">
+              <Link to="/courses">
                 {" "}
                 <Button variant="button" className="w-fit mt-4">
                   {" "}

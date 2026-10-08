@@ -5,19 +5,26 @@ import Cookies from "js-cookie";
 
 export const getCourseById = (id) => {
   const token = Cookies.get("token");
-  const queryfn = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/course/${id}`;
-    const { data } = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
 
-    return data;
-  };
   return useQuery({
     queryKey: [QueryKey.getCourseById, id],
-    queryFn: queryfn,
-    enabled: !!token,
+
+    queryFn: async () => {
+      const url = `${import.meta.env.VITE_API_URL}/course/${id}`;
+
+      console.log("GET COURSE URL:", url);
+
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("GET COURSE RESPONSE:", data);
+
+      return data;
+    },
+
+    enabled: Boolean(token && id),
   });
 };

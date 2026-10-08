@@ -38,7 +38,7 @@ function CourseScreen() {
             </p>
           </div>
           {userRole === "admin" && (
-            <Link to={"/admin/courses-create"}>
+            <Link to={"/courses-create"}>
               <Button variant="button" className="text-sm py-4">
                 <Plus className="size-5 overflow-hidden" />
                 Create Course
@@ -68,9 +68,9 @@ function CourseScreen() {
             {isLoading
               ? Array.from({ length: 4 }).map((i) => (
                   <div className="h-70 rounded-md  p-1 border-border w-full flex flex-col gap-2">
-                    <Skeleton className="h-32" />
-                    <div className="relative h-32 bg-muted/60 overflow-hidden">
-                      <Skeleton className="absolute top-0 left-0 h-5 w-16 bg-muted-foreground/60" />
+                    <Skeleton className="h-32 bg-muted/60" />
+                    <div className="relative h-32 overflow-hidden">
+                      <Skeleton className="absolute bg-muted/60 top-0 left-0 h-5 w-16 " />
                     </div>
 
                     <div className="flex flex-col pl-2 pr-2 gap-2">

@@ -1,3 +1,4 @@
+import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -25,15 +26,16 @@ import { useEnrollCourse } from "@/mutations/useEnrollCourse";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import axios from "axios";
+import remarkGfm from "remark-gfm";
 export const CourseDetail = () => {
   const { id } = useParams();
 
   const { data, isLoading } = getCourseById(id);
+  console.log("Data ", data || "Data is Not Available ");
   const { mutateAsync, isPending } = useEnrollCourse();
   const userId = Cookies.get("userId");
   const payload = {
     userId: userId,
-    courseId: id,
   };
   console.log("Pay", payload);
   const handleEnroll = async () => {
@@ -119,11 +121,11 @@ export const CourseDetail = () => {
             <div className="group w-full h-72 shrink-0 relative bg-accent overflow-hidden">
               <img
                 className="w-full object-cover h-full"
-                src={data?.data?.thumbnail || "/image.png"}
-                alt=""
+                src={data?.data?.thumbnail || "/DeafultThumbinal.png"}
+                alt="thumbnail"
               />
 
-              <div className="cursor-pointer absolute bottom-4 left-4 text-[14px] px-12 py-1 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-primary text-primary-foreground">
+              <div className="cursor-pointer absolute top-1 left-1 text-[14px] px-4 py-1 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-primary/80 text-primary-foreground/90">
                 {data?.data?.tags}
               </div>
 
@@ -169,7 +171,10 @@ export const CourseDetail = () => {
                       strokeWidth={1.6}
                       size={18}
                     />
-                    Days: Mon, Wed, Fri
+                    Days:{" "}
+                    {data?.data?.courseDays.map((item) => (
+                      <div>{item},</div>
+                    ))}
                   </CardDescription>
                   <CardDescription className="flex items-center gap-2">
                     {" "}
@@ -182,7 +187,7 @@ export const CourseDetail = () => {
                   </CardDescription>
                 </div>
               </div>
-              <Card className="flex flex-col min-h-140! w-full mt-8 bg-muted! pl-6 pt-6">
+              <Card className="flex flex-col min-h-140! w-full mt-8 pl-6  bg-transparent pt-6">
                 <CardTitle className="flex gap-2 items-center text-2xl font-semibold">
                   <BookOpenCheck
                     className="text-[#3b82f6]"
@@ -192,19 +197,72 @@ export const CourseDetail = () => {
                   What You'll learn
                 </CardTitle>
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                  {WhatWillLearn.map((item) => (
-                    <div key={item?.id} className="flex gap-2 items-start">
-                      <CircleCheckBig
-                        className="text-[#4ce9a7] shrink-0 pt-0.5"
-                        strokeWidth={1.5}
-                        size={18}
-                      />
+                  <div className="flex gap-2 items-start">
+                    <CardDescription className="text-[15px] leading-relaxed ">
+                      {data?.data?.content ? (
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            h1: ({ children }) => (
+                              <h1 className="mb-3 text-xl font-bold text-foreground">
+                                {children}
+                              </h1>
+                            ),
 
-                      <CardDescription className="text-[15px] max-h-14 line-clamp-2 leading-relaxed">
-                        {item?.content}
-                      </CardDescription>
-                    </div>
-                  ))}
+                            h2: ({ children }) => (
+                              <h2 className="mb-3 mt-5 text-lg font-semibold text-foreground">
+                                {children}
+                              </h2>
+                            ),
+
+                            h3: ({ children }) => (
+                              <h3 className="mb-2 mt-4 text-base font-semibold text-foreground">
+                                {children}
+                              </h3>
+                            ),
+
+                            p: ({ children }) => (
+                              <p className="mb-3 text-sm leading-6 text-muted-foreground">
+                                {children}
+                              </p>
+                            ),
+
+                            ul: ({ children }) => (
+                              <ul className="mb-4 ml-5 list-disc space-y-1 text-sm text-muted-foreground">
+                                {children}
+                              </ul>
+                            ),
+
+                            ol: ({ children }) => (
+                              <ol className="mb-4 ml-5 list-decimal space-y-1 text-sm text-muted-foreground">
+                                {children}
+                              </ol>
+                            ),
+
+                            li: ({ children }) => (
+                              <li className="pl-1">{children}</li>
+                            ),
+
+                            strong: ({ children }) => (
+                              <strong className="font-semibold text-foreground">
+                                {children}
+                              </strong>
+                            ),
+
+                            em: ({ children }) => (
+                              <em className="italic">{children}</em>
+                            ),
+                          }}
+                        >
+                          {data.data.content}
+                        </ReactMarkdown>
+                      ) : (
+                        <p className="text-sm text-muted-foreground">
+                          Module not available
+                        </p>
+                      )}
+                    </CardDescription>
+                  </div>
                 </div>
               </Card>
             </ScrollArea>
@@ -230,7 +288,7 @@ export const CourseDetail = () => {
                   <Skeleton className="h-6 w-12" />
                   <Skeleton className="h-3 w-16" />
                 </div>
-                <div className="flex flex-col border-l border-border items-center gap-1.5 pl-4">
+                <div className="flex flex-col  items-center gap-1.5 pl-4">
                   <Skeleton className="h-6 w-12" />
                   <Skeleton className="h-3 w-16" />
                 </div>

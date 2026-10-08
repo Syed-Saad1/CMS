@@ -17,7 +17,7 @@ export const DeleteCourseModal = ({ handleOpenModal, item }) => {
         handleOpenModal?.(false);
       },
     });
-    navigate("/admin/courses");
+    navigate("/courses");
   };
 
   if (!item) {

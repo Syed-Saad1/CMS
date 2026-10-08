@@ -24,7 +24,7 @@ export default function SidebarNavigation(role) {
     {
       id: "Courses",
       label: "Courses",
-      link: "/admin/courses",
+      link: "/courses",
       icon: "flowbite:graduation-cap-outline",
       isNavigate: true,
     },

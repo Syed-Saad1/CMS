@@ -23,7 +23,7 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
   return (
     <div>
       {" "}
-      <Card className="block! h-106 w-full rounded-xl p-4 mb-5">
+      <Card className="block! h-fit w-full rounded-xl p-4 mb-5">
         <div className="w-full flex justify-between items-center">
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
@@ -31,7 +31,7 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
             Recently Added Courses
           </h1>
           <Link
-            to={"/admin/courses"}
+            to={"/courses"}
             className="flex items-center gap-2 text-primary! text-sm font-normal "
           >
             View All
@@ -95,8 +95,8 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
                       <TableCell>
                         <div className="flex min-w-0 items-center gap-2">
                           <img
-                            src={item?.thumbnail || "/DefaultThumbnail.png"}
-                            className="size-12 shrink-0 rounded-lg object-contain"
+                            src={item?.thumbnail || "/DeafultThumbinal.png"}
+                            className="h-12 w-14 shrink-0 rounded-lg object-contain"
                             alt={item?.title}
                           />
 
@@ -106,13 +106,15 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
                         </div>
                       </TableCell>
                       <TableCell className={""}>
-                        <div className="flex items-center gap-0.5 font-semibold">
+                        <div className="flex items-center gap-1 font-semibold">
                           <img
                             src={item?.instructor?.avatar || "/men2.png"}
-                            className="size-8 rounded-full"
+                            className="size-8 object-cover rounded-full"
                             alt={item?.instructor?.name}
                           />
-                          {item?.instructor?.name || "Sir Rashid Ali"}
+                          <CardTitle className={"text-sm"}>
+                            {item?.instructor?.name || "Sir Rashid Ali"}
+                          </CardTitle>
                         </div>
                       </TableCell>
                       <TableCell>

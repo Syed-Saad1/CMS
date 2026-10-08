@@ -47,20 +47,22 @@ function StudentNoticedBoard() {
             View All Noticed
           </Link>
         </div>
-        <div className="mt-3 flex flex-col gap-3">
-          {Annoucment?.slice(0, 3)?.map((item) => {
+        <div className="mt-3 flex flex-col gap-2">
+          {Annoucment?.slice(0, 4)?.map((item) => {
             return (
-              <div key={item?.id} className="flex gap-3 items-center">
-                <div className="size-16 bg-primary/15 rounded-xl flex justify-center items-center">
+              <div key={item?.id} className="flex gap-2 items-start">
+                <div className="size-12 bg-primary/12 rounded-xl flex justify-center items-center">
                   {" "}
-                  <Megaphone className="size-7 text-primary" />
+                  <Megaphone className="size-6 text-primary/60" />
                 </div>
                 <div>
-                  <CardTitle className={"font-semibold"}>
+                  <CardTitle className={"text-sm font-semibold"}>
                     {item?.Title}{" "}
                   </CardTitle>
-                  <CardDescription>{item?.des} </CardDescription>
-                  <p className="text-primary">{item?.PostDate}</p>
+                  <CardDescription className={"text-xs"}>
+                    {item?.des}{" "}
+                  </CardDescription>
+                  <p className="text-xs text-primary">{item?.PostDate}</p>
                 </div>
               </div>
             );

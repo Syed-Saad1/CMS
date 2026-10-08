@@ -87,7 +87,7 @@ function StudentDashboardMatrix() {
                     </CardDescription>
                     <p className="text-sm text-success">{item?.description}</p>
 
-                    <div class="w-full bg-primary/60 rounded-full h-2">
+                    <div className="w-full bg-primary/60 rounded-full h-2">
                       <div
                         className="bg-primary/80 h-2 rounded-full"
                         style={{ width: 35 }}

@@ -28,3 +28,10 @@ export const createCourse = () => {
     },
   });
 };
+
+let ProductPrice = 190;
+
+let ProductList = ["Shose ", "Shirt ", " Paint"];
+let findListItem = ProductList.shift();
+
+console.log(findListItem);

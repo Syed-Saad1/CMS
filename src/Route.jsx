@@ -7,7 +7,6 @@ import { LoginScreen } from "./screens/auth-screen/LoginScreen";
 import DashboardLayout from "./layouts/DashboardLayout";
 import AdminUsers from "./screens/admin-dashboard/AdminUsers";
 import AdminCourses from "./screens/CourseScreen";
-import AdminEnroll from "./screens/admin-dashboard/AdminEnroll";
 import AdminProfile from "./screens/admin-dashboard/AdminProfile";
 import UserView from "./screens/admin-dashboard/UserView";
 import AdminCreateCourse from "./screens/admin-dashboard/AdminCreateCourse";
@@ -15,6 +14,7 @@ import UserDashboard from "./screens/user/UserDashboard";
 import CourseDetail from "./container/courses/CourseDetail";
 import UserProfile from "./screens/user/UserProfile";
 import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
+import EditCourseCard from "./container/courses/EditCourseForm";
 function RoutePack() {
   return (
     <BrowserRouter>
@@ -28,12 +28,12 @@ function RoutePack() {
         <Route element={<DashboardLayout />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />
-          <Route path="/admin/courses" element={<AdminCourses />} />
-          <Route path="/admin/enrollments" element={<AdminEnroll />} />
+          <Route path="/courses" element={<AdminCourses />} />
           <Route path="/admin/profile" element={<AdminProfile />} />
           <Route path="/user/all-users" element={<AdminUsers />} />
-          <Route path="/admin/courses/:id" element={<CourseDetail />} />{" "}
-          <Route path="/admin/courses-create" element={<AdminCreateCourse />} />{" "}
+          <Route path="/courses/:id" element={<CourseDetail />} />{" "}
+          <Route path="/courses-create" element={<AdminCreateCourse />} />
+          <Route path="/courses/edit/:id" element={<EditCourseCard />} />
           <Route path="/admin/users/:id" element={<UserView />} />
         </Route>
         <Route element={<DashboardLayout />}>

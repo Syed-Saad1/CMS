@@ -16,21 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const options = [
-  { value: "Programing", label: "Programing" },
-  { value: "Design", label: "Design" },
-  { value: "E-Commerce", label: "E-Commerce" },
-  { value: "Devlopment", label: "Devlopment" },
-  { value: "AI(Artifical Intelligence)", label: "AI(Artifical Intelligence)" },
-  { value: "React", label: "React" },
-  { value: "JavaScript", label: "JavaScript" },
-  { value: "Finance", label: "Finance" },
-  { value: "Marketing", label: "Marketing" },
-  { value: "DataScience", label: "Data Science" },
-  { value: "DataScience", label: "Data Science" },
-];
-
-function MultiSelect({ value = [], onChange }) {
+function MultiSelect({ value = [], onChange, options }) {
   const [open, setOpen] = React.useState(false);
 
   const handleSelect = (selectedValue) => {
@@ -43,12 +29,12 @@ function MultiSelect({ value = [], onChange }) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="w-full">
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between mt-2"
         >
           {value.length > 0 ? value.join(", ") : "Select tags..."}
 
