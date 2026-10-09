@@ -17,8 +17,6 @@ function DeleteUserAccount({ item }) {
   const [selectItem, setselectItem] = useState(null);
   const { mutateAsync, isPending } = deleteUser();
 
-  // const userId = Cookies.get("userId");
-
   const handleDelete = async () => {
     try {
       await mutateAsync(id);

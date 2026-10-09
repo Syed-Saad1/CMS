@@ -45,14 +45,21 @@ export const CourseCard = ({ item }) => {
               </PopoverTrigger>
 
               <PopoverContent className="w-fit">
-                <div className="flex flex-col justify-center items-center gap-1 bg-transparent">
-                  <Link to={`/courses/edit/${item?._id}`} variant="outline">
-                    Edit
+                <div className="flex flex-col justify-center items-center gap-2 bg-transparent">
+                  <Link to={`/courses/edit/${item?._id}`}>
+                    <Button variant="outline" className={" w-30"}>
+                      Edit
+                    </Button>
+                  </Link>
+                  <Link to={`/courses/assign/${item?._id}`}>
+                    <Button variant="outline" className={" w-30"}>
+                      Assign Course
+                    </Button>
                   </Link>
 
                   <DialogTrigger>
                     <Button
-                      className="bg-destructive/40 hover:bg-destructive/80! text-primary-foreground"
+                      className="bg-destructive hover:bg-destructive/80! text-primary-foreground w-30"
                       onClick={() => setselectItem(item)}
                       variant="ghost"
                     >

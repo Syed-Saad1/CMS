@@ -15,6 +15,7 @@ import CourseDetail from "./container/courses/CourseDetail";
 import UserProfile from "./screens/user/UserProfile";
 import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
 import EditCourseCard from "./container/courses/EditCourseForm";
+import TeacherAssigned from "./components/TeacherAssigned";
 function RoutePack() {
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function RoutePack() {
           <Route path="/user/all-users" element={<AdminUsers />} />
           <Route path="/courses/:id" element={<CourseDetail />} />{" "}
           <Route path="/courses-create" element={<AdminCreateCourse />} />
+          <Route path="/courses/assign/:id" element={<TeacherAssigned />} />
           <Route path="/courses/edit/:id" element={<EditCourseCard />} />
           <Route path="/admin/users/:id" element={<UserView />} />
         </Route>

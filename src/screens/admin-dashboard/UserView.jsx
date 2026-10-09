@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import DeleteUserAccount from "@/components/DeleteUserAccount";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
+import TeacherAssigned from "@/components/TeacherAssigned";
 
 function UserView() {
   const { id } = useParams();

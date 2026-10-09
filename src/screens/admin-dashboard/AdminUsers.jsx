@@ -197,8 +197,18 @@ export const UserDashboard = () => {
                           <img className="size-4" src="/instagram.png" alt="" />
                         </div>
                       </TableCell>
-
-                      <TableCell>21-Sep-2026</TableCell>
+                      <TableCell>
+                        {item?.createdAt
+                          ? new Date(item.createdAt).toLocaleDateString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )
+                          : "----"}
+                      </TableCell>{" "}
                       <TableCell>
                         <Link
                           className="hover:border-b-primary hover:border-b-2 text-xs text-accent-foreground"

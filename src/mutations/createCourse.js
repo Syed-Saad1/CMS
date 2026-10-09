@@ -22,16 +22,7 @@ export const createCourse = () => {
     mutationFn,
 
     onSuccess: () => {
-      // 3. Force-refresh the active course list query.
-      // Replace 'QueryKey.courseList' with your actual course list query key constant!
       queryClient.invalidateQueries({ queryKey: [QueryKey.getCourses] });
     },
   });
 };
-
-let ProductPrice = 190;
-
-let ProductList = ["Shose ", "Shirt ", " Paint"];
-let findListItem = ProductList.shift();
-
-console.log(findListItem);

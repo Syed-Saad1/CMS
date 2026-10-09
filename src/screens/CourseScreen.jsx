@@ -25,7 +25,7 @@ function CourseScreen() {
   });
   return (
     <>
-      <div className="h-full w-full mt-6 mx-6">
+      <div className="h-full w-full mt-12 mx-6">
         <div className="flex justify-between items-end  ">
           <div>
             {" "}

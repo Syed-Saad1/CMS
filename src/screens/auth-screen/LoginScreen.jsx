@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 
 import { Icon } from "@iconify/react";
 import Cookies from "js-cookie";
+import { useLogin } from "@/mutations/useLogin";
 
 const ValidationScheme = Yup.object({
   email: Yup.string()
@@ -31,50 +32,46 @@ const ValidationScheme = Yup.object({
     .required("Password is Required"),
 });
 export const LoginScreen = () => {
-  const [isloading, setLoading] = useState(false);
   const initialValues = {
     email: "",
     password: "",
   };
-  const url = `${import.meta.env.VITE_API_URL}/auth/login`;
-  const token = Cookies.get("token");
-  const role = Cookies.get("role");
-  const userId = Cookies.get("userId");
 
   const navigate = useNavigate();
-  if (token && role === "admin") {
-    return <Navigate to={"/admin/dashboard"} replace />;
-  }
+
+  const { mutateAsync, isPending } = useLogin();
+
   const onSubmit = async (values, { resetForm }) => {
     try {
-      setLoading(true);
-      const response = await axios?.post(url, values, {
-        withCredentials: true,
-      });
-      console.log("Res", response);
-      const role = response?.data?.data?.user?.role;
-      const UserId = response?.data?.data?.user?._id;
+      const payload = {
+        email: values.email,
+        password: values.password,
+      };
+      const response = await mutateAsync(payload);
 
-      console.log("login-role", role);
-      Cookies.set("token", response?.data?.data?.accessToken);
-      Cookies.set("role", role);
-      Cookies.set("userId", UserId);
+      console.log("response", response);
 
-      if (response.status === 200) {
-        if (role === "admin") {
-          navigate("/admin/dashboard", { replace: true });
-        } else if (role === "user") {
-          navigate("/user/dashboard", { replace: true });
+      const userRole = response?.data?.user?.role;
+      const userId = response?.data?.user?._id;
+      const accessToken = response?.data?.accessToken;
+
+      console.log("userRole", { userRole, userId, accessToken });
+
+      if (response?.success === true) {
+        if (userRole === "admin") {
+          navigate("/admin/dashboard");
+        } else if (userRole === "user") {
+          navigate("/user/dashboard");
         }
       }
+      Cookies.set("token", accessToken);
+      Cookies.set("role", userRole);
+      Cookies.set("userId", userId);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error?.message || "Server error occurred");
-      } else {
-        toast.error("Something went wrong");
       }
     } finally {
-      setLoading(false);
       resetForm();
     }
   };
@@ -164,9 +161,16 @@ export const LoginScreen = () => {
                 className="mt-6 w-full bg-primary text-base hover:bg-primary/90 h-12!"
                 type="submit"
                 variant={"default"}
-                disabled={isloading}
+                disabled={isPending}
               >
-                {isloading ? <Icon icon="line-md:loading-loop" /> : "Sign in"}
+                {isPending ? (
+                  <>
+                    {" "}
+                    <Icon icon="line-md:loading-loop" /> Signin...
+                  </>
+                ) : (
+                  "Sign in"
+                )}
               </Button>
               <p className="text-center text-xs md:text-sm text-gray-500 font-medium mt-4 cursor-pointer">
                 Don't have an account?{" "}

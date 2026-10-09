@@ -29,13 +29,13 @@ import axios from "axios";
 import remarkGfm from "remark-gfm";
 export const CourseDetail = () => {
   const { id } = useParams();
-
   const { data, isLoading } = getCourseById(id);
   console.log("Data ", data || "Data is Not Available ");
   const { mutateAsync, isPending } = useEnrollCourse();
   const userId = Cookies.get("userId");
   const payload = {
     userId: userId,
+    courseId: id,
   };
   console.log("Pay", payload);
   const handleEnroll = async () => {
