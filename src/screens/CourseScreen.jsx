@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
 import { Input } from "@/components/ui/input";
+import UpdateAssignedTeacher from "@/components/UpdateAssignedTeacherModal";
 
 function CourseScreen() {
   const [search, setSearch] = useState("");

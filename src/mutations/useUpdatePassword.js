@@ -1,27 +1,42 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryKey } from "@/constant/query";
-import axios from "axios";
 import Cookies from "js-cookie";
+import api from "@/lib/axios.js";
 import toast from "react-hot-toast";
 
 export const useUpdatePassword = (id) => {
   const token = Cookies.get("token");
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (payload) => {
-      const url = `${import.meta.env.VITE_API_URL}/auth/user/updatePassword/${id}`;
-      const { data } = await axios.patch(url, payload, {
+  const mutationFn = async (payload) => {
+    const { data } = await api.patch(
+      `/auth/user/updatePassword/${id}`,
+      payload,
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      return data;
-    },
+      },
+    );
+
+    return data;
+  };
+
+  return useMutation({
+    mutationFn,
+
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKey.getUpdateRole] });
-      queryClient.invalidateQueries({ queryKey: [QueryKey.getUser] });
-      toast.success("Update Password Succesfully");
+      queryClient.invalidateQueries({
+        queryKey: [QueryKey.getUser],
+      });
+
+      toast.success("Password updated successfully");
+    },
+
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message || "Failed to update password",
+      );
     },
   });
 };

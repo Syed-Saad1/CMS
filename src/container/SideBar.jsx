@@ -51,10 +51,22 @@ function SideBar() {
         <button
           onClick={() => {
             Cookies.remove("token");
-            Cookies.remove("role");
             navigation("/auth/login");
+            Cookies.remove("role");
           }}
-          className="text-foreground w-full flex items-center gap-2 px-4 py-2 rounded-sm hover:text-white hover:bg-red-400/60 transition-2s"
+          className=" group flex w-full items-center gap-3
+    rounded-lg px-4 py-3
+    text-sm font-medium
+    text-red-600
+    transition-all duration-200 ease-in-out
+    hover:bg-red-200 hover:text-red-700
+    active:scale-[0.98]
+    focus-visible:outline-none
+    focus-visible:ring-2
+    focus-visible:ring-red-500
+    dark:text-red-400
+    dark:hover:bg-red-950/50
+    dark:hover:text-red-300"
         >
           <Icon className="size-5" icon="ic:baseline-logout" />
           Logout

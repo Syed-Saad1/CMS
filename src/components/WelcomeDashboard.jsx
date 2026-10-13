@@ -6,7 +6,10 @@ import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Skeleton } from "./ui/skeleton";
+import { useTranslation } from "react-i18next";
 function WelcomeDashboard() {
+  const { t } = useTranslation();
+
   const hours = new Date().getHours();
   let greeting = "Good evening";
   const Role = Cookies.get("role");
@@ -58,12 +61,10 @@ function WelcomeDashboard() {
               </CardTitle>{" "}
               <CardDescription className={"text-xl mt-1"}>
                 {" "}
-                Welcome Back, {name}{" "}
+                {t("AdminWel.title")}, {name}{" "}
               </CardDescription>{" "}
               <CardDescription className={"text-sm mt-1 text-muted-foreground"}>
-                {" "}
-                Here's Whats happening with your course managment system today.
-                keep up the great work!{" "}
+                {t("AdminWel.des")}
               </CardDescription>{" "}
               <Link to="/courses">
                 {" "}

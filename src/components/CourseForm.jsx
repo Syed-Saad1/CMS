@@ -39,14 +39,12 @@ const Daysoptions = [
   { value: "Friday", label: "Friday" },
   { value: "Saturday", label: "Saturday" },
 ];
-function CourseForm() {
+function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   const [courseOverview, setCourseOverview] = useState("");
+  const navigate = useNavigate();
   const ImgRef = useRef(null);
-
   const [thumbnail, setThumbnail] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
-
-  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -54,9 +52,6 @@ function CourseForm() {
 
   const { mutateAsync: createCourseMutation, isPending: isCreatePending } =
     createCourse();
-
-  const { mutateAsync: editCourseMutation, isPending: isEditPending } =
-    editCourse(id);
 
   const {
     data: courseData,
@@ -101,6 +96,11 @@ function CourseForm() {
     });
 
   async function onSubmit(values, { resetForm }) {
+    if (isEdit) {
+      await editCourseMutation({ courseId, ...values });
+    } else {
+      await createCourseMutation(values);
+    }
     try {
       const payload = {
         title: values.title,
@@ -115,6 +115,8 @@ function CourseForm() {
         courseTime: values.courseTime.endTime,
       };
       console.log("Payload", payload);
+      toast.success("Course Create Successfully");
+      navigate("/courses");
       await editCourseMutation(payload);
       toast.success("Update User Data Successfully");
       const formData = new FormData();
@@ -147,10 +149,6 @@ function CourseForm() {
         formData.append("thumbnail", values.thumbnail);
       }
 
-      console.log("MODE:", isEdit ? "EDIT" : "CREATE");
-
-      console.log("ID:", id);
-
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
       }
@@ -176,20 +174,7 @@ function CourseForm() {
       if (ImgRef.current) {
         ImgRef.current.value = "";
       }
-
-      navigate("/courses");
-    } catch (error) {
-      console.error(
-        isEdit ? "Update Course Error:" : "Create Course Error:",
-        error,
-      );
-
-      console.error("STATUS:", error?.response?.status);
-
-      console.error("DATA:", error?.response?.data);
-
-      toast.error(error?.response?.data?.message || "Something Went Wrong");
-    }
+    } catch (error) {}
   }
 
   const handleThumbnailFile = (file) => {
@@ -486,7 +471,6 @@ Describe what students will learn in this course...
                   Cancel
                 </Button>
               </Link>
-
               <Button
                 type="submit"
                 variant="button"
@@ -496,22 +480,16 @@ Describe what students will learn in this course...
                 {isPending ? (
                   <>
                     <Loader className="size-4 animate-spin" />
-
-                    {location.pathname === "/courses/edit/:id"
-                      ? "Updating..."
-                      : "Creating..."}
+                    {isEdit ? "Updating..." : "Creating..."}
                   </>
                 ) : (
                   <>
-                    {location.pathname === "/courses/edit/:id" ? (
+                    {isEdit ? (
                       <Save className="size-4" />
                     ) : (
                       <Plus className="size-4" />
                     )}
-
-                    {location.pathname === "/courses/edit/:id"
-                      ? "Update Course"
-                      : "Create Course"}
+                    {isEdit ? "Update Course" : "Create Course"}
                   </>
                 )}
               </Button>

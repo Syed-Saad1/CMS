@@ -65,7 +65,6 @@ export const UserDashboard = () => {
         </div>
         <div className="flex gap-3">
           <Button variant={"button"} className="text-[13px]  py-4">
-            {" "}
             <ListSortAscending /> Filter
           </Button>
         </div>
@@ -222,9 +221,14 @@ export const UserDashboard = () => {
                   );
                 })
               ) : (
-                <div className="text-red-700 font-bold text-2xl w-full mt-4">
-                  User Data Not Found
-                </div>
+                <TableRow>
+                  <TableCell
+                    colSpan={7}
+                    className="h-24 text-center text-muted-foreground font-bold text-lg"
+                  >
+                    User Data Not Found
+                  </TableCell>
+                </TableRow>
               )}
             </TableBody>
           )}

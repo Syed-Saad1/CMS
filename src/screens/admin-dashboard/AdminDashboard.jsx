@@ -16,7 +16,6 @@ import RecentlyAddedCourse from "@/components/RecentlyAddedCourse";
 
 import {
   ArrowUp,
-  ArrowUpAZ,
   CopyCheck,
   FileText,
   GraduationCap,
@@ -131,9 +130,9 @@ export function AdminDashboard() {
                   bg-card
                   flex
                   items-start
-                  px-2
+                  px-2 py-2
                   pt-2
-                  h-28
+                  h-fit
                   gap-1.5
                   w-full
                   overflow-hidden
@@ -161,7 +160,7 @@ export function AdminDashboard() {
                       </CardTitle>
                       <h1 className="text-accent-foreground w-fit flex pl-2 mt-2">
                         <ArrowUp className="size-4" />
-                        <span className="p-0.5 text-xs rounded-full text-success-foreground bg-success">
+                        <span className="size-6 flex justify-center items-center  p-1 text-xs rounded-full text-success-foreground bg-success">
                           12%
                         </span>
                       </h1>

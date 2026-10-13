@@ -13,20 +13,21 @@ import {
 } from "./ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { RoleBadge } from "./RoleBadge";
-import { Icon } from "@iconify/react";
 import { StatusBadge } from "./ui/status";
+import { useTranslation } from "react-i18next";
 
 function RecentlyAddedUsers({ UserLoading, userData }) {
+  const { t } = useTranslation();
   return (
     <div>
       {" "}
-      <Card className="block! h-88! w-full rounded-xl p-4 mb-5">
+      <Card className="block! h-fit! w-full rounded-xl p-4 mb-5">
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
             <User className="text-primary size-6" strokeWidth={1.4} />
-            Recently Added Users
+            {t("RecentAddedUser.title", { defaultValue: "Title" })}
           </h1>
           <Link
             to={"/admin/users"}
@@ -71,74 +72,87 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
               </TableBody>
             ) : (
               <TableBody>
-                {userData?.slice(0, 6).map((item) => {
-                  const IntialFirst = item?.firstName
-                    ?.trim()
-                    .charAt(0)
-                    .toUpperCase();
+                {userData.length ? (
+                  userData?.slice(0, 5).map((item) => {
+                    const IntialFirst = item?.firstName
+                      ?.trim()
+                      .charAt(0)
+                      .toUpperCase();
 
-                  const LastFirst = item?.lastName
-                    ?.trim()
-                    .charAt(0)
-                    .toUpperCase();
+                    const LastFirst = item?.lastName
+                      ?.trim()
+                      .charAt(0)
+                      .toUpperCase();
 
-                  return (
-                    <TableRow key={item?._id}>
-                      <TableCell className="pl-2">
-                        <div className="flex items-center gap-2">
-                          <div className="flex size-8 justify-center items-center">
-                            {item?.avatar ? (
-                              <img
-                                className="size-full rounded-full object-cover"
-                                src={item.avatar}
-                                alt={`${item?.firstName} ${item?.lastName}`}
-                              />
-                            ) : (
-                              <h1 className="size-full text-xs flex justify-center items-center bg-muted rounded-full">
-                                {IntialFirst}
-                                {LastFirst}
-                              </h1>
-                            )}
+                    return (
+                      <TableRow key={item?._id}>
+                        <TableCell className="pl-2">
+                          <div className="flex items-center gap-2">
+                            <div className="flex size-8 justify-center items-center">
+                              {item?.avatar ? (
+                                <img
+                                  className="size-full rounded-full object-cover"
+                                  src={item.avatar}
+                                  alt={`${item?.firstName} ${item?.lastName}`}
+                                />
+                              ) : (
+                                <h1 className="size-full text-xs flex justify-center items-center bg-muted rounded-full">
+                                  {IntialFirst}
+                                  {LastFirst}
+                                </h1>
+                              )}
+                            </div>
+
+                            <div className="flex flex-col">
+                              <Tooltip>
+                                <TooltipTrigger
+                                  render={
+                                    <span className="py-0 pl-0 text-sm">
+                                      {item?.firstName} {item?.lastName}
+                                    </span>
+                                  }
+                                />
+
+                                <TooltipContent className="flex flex-col">
+                                  <CardTitle>Course Enrollments</CardTitle>
+
+                                  {item?.enrolledCourses?.map(
+                                    (course, index) => (
+                                      <p className="max-w-30" key={index}>
+                                        {course}
+                                      </p>
+                                    ),
+                                  )}
+                                </TooltipContent>
+                              </Tooltip>
+
+                              <span className="text-xs text-muted-foreground">
+                                {item?.email || "---"}
+                              </span>
+                            </div>
                           </div>
+                        </TableCell>
 
-                          <div className="flex flex-col">
-                            <Tooltip>
-                              <TooltipTrigger
-                                render={
-                                  <span className="py-0 pl-0 text-sm">
-                                    {item?.firstName} {item?.lastName}
-                                  </span>
-                                }
-                              />
+                        <TableCell>
+                          <RoleBadge role={item?.role} />
+                        </TableCell>
 
-                              <TooltipContent className="flex flex-col">
-                                <CardTitle>Course Enrollments</CardTitle>
-
-                                {item?.enrolledCourses?.map((course, index) => (
-                                  <p className="max-w-30" key={index}>
-                                    {course}
-                                  </p>
-                                ))}
-                              </TooltipContent>
-                            </Tooltip>
-
-                            <span className="text-xs text-muted-foreground">
-                              {item?.email || "---"}
-                            </span>
-                          </div>
-                        </div>
-                      </TableCell>
-
-                      <TableCell>
-                        <RoleBadge role={item?.role} />
-                      </TableCell>
-
-                      <TableCell>
-                        <StatusBadge status="active" />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                        <TableCell>
+                          <StatusBadge status="active" />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={7}
+                      className="h-24 text-center text-muted-foreground font-bold text-sm"
+                    >
+                      User Data Not Found
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             )}
           </Table>

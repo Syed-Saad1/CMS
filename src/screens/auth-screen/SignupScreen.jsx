@@ -19,6 +19,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { cn } from "@/lib/utils";
+import { useSignup } from "@/mutations/useSignup";
 
 const ValidationScheme = Yup.object({
   firstName: Yup.string()
@@ -41,7 +42,8 @@ const ValidationScheme = Yup.object({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 export const SignupScreen = () => {
-  const [isloading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -49,15 +51,13 @@ export const SignupScreen = () => {
     password: "",
     confrimpassword: "",
   };
-  const url = `${import.meta.env.VITE_API_URL}/auth/register`;
+  const { mutateAsync, isPending } = useSignup();
   const token = Cookies.get("token");
   if (token) {
     return <Navigate to={"/admin/dashboard"} replace />;
   }
-  const navigate = useNavigate();
   const onSubmit = async (values, { resetForm }) => {
     try {
-      setIsLoading(true);
       const payload = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -65,7 +65,7 @@ export const SignupScreen = () => {
         password: values.password,
       };
 
-      const response = await axios.post(url, values);
+      const response = await mutateAsync(payload);
       if (response?.data?.success === false) {
         toast.error(response?.data?.message || "Registration failed");
         return;
@@ -90,8 +90,6 @@ export const SignupScreen = () => {
       } else {
         toast.error("Something went wrong");
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -212,9 +210,9 @@ export const SignupScreen = () => {
               type="submit"
               className="mt-6 w-full bg-[#180289] text-base hover:bg-blue-900 h-12!"
               variant={"default"}
-              disabled={isloading}
+              disabled={isPending}
             >
-              {isloading ? (
+              {isPending ? (
                 <Icon icon="line-md:loading-loop" />
               ) : (
                 "Create Account"

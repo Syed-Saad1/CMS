@@ -30,7 +30,6 @@ import remarkGfm from "remark-gfm";
 export const CourseDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = getCourseById(id);
-  console.log("Data ", data || "Data is Not Available ");
   const { mutateAsync, isPending } = useEnrollCourse();
   const userId = Cookies.get("userId");
   const payload = {
@@ -125,12 +124,17 @@ export const CourseDetail = () => {
                 alt="thumbnail"
               />
 
-              <div className="cursor-pointer absolute top-1 left-1 text-[14px] px-4 py-1 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-primary/80 text-primary-foreground/90">
-                {data?.data?.tags}
+              <div className="cursor-pointer absolute top-1 left-1 text-[14px] px-4 py-2 rounded-2xl w-fit z-40 font-semibold shadow-2xl bg-primary/80 text-primary-foreground/90 flex whitespace-nowrap  gap-x-1">
+                {data?.data?.tags?.map((item, index) => (
+                  <span key={index}>
+                    {item}
+                    {index < data?.data?.tags?.length - 1 ? "," : ""}
+                  </span>
+                ))}
               </div>
 
               <DialogTrigger
-                className="absolute top-0 right-0 z-50
+                className="absolute top-1 right-1 z-50
                group-hover:opacity-100 opacity-0
                bg-destructive hover:bg-destructive/90
                inline-flex items-center gap-2

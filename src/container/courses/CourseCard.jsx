@@ -21,7 +21,7 @@ export const CourseCard = ({ item }) => {
     <Dialog>
       <Card
         key={item?._id}
-        className="h-70 rounded-xl shadow-xl border border-border w-full flex flex-col gap-2"
+        className="h-fit pb-2 rounded-xl border border-border w-full flex flex-col gap-2"
       >
         <div className="group relative h-32 bg-accent overflow-hidden">
           <img
@@ -34,7 +34,7 @@ export const CourseCard = ({ item }) => {
               <PopoverTrigger
                 asChild
                 className="
-                  absolute -top-0.5 -right-0.5
+                  absolute top-0.5 right-0.5
                   rounded-lg
                   opacity-0 group-hover:opacity-100
                 "
@@ -73,13 +73,11 @@ export const CourseCard = ({ item }) => {
         </div>
 
         <div className="flex flex-col pl-2">
-          <Link to={`${item?._id}`} className="w-full">
-            <CardTitle className="text-lg mt-2 leading-5 hover:underline hover:text-primary line-clamp-1">
-              {item?.title}
-            </CardTitle>
-          </Link>
+          <CardTitle className="text-lg mt-2  line-clamp-1 truncate">
+            {item?.title}
+          </CardTitle>
 
-          <CardDescription className="text-xs mt-2 line-clamp-2">
+          <CardDescription className="text-xs min-h-8 mt-2 line-clamp-2">
             {item?.description}
           </CardDescription>
 

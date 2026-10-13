@@ -10,6 +10,8 @@ import {
   ChevronDown,
   Clock,
   IdCardLanyard,
+  Pencil,
+  Trash,
   User,
   UserRoundCheck,
   UserRoundCog,
@@ -33,6 +35,10 @@ import {
 } from "./ui/dropdown-menu";
 import { useCreateAssigment } from "@/mutations/useCreateAssigment";
 import toast from "react-hot-toast";
+import UpdateAssignedTeacher from "./UpdateAssignedTeacherModal";
+import TeacherListDropDown from "./TeacherListDropDown";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import DeleteTeacherAssignedModal from "./DeleteTeacherAssignedModal";
 function TeacherAssigned() {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   console.log("Set", selectedTeacher);
@@ -129,17 +135,19 @@ function TeacherAssigned() {
             <hr className="mt-4 text-muted-foreground h-2 w-full" />
             <div className="flex gap-2 justify-start items-start mt-2">
               {" "}
-              <div className="bg-primary/70 rounded-xl flex justify-center items-center size-22 ">
+              <div className="bg-primary/40 rounded-sm flex justify-center items-center size-22 ">
                 <img
-                  className="h-14 w-18 object-cover "
+                  className="h-18 w-20 object-cover rounded-lg"
                   src={Data?.thumbnail || "/DeafultThumbinal.png"}
                   alt=""
                 />
               </div>
-              <div className="flex flex-col">
-                <CardTitle className={"text-lg font-bold line-clamp-1"}>
-                  {Data?.title || "CourseName"}
-                </CardTitle>
+              <div className="flex justify-center items-center gap-1">
+                <div className="max-w-60 flex-1 ">
+                  <CardTitle className="truncate  text-lg font-normal">
+                    {Data?.title || "CourseName"}{" "}
+                  </CardTitle>
+                </div>
                 <div className="cursor-pointer mt-1  text-[14px] px-4 py-1 rounded-2xl w-fit  font-semibold shadow-2xl bg-primary/35 text-primary-foreground">
                   {Data?.tags}
                 </div>
@@ -202,50 +210,13 @@ function TeacherAssigned() {
               Selected the teacher from this course available teachers
             </CardDescription>
             <CardTitle className={"mt-6 mb-2"}>Teacher</CardTitle>
-            <div className="w-full">
-              <DropdownMenu>
-                {" "}
-                <DropdownMenuTrigger
-                  render={<Button variant="outline" />}
-                  className="flex w-full justify-between px-2"
-                >
-                  {" "}
-                  {selectedTeacher
-                    ? `${selectedTeacher?.firstName} ${selectedTeacher?.lastName}`
-                    : "Select Teacher"}{" "}
-                  <ChevronDown className="ml-2 size-4" />
-                </DropdownMenuTrigger>{" "}
-                <DropdownMenuContent>
-                  {" "}
-                  <DropdownMenuGroup>
-                    {" "}
-                    {TeacherData?.map((item) => {
-                      return (
-                        <div>
-                          <DropdownMenuItem
-                            key={item.id}
-                            onClick={() => setSelectedTeacher(item)}
-                          >
-                            {" "}
-                            <img
-                              src={item?.avatar}
-                              className="size-5 rounded-full object-cover"
-                              alt={item?.firstName}
-                            />{" "}
-                            <CardTitle>
-                              {" "}
-                              {item?.firstName} {item?.lastName}
-                            </CardTitle>{" "}
-                          </DropdownMenuItem>{" "}
-                        </div>
-                      );
-                    })}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>{" "}
-              </DropdownMenu>
-            </div>
+            <TeacherListDropDown
+              selectedTeacher={selectedTeacher}
+              TeacherData={TeacherData}
+              setSelectedTeacher={setSelectedTeacher}
+            />
 
-            <div className="bg-primary/15 h-26 px-3 py-2 w-full mt-4 rounded-xl">
+            <div className="bg-primary/15 h-26 px-3 py-2 w-full mt-6 rounded-xl">
               <CardTitle className={"text-lg"}>Selected Teacher</CardTitle>
               <Card
                 key={selectedTeacher?.id}
@@ -277,7 +248,7 @@ function TeacherAssigned() {
                 </div>
               </Card>
             </div>
-            <div>
+            <div className="mt-6 flex gap-2 items-center">
               <Link to={"/courses"}>
                 <Button variant="outline">
                   <X />
@@ -291,8 +262,8 @@ function TeacherAssigned() {
           </div>
         </Card>
       </div>
-      <div className="grid grid-cols-[58%_38%]  w-full mt-8">
-        <div className="p-4 h-fit w-full rounded-xl bg-card mb-4">
+      <div className="grid grid-cols-[58%_38%] gap-4  w-full mt-8">
+        <div className="p-4 h-fit w-full rounded-xl bg-card mb-6">
           <CardTitle>Available Teacher</CardTitle>
           <CardDescription>
             Here's are a list of teacher's you can assign this Course
@@ -327,12 +298,19 @@ function TeacherAssigned() {
                         </h1>
                       )}
                     </div>
-                    <CardTitle className={"text-sm line-clamp-1 mt-1"}>
-                      {item?.firstName} {item?.lastName}
-                    </CardTitle>
-                    <CardDescription className={"text-xs"}>
-                      {item?.email}
-                    </CardDescription>
+                    <div className="mt-2">
+                      <div className="min-w-0 ">
+                        <CardTitle className="truncate text-sm font-medium">
+                          {item?.firstName} {item?.lastName}{" "}
+                        </CardTitle>
+                      </div>
+                      <div className="min-w-0 ">
+                        <CardDescription className="truncate text-sm font-medium">
+                          {item?.email}
+                        </CardDescription>
+                      </div>
+                    </div>
+
                     <div
                       className="bg-green-100 dark:bg-green-800/20 text-green-700 hover:bg-green-100 w-fit py-0.5 px-2 rounded-xl mt-1
                   "
@@ -352,7 +330,72 @@ function TeacherAssigned() {
             })}
           </div>
         </div>
-        <div className="w-full"></div>
+        <div className="w-full h-fit p-4 bg-card rounded-xl">
+          <CardTitle>Manage Teacher Assignments</CardTitle>
+          <CardDescription className={"text-xs"}>
+            View currently assigned teachers, update assignments, or remove.
+          </CardDescription>
+          <hr className="mt-5" />
+          <Card className={"flex flex-col"} key={selectedTeacher?.id}>
+            <div className="flex justify-start items-start mt-4 gap-4">
+              <div className="flex size-12 justify-center items-center ">
+                {selectedTeacher?.avatar ? (
+                  <img
+                    className="size-full rounded-full object-cover "
+                    src={selectedTeacher?.avatar}
+                  />
+                ) : (
+                  <div className="bg-accent size-12 rounded-full flex items-center justify-center">
+                    <UserRoundCheck className="size-6" />
+                  </div>
+                )}
+              </div>{" "}
+              <div>
+                <CardDescription>
+                  {selectedTeacher?.firstName || "No Teacher Selected"}
+                  {selectedTeacher?.lastName || ""}
+                </CardDescription>
+                <CardDescription>
+                  {selectedTeacher?.email ||
+                    "Please Choose a teacher from a dropdown"}
+                </CardDescription>
+              </div>
+            </div>
+            <div className="mt-6 flex gap-2 items-center">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="button">
+                    <Pencil />
+                    Change Teacher
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent className={"max-w-118! shrink-0 h-140!"}>
+                  <UpdateAssignedTeacher
+                    TeacherData={TeacherData}
+                    setSelectedTeacher={setSelectedTeacher}
+                    selectedTeacher={selectedTeacher}
+                    Data={Data}
+                  />
+                </DialogContent>
+              </Dialog>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button type="submit" variant="destructive">
+                    <Trash />
+                    Remove Assigned
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DeleteTeacherAssignedModal
+                    selectedTeacher={selectedTeacher}
+                    Data={Data}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   );

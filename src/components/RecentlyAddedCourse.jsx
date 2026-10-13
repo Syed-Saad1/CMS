@@ -23,7 +23,7 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
   return (
     <div>
       {" "}
-      <Card className="block! h-fit w-full rounded-xl p-4 mb-5">
+      <Card className="block! h-fit w-full rounded-xl p-3 mb-5">
         <div className="w-full flex justify-between items-center">
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
@@ -94,13 +94,7 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
                     <TableRow key={item?.id}>
                       <TableCell>
                         <div className="flex min-w-0 items-center gap-2">
-                          <img
-                            src={item?.thumbnail || "/DeafultThumbinal.png"}
-                            className="h-12 w-14 shrink-0 rounded-lg object-contain"
-                            alt={item?.title}
-                          />
-
-                          <CardTitle className="min-w-0 flex-1 line-clamp-2 whitespace-normal text-xs leading-4">
+                          <CardTitle className="min-w-0 flex-1 line-clamp-2 whitespace-normal text-sm  truncate">
                             {item?.title}
                           </CardTitle>
                         </div>

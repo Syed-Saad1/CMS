@@ -43,10 +43,6 @@ export const editCourse = (id) => {
 
   return useMutation({
     mutationFn: async (payload) => {
-      if (!id) {
-        throw new Error("Course ID is missing");
-      }
-
       const token = Cookies.get("token");
 
       const url = `${import.meta.env.VITE_API_URL}/course/update/${id}`;
