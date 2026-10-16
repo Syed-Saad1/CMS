@@ -14,6 +14,7 @@ import { Button } from "./ui/button";
 
 import { Loader } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
+import { useTranslation } from "react-i18next";
 function AllUserUpdateProfile({
   values,
   errors,
@@ -21,6 +22,7 @@ function AllUserUpdateProfile({
   isUpdating,
   isLoading,
 }) {
+  const { t } = useTranslation();
   return (
     <div>
       {isLoading ? (
@@ -60,7 +62,7 @@ function AllUserUpdateProfile({
         <div>
           <Card className="flex flex-col w-full h-76! gap-y-4 px-6 py-6 pb-4">
             <div>
-              <CardTitle className={"text-lg"}>Personal Information</CardTitle>
+              <CardTitle className={"text-lg"}>{t("ui.personalInfo")}</CardTitle>
 
               <CardDescription className="mt-1">
                 Update your basic profile details and contact information.
@@ -72,7 +74,7 @@ function AllUserUpdateProfile({
             <CardContent className="mt-2">
               <div className="grid grid-cols-2 items-center gap-4">
                 <Field>
-                  <Label htmlFor="firstName">First Name:</Label>
+                  <Label htmlFor="firstName">{t("ui.firstName")}</Label>
 
                   <Input
                     id="firstName"
@@ -91,7 +93,7 @@ function AllUserUpdateProfile({
                 </Field>
 
                 <Field>
-                  <Label htmlFor="lastName">Last Name:</Label>
+                  <Label htmlFor="lastName">{t("ui.lastName")}</Label>
 
                   <Input
                     id="lastName"
@@ -105,7 +107,7 @@ function AllUserUpdateProfile({
               </div>
 
               <Field className="mt-4">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("ui.email")}</Label>
 
                 <Input
                   id="email"

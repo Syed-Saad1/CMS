@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { Skeleton } from "./ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 const options = [
   { value: "Programing", label: "Programing" },
@@ -40,6 +41,7 @@ const Daysoptions = [
   { value: "Saturday", label: "Saturday" },
 ];
 function CourseForm({ isEditPending, editCourseMutation, courseId }) {
+  const { t } = useTranslation();
   const [courseOverview, setCourseOverview] = useState("");
   const navigate = useNavigate();
   const ImgRef = useRef(null);
@@ -78,11 +80,11 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   };
 
   const ValidationScheme = Yup.object({
-    title: Yup.string().trim().required("Course Title is Required"),
+    title: Yup.string().trim().required(t("ui.courseTitleRequired")),
 
-    description: Yup.string().trim().required("Course Description is Required"),
+    description: Yup.string().trim().required(t("ui.courseDescriptionRequired")),
 
-    price: Yup.string().required("Course Price is Required"),
+    price: Yup.string().required(t("ui.coursePriceRequired")),
   });
 
   const { errors, values, handleChange, handleSubmit, setFieldValue } =
@@ -114,11 +116,10 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
         courseTime: values.courseTime.startTime,
         courseTime: values.courseTime.endTime,
       };
-      console.log("Payload", payload);
-      toast.success("Course Create Successfully");
+      toast.success(t("ui.courseCreateSuccess"));
       navigate("/courses");
       await editCourseMutation(payload);
-      toast.success("Update User Data Successfully");
+      toast.success(t("ui.userUpdated"));
       const formData = new FormData();
 
       formData.append("tags", JSON.stringify(values.tags || []));
@@ -150,17 +151,16 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
       }
 
       for (const [key, value] of formData.entries()) {
-        console.log(key, value);
       }
 
       if (isEdit) {
         await editCourseMutation(formData);
 
-        toast.success("Course Updated Successfully");
+        toast.success(t("ui.courseUpdateSuccess"));
       } else {
         await createCourseMutation(formData);
 
-        toast.success("Course Created Successfully");
+        toast.success(t("ui.courseCreateSuccess"));
       }
 
       resetForm();
@@ -183,14 +183,14 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
 
     if (!allowedTypes.includes(file.type)) {
-      alert("Only PNG, JPG, JPEG or WEBP images are allowed.");
+      alert(t("ui.imageTypes"));
       return;
     }
 
     const maxSize = 5 * 1024 * 1024;
 
     if (file.size > maxSize) {
-      alert("Image size must be less than 5MB.");
+      alert(t("ui.imageSize"));
       return;
     }
 
@@ -357,7 +357,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 className={"mt-2"}
                 type="text"
                 id="Tit"
-                placeholder="e.g., Introduction to Advanced Calculus"
+                placeholder={t("ui.titleExample")}
               />
 
               {errors?.title && (
@@ -376,7 +376,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 id="des"
                 name="description"
                 className="mt-2 text-xs h-24! overflow-x-scroll overflow-y-scroll"
-                placeholder="Provide a detailed overview of the curriculum and learning objectives..."
+                placeholder={t("ui.descriptionExample")}
               />
 
               {errors?.description && (
@@ -395,7 +395,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                   id="Pri"
                   onChange={handleChange}
                   name="price"
-                  placeholder="e.g. 500"
+                  placeholder={t("ui.priceExample")}
                   type="number"
                   className="h-8 mt-2"
                 />
@@ -497,7 +497,7 @@ Describe what students will learn in this course...
           </Card>
           <div>
             <Card className="flex flex-col py-8 px-6 h-fit">
-              <CardTitle className="text-xl">Course Thumbnail</CardTitle>
+              <CardTitle className="text-xl">{t("ui.courseThumbnail")}</CardTitle>
 
               <div className="space-y-2 mt-6">
                 <div

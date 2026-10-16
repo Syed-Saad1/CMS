@@ -5,48 +5,38 @@ import Cookies from "js-cookie";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowBigUpDash,
-  ArrowDown,
   ChartBarStacked,
-  ChevronDown,
   Clock,
   IdCardLanyard,
   Pencil,
   Trash,
-  User,
   UserRoundCheck,
   UserRoundCog,
-  WavesArrowUp,
   X,
 } from "lucide-react";
 import { Label } from "./ui/label";
 import { Skeleton } from "./ui/skeleton";
-import { useGetUser } from "@/query/useGetUser";
-import { StatusBadge } from "./ui/status";
 import { Button } from "./ui/button";
-import MultiSelect from "@/container/MultiSelect";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { useCreateAssigment } from "@/mutations/useCreateAssigment";
 import toast from "react-hot-toast";
 import UpdateAssignedTeacher from "./UpdateAssignedTeacherModal";
-import TeacherListDropDown from "./TeacherListDropDown";
+import TeacherListDropDown from "./CreateTeacherListDropDown";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import DeleteTeacherAssignedModal from "./DeleteTeacherAssignedModal";
+import { getAllTeacher } from "@/query/getAllTeacher";
+import { useTranslation } from "react-i18next";
+import { ScrollArea } from "./ui/scroll-area";
 function TeacherAssigned() {
+  const { t } = useTranslation();
+  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
+
+  console.log("selectedTeacherId", selectedTeacherId);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
-  console.log("Set", selectedTeacher);
   const { id } = useParams();
   const { data, isLoading } = getCourseById(id);
   const Data = data?.data;
-  const { data: UserData } = useGetUser();
-  const TeacherData = UserData?.data?.filter((Role) => Role.role === "teacher");
+  const { data: UserData } = getAllTeacher();
+  const TeacherData = UserData?.data;
   const { mutateAsync } = useCreateAssigment(id);
   const payload = {
     courseId: id,
@@ -55,16 +45,16 @@ function TeacherAssigned() {
   const Submit = async () => {
     try {
       await mutateAsync(payload);
-      toast.success("Assigned Course Successfully");
+      toast.success(t("ui.assignSuccess"));
     } catch (error) {
-      toast.error("Assigned Course Something Wen't Wrong");
+      toast.error(t("ui.assignFailure"));
     }
   };
 
   return (
     <div className="p-6 w-full flex-col justify-start items-start flex h-full">
-      <CardTitle className={"text-xl"}>Assigne Course Teacher</CardTitle>
-      <CardDescription>Assign a teacher to this Course</CardDescription>
+      <CardTitle className={"text-xl"}>{t("ui.teacherTitle")}</CardTitle>
+      <CardDescription>{t("ui.assignTeacherDescription")}</CardDescription>
       <div className="grid grid-cols-[58%_38%] w-full gap-4 mt-4">
         {isLoading ? (
           <Card className="h-100 p-4 flex flex-col">
@@ -131,7 +121,9 @@ function TeacherAssigned() {
           </Card>
         ) : (
           <Card className={"h-100 p-4 flex flex-col"}>
-            <CardTitle className={"text-xl"}>Course Information</CardTitle>
+            <CardTitle className={"text-xl"}>
+              {t("ui.courseInformation")}
+            </CardTitle>
             <hr className="mt-4 text-muted-foreground h-2 w-full" />
             <div className="flex gap-2 justify-start items-start mt-2">
               {" "}
@@ -158,7 +150,7 @@ function TeacherAssigned() {
               <div className="flex items-center gap-4 ">
                 <div className=" flex justify-center gap-0.5 items-center">
                   <IdCardLanyard className="size-5 shrink-0" />
-                  <Label className={"min-w-18 w-18"}>Course ID:</Label>
+                  <Label className={"min-w-18 w-18"}>{t("ui.courseId")}</Label>
                 </div>
                 <CardDescription>
                   course_{Data?._id.toUpperCase().slice(0, 10)}
@@ -167,21 +159,21 @@ function TeacherAssigned() {
               <div className="flex items-center gap-4 ">
                 <div className=" flex justify-center gap-0.5 items-center">
                   <ChartBarStacked className="size-5 shrink-0" />
-                  <Label className={"min-w-18 w-18"}>Category:</Label>
+                  <Label className={"min-w-18 w-18"}>{t("ui.category")}</Label>
                 </div>
                 <CardDescription>{Data?.tags}</CardDescription>
               </div>
               <div className=" flex items-center gap-4 ">
                 <div className=" flex justify-center gap-0.5 items-center">
                   <ArrowBigUpDash className="size-5 shrink-0" />
-                  <Label className={"min-w-18 w-18"}>Level:</Label>
+                  <Label className={"min-w-18 w-18"}>{t("ui.level")}</Label>
                 </div>
-                <CardDescription>Begginer to Advance</CardDescription>
+                <CardDescription>{t("ui.beginnerAdvanced")}</CardDescription>
               </div>
               <div className="flex items-center gap-4 ">
                 <div className=" flex justify-center gap-0.5 items-center">
                   <Clock className="size-5 shrink-0" />
-                  <Label className={"min-w-18 w-18"}>Duration:</Label>
+                  <Label className={"min-w-18 w-18"}>{t("ui.duration")}</Label>
                 </div>
                 <CardDescription>
                   {Data?.courseDuration?.value
@@ -191,7 +183,7 @@ function TeacherAssigned() {
               </div>
             </div>
             <hr className="my-2 text-muted-foreground h-2 w-full" />
-            <Label className={"text-lg "}>Course Description</Label>
+            <Label className={"text-lg "}>{t("ui.courseDescription")}</Label>
             <CardDescription className={"min-h-15 h-12 line-clamp-3"}>
               {Data?.description || "Description is Not Define "}
             </CardDescription>
@@ -202,14 +194,16 @@ function TeacherAssigned() {
             <div className="flex gap-2">
               <UserRoundCog />
               <div className="w-full">
-                <CardTitle className={"text-xl"}>Assign Teacher</CardTitle>
+                <CardTitle className={"text-xl"}>
+                  {t("ui.teacherTitle")}
+                </CardTitle>
                 <hr className="mt-4 text-muted-foreground h-2 w-full" />
               </div>
             </div>
             <CardDescription>
               Selected the teacher from this course available teachers
             </CardDescription>
-            <CardTitle className={"mt-6 mb-2"}>Teacher</CardTitle>
+            <CardTitle className={"mt-6 mb-2"}>{t("ui.teacher")}</CardTitle>
             <TeacherListDropDown
               selectedTeacher={selectedTeacher}
               TeacherData={TeacherData}
@@ -217,7 +211,9 @@ function TeacherAssigned() {
             />
 
             <div className="bg-primary/15 h-26 px-3 py-2 w-full mt-6 rounded-xl">
-              <CardTitle className={"text-lg"}>Selected Teacher</CardTitle>
+              <CardTitle className={"text-lg"}>
+                {t("ui.selectedTeacher")}
+              </CardTitle>
               <Card
                 key={selectedTeacher?.id}
                 className={
@@ -264,7 +260,7 @@ function TeacherAssigned() {
       </div>
       <div className="grid grid-cols-[58%_38%] gap-4  w-full mt-8">
         <div className="p-4 h-fit w-full rounded-xl bg-card mb-6">
-          <CardTitle>Available Teacher</CardTitle>
+          <CardTitle>{t("ui.availableTeacher")}</CardTitle>
           <CardDescription>
             Here's are a list of teacher's you can assign this Course
           </CardDescription>
@@ -330,72 +326,111 @@ function TeacherAssigned() {
             })}
           </div>
         </div>
-        <div className="w-full h-fit p-4 bg-card rounded-xl">
-          <CardTitle>Manage Teacher Assignments</CardTitle>
+        <ScrollArea
+          orientation="vertically"
+          className={"h-72 bg-card max-h-72 p-4  rounded-xl"}
+        >
+          <CardTitle>{t("ui.manageAssignments")}</CardTitle>
           <CardDescription className={"text-xs"}>
             View currently assigned teachers, update assignments, or remove.
           </CardDescription>
           <hr className="mt-5" />
-          <Card className={"flex flex-col"} key={selectedTeacher?.id}>
-            <div className="flex justify-start items-start mt-4 gap-4">
-              <div className="flex size-12 justify-center items-center ">
-                {selectedTeacher?.avatar ? (
-                  <img
-                    className="size-full rounded-full object-cover "
-                    src={selectedTeacher?.avatar}
-                  />
-                ) : (
-                  <div className="bg-accent size-12 rounded-full flex items-center justify-center">
-                    <UserRoundCheck className="size-6" />
+          <div className="grid gap-4 grid-rows-4  mt-4">
+            {" "}
+            {Data?.teacherAssignments?.map((item) => {
+              console.log("item", item);
+              const teacher = item?.teacher;
+              return (
+                <Card
+                  className={"flex flex-col bg-muted/40 p-2"}
+                  key={teacher?.id}
+                >
+                  <div className="flex justify-start items-start mt-4 gap-4">
+                    <div className="flex size-12 justify-center items-center ">
+                      {teacher?.avatar ? (
+                        <img
+                          className="size-full rounded-full object-cover "
+                          src={teacher?.avatar}
+                        />
+                      ) : (
+                        <div className="bg-accent size-12 rounded-full flex items-center justify-center">
+                          <UserRoundCheck className="size-6" />
+                        </div>
+                      )}
+                    </div>{" "}
+                    <div>
+                      <CardDescription>
+                        {teacher?.firstName || "No Teacher Selected"}
+                        {teacher?.lastName || ""}
+                      </CardDescription>
+                      <CardDescription>
+                        {teacher?.email ||
+                          "Please Choose a teacher from a dropdown"}
+                      </CardDescription>
+                    </div>
                   </div>
-                )}
-              </div>{" "}
-              <div>
-                <CardDescription>
-                  {selectedTeacher?.firstName || "No Teacher Selected"}
-                  {selectedTeacher?.lastName || ""}
-                </CardDescription>
-                <CardDescription>
-                  {selectedTeacher?.email ||
-                    "Please Choose a teacher from a dropdown"}
-                </CardDescription>
-              </div>
-            </div>
-            <div className="mt-6 flex gap-2 items-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="button">
-                    <Pencil />
-                    Change Teacher
-                  </Button>
-                </DialogTrigger>
+                  <div className="mt-6 flex gap-2 items-center">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          onClick={() =>
+                            setSelectedTeacherId({
+                              teacher,
+                              item,
+                              assignId: item?._id,
+                            })
+                          }
+                          variant="button"
+                        >
+                          <Pencil />
+                          Change Teacher
+                        </Button>
+                      </DialogTrigger>
 
-                <DialogContent className={"max-w-118! shrink-0 h-140!"}>
-                  <UpdateAssignedTeacher
-                    TeacherData={TeacherData}
-                    setSelectedTeacher={setSelectedTeacher}
-                    selectedTeacher={selectedTeacher}
-                    Data={Data}
-                  />
-                </DialogContent>
-              </Dialog>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button type="submit" variant="destructive">
-                    <Trash />
-                    Remove Assigned
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DeleteTeacherAssignedModal
-                    selectedTeacher={selectedTeacher}
-                    Data={Data}
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-          </Card>
-        </div>
+                      <DialogContent
+                        className={"max-w-lg! w-fit shrink-0 h-140!"}
+                      >
+                        <UpdateAssignedTeacher
+                          TeacherData={TeacherData}
+                          setSelectedTeacher={setSelectedTeacher}
+                          selectedTeacher={selectedTeacher}
+                          Data={Data}
+                          selectedTeacherId={selectedTeacherId}
+                        />
+                      </DialogContent>
+                    </Dialog>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          onClick={() =>
+                            setSelectedTeacherId({
+                              teacher,
+                              item,
+                              assignId: item?._id,
+                            })
+                          }
+                          variant="destructive"
+                        >
+                          <Trash />
+                          Remove Assigned
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DeleteTeacherAssignedModal
+                          selectedTeacherId={selectedTeacherId}
+                          setSelectedTeacherId={setSelectedTeacherId}
+                          selectedTeacher={selectedTeacher}
+                          Data={Data}
+                          teacher={teacher}
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

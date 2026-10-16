@@ -107,17 +107,19 @@
 import React from "react";
 import { Clock3 } from "lucide-react";
 import { Label } from "./ui/label";
+import { useTranslation } from "react-i18next";
 
 function TimeRangePicker({ values, setFieldValue }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col">
       <Label className="mt-2">
-        Class Timing <span className="text-destructive">*</span>
+          {t("ui.classTiming")} <span className="text-destructive">*</span>
       </Label>
 
       <div className="mt-2 grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-xs font-normal">Start Time</label>
+          <label className="text-xs font-normal">{t("ui.startTime")}</label>
 
           <div className="relative">
             <Clock3 className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -126,7 +128,6 @@ function TimeRangePicker({ values, setFieldValue }) {
               type="time"
               value={values?.courseTime?.startTime || ""}
               onChange={(e) => {
-                console.log("Start:", e.target.value);
 
                 setFieldValue("courseTime.startTime", e.target.value);
               }}
@@ -136,7 +137,7 @@ function TimeRangePicker({ values, setFieldValue }) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs font-normal">End Time</label>
+          <label className="text-xs font-normal">{t("ui.endTime")}</label>
 
           <div className="relative">
             <Clock3 className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -145,7 +146,6 @@ function TimeRangePicker({ values, setFieldValue }) {
               type="time"
               value={values?.courseTime?.endTime || ""}
               onChange={(e) => {
-                console.log("End:", e.target.value);
 
                 setFieldValue("courseTime.endTime", e.target.value);
               }}

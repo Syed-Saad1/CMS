@@ -20,28 +20,17 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { cn } from "@/lib/utils";
 import { useSignup } from "@/mutations/useSignup";
+import { useTranslation } from "react-i18next";
 
-const ValidationScheme = Yup.object({
-  firstName: Yup.string()
-    .max(8, "firstName is maximum 8 letters")
-    .min(3, "firstName is at least 3 letters")
-    .required("firstName is Required"),
-  lastName: Yup.string()
-    .max(8, "lastName is maximum 8 letters")
-    .min(3, "lastName is at least 3 letters")
-    .required("lastName is Required"),
-
-  email: Yup.string()
-    .email("Invalid Email Address")
-    .required("Email is Required"),
-  password: Yup.string()
-    .min(8, "password is at least 8 characters")
-    .required("Password is Required"),
-  confrimpassword: Yup.string()
-    .required("Password is Required")
-    .oneOf([Yup.ref("password")], "Passwords must match"),
-});
 export const SignupScreen = () => {
+  const { t } = useTranslation();
+  const ValidationScheme = Yup.object({
+    firstName: Yup.string().max(8, t("auth.firstNameMax")).min(3, t("auth.firstNameMin")).required(t("auth.firstNameRequired")),
+    lastName: Yup.string().max(8, t("auth.lastNameMax")).min(3, t("auth.lastNameMin")).required(t("auth.lastNameRequired")),
+    email: Yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
+    password: Yup.string().min(8, t("auth.passwordMin")).required(t("auth.passwordRequired")),
+    confrimpassword: Yup.string().required(t("auth.passwordRequired")).oneOf([Yup.ref("password")], t("auth.passwordsMatch")),
+  });
   const navigate = useNavigate();
 
   const initialValues = {
@@ -67,7 +56,7 @@ export const SignupScreen = () => {
 
       const response = await mutateAsync(payload);
       if (response?.data?.success === false) {
-        toast.error(response?.data?.message || "Registration failed");
+        toast.error(response?.data?.message || t("auth.registrationFailed"));
         return;
       }
       const accessToken = response?.data?.data?.accessToken;
@@ -78,17 +67,17 @@ export const SignupScreen = () => {
       if (role) {
         Cookies.set("role", role);
       }
-      toast.success(response?.data?.message || "Account created successfully");
+      toast.success(response?.data?.message || t("auth.accountCreated"));
       resetForm();
       navigate("/user/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message =
-          error?.response?.data?.message || "Something went wrong";
+          error?.response?.data?.message || t("messages.somethingWrong");
 
         toast.error(message);
       } else {
-        toast.error("Something went wrong");
+        toast.error(t("messages.somethingWrong"));
       }
     }
   };
@@ -130,11 +119,11 @@ export const SignupScreen = () => {
           <CardContent className="mt-10">
             <div className=" grid grid-cols-2 gap-4">
               <Field>
-                <Label>First Name</Label>
+                <Label>{t("auth.firstName")}</Label>
                 <Input
                   className=" h-9!"
                   name="firstName"
-                  placeholder="Enter Your firstName"
+                  placeholder={t("auth.enterFirstName")}
                   type="text"
                   value={values.firstName}
                   onChange={handleChange}
@@ -145,11 +134,11 @@ export const SignupScreen = () => {
               </Field>
 
               <Field>
-                <Label>Last Name</Label>
+                <Label>{t("auth.lastName")}</Label>
                 <Input
                   className="h-9!"
                   name="lastName"
-                  placeholder="Enter Your lastName"
+                  placeholder={t("auth.enterLastName")}
                   type="text"
                   value={values.lastName}
                   onChange={handleChange}
@@ -160,11 +149,11 @@ export const SignupScreen = () => {
               </Field>
             </div>
             <Field className="mt-4">
-              <Label>Institutional Email </Label>
+              <Label>{t("auth.institutionalEmail")}</Label>
               <Input
                 className="mt-1 h-9!"
                 name="email"
-                placeholder="Enter Your Email"
+                placeholder={t("auth.enterEmail")}
                 type="email"
                 value={values.email}
                 onChange={handleChange}
@@ -174,12 +163,12 @@ export const SignupScreen = () => {
               )}
             </Field>
             <Field className="mt-4">
-              <Label>Password</Label>
+              <Label>{t("auth.password")}</Label>
               <Input
                 className="mt-1 h-9!"
                 showTogglePassword={true}
                 name="password"
-                placeholder="Enter Your Password"
+                placeholder={t("auth.enterPassword")}
                 type="password"
                 value={values.password}
                 onChange={handleChange}
@@ -189,12 +178,12 @@ export const SignupScreen = () => {
               )}
             </Field>
             <Field className="mt-4">
-              <Label>Confirm Password</Label>
+              <Label>{t("auth.confirmPassword")}</Label>
               <Input
                 className="mt-1 h-9!"
                 showTogglePassword={true}
                 name="confrimpassword"
-                placeholder="Re-type Your Password"
+                placeholder={t("auth.retypePassword")}
                 type="password"
                 value={values.confrimpassword}
                 onChange={handleChange}

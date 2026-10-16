@@ -13,7 +13,6 @@ function DeleteUserAccount({ item }) {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log("ID", id);
   const [selectItem, setselectItem] = useState(null);
   const { mutateAsync, isPending } = deleteUser();
 

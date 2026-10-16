@@ -15,7 +15,6 @@ export const getMyProfile = () => {
       },
     });
 
-    console.log("MY PROFILE API:", data);
 
     return data;
   };

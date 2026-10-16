@@ -12,7 +12,6 @@ export const getCourseById = (id) => {
     queryFn: async () => {
       const url = `${import.meta.env.VITE_API_URL}/course/${id}`;
 
-      console.log("GET COURSE URL:", url);
 
       const { data } = await axios.get(url, {
         headers: {
@@ -20,7 +19,6 @@ export const getCourseById = (id) => {
         },
       });
 
-      console.log("GET COURSE RESPONSE:", data);
 
       return data;
     },

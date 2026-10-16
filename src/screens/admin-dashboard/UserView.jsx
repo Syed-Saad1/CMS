@@ -51,7 +51,6 @@ function UserView() {
 
       toast.success("Update User Data Successfully");
     } catch (error) {
-      console.error("Update user error:", error);
     }
   };
 

@@ -22,16 +22,14 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
 import Cookies from "js-cookie";
 import { useLogin } from "@/mutations/useLogin";
+import { useTranslation } from "react-i18next";
 
-const ValidationScheme = Yup.object({
-  email: Yup.string()
-    .email("Invalid Email Address")
-    .required("Email is Required"),
-  password: Yup.string()
-    .min(8, "password is at least 8 characters")
-    .required("Password is Required"),
-});
 export const LoginScreen = () => {
+  const { t } = useTranslation();
+  const ValidationScheme = Yup.object({
+    email: Yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
+    password: Yup.string().min(8, t("auth.passwordMin")).required(t("auth.passwordRequired")),
+  });
   const initialValues = {
     email: "",
     password: "",
@@ -49,13 +47,11 @@ export const LoginScreen = () => {
       };
       const response = await mutateAsync(payload);
 
-      console.log("response", response);
 
       const userRole = response?.data?.user?.role;
       const userId = response?.data?.user?._id;
       const accessToken = response?.data?.accessToken;
 
-      console.log("userRole", { userRole, userId, accessToken });
 
       if (response?.success === true) {
         if (userRole === "admin") {
@@ -69,7 +65,7 @@ export const LoginScreen = () => {
       Cookies.set("userId", userId);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error?.message || "Server error occurred");
+        toast.error(error?.message || t("messages.serverError"));
       }
     } finally {
       resetForm();
@@ -102,20 +98,20 @@ export const LoginScreen = () => {
                 />
               </Link>
               <CardTitle className="font-DmSans text-3xl font-bold">
-                Welcome back
+                {t("auth.welcomeBack")}
               </CardTitle>
               <CardDescription className="mt-1 text-base">
-                Please enter your details to sign in.
+                {t("auth.signInPrompt")}
               </CardDescription>
             </CardHeader>
             <CardContent className="mt-10">
               <Field>
-                <Label>Email address</Label>
+                <Label>{t("auth.emailAddress")}</Label>
                 <Input
                   className="mt-1"
                   name="email"
                   value={values.email}
-                  placeholder="Enter Your Email"
+                  placeholder={t("auth.enterEmail")}
                   type="email"
                   onChange={handleChange}
                 />
@@ -124,13 +120,13 @@ export const LoginScreen = () => {
                 )}
               </Field>
               <Field className="mt-4">
-                <Label>Password</Label>
+                <Label>{t("auth.password")}</Label>
                 <Input
                   showTogglePassword={true}
                   className="mt-1"
                   name="password"
                   value={values.password}
-                  placeholder="Enter Your Password"
+                  placeholder={t("auth.enterPassword")}
                   onChange={handleChange}
                   type="password"
                 />

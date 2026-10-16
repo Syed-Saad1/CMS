@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardDescription, CardTitle } from "./ui/card";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Repeat,
-  Save,
-  UserRoundCheck,
-  X,
-} from "lucide-react";
-import TeacherListDropDown from "./TeacherListDropDown";
+import { ArrowRight, Repeat, Save, UserRoundCheck, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { DialogClose } from "./ui/dialog";
+import { useUpdateAssigned } from "@/mutations/useUpdateAssigned";
+import UpdateTeacherListDropDown from "./UpdateTeacherListDropDown";
+import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
 
-function UpdateAssignedTeacher({
-  setSelectedTeacher,
-  Data,
-  TeacherData,
-  selectedTeacher,
-}) {
+function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
+  const [updateAssigned, setUpdateAssignedTeacher] = useState(null);
+  const id = selectedTeacherId?.assignId;
+  const { mutateAsync } = useUpdateAssigned(id);
+  const handleClick = async () => {
+    try {
+      const payload = {
+        teacherId: updateAssigned?._id,
+      };
+      await mutateAsync(payload);
+      await Delete();
+    } catch (error) {}
+  };
   return (
     <div>
       <div>
@@ -48,9 +50,9 @@ function UpdateAssignedTeacher({
       <div>
         {" "}
         <CardTitle className={"mt-4 mb-2"}>Select New Teacher</CardTitle>
-        <TeacherListDropDown
-          selectedTeacher={selectedTeacher}
-          setSelectedTeacher={setSelectedTeacher}
+        <UpdateTeacherListDropDown
+          updateAssigned={updateAssigned}
+          setUpdateAssignedTeacher={setUpdateAssignedTeacher}
           TeacherData={TeacherData}
         />
         <CardDescription className={"text-xs pl-1 pt-1 mt-1"}>
@@ -70,12 +72,12 @@ function UpdateAssignedTeacher({
             >
               Current Teacher
             </div>
-            <div key={selectedTeacher?.id}>
+            <div key={selectedTeacherId?.teacher?.id}>
               <div className="flex size-12 justify-center items-center ">
-                {selectedTeacher?.avatar ? (
+                {selectedTeacherId?.teacher?.avatar ? (
                   <img
                     className="size-full rounded-full object-cover "
-                    src={selectedTeacher?.avatar}
+                    src={selectedTeacherId?.teacher?.avatar}
                   />
                 ) : (
                   <div className="bg-accent size-12 rounded-full flex items-center justify-center">
@@ -86,12 +88,12 @@ function UpdateAssignedTeacher({
             </div>
             <div>
               <CardTitle className={"text-sm"}>
-                {selectedTeacher?.firstName}
-                {selectedTeacher?.lastName}
+                {selectedTeacherId?.teacher?.firstName}
+                {selectedTeacherId?.teacher?.lastName}
               </CardTitle>
               <div className="min-w-0 flex-1 ">
                 <CardDescription className="truncate block text-xs font-normal">
-                  {selectedTeacher?.email}
+                  {selectedTeacherId?.teacher?.email}
                 </CardDescription>
               </div>
             </div>
@@ -107,12 +109,12 @@ function UpdateAssignedTeacher({
             >
               New Teacher
             </div>
-            <div key={selectedTeacher?.id}>
+            <div key={updateAssigned?.id}>
               <div className="flex size-12 justify-center items-center ">
-                {selectedTeacher?.avatar ? (
+                {updateAssigned?.avatar ? (
                   <img
                     className="size-full rounded-full object-cover "
-                    src={selectedTeacher?.avatar}
+                    src={updateAssigned?.avatar}
                   />
                 ) : (
                   <div className="bg-accent size-12 rounded-full flex items-center justify-center">
@@ -123,12 +125,12 @@ function UpdateAssignedTeacher({
             </div>
             <div>
               <CardTitle className={"text-sm"}>
-                {selectedTeacher?.firstName}
-                {selectedTeacher?.lastName}
+                {updateAssigned?.firstName}
+                {updateAssigned?.lastName}
               </CardTitle>
               <div className="min-w-0 flex-1 ">
                 <CardDescription className="truncate block text-xs font-normal">
-                  {selectedTeacher?.email}
+                  {updateAssigned?.email}
                 </CardDescription>
               </div>
             </div>
@@ -143,7 +145,7 @@ function UpdateAssignedTeacher({
             Cancel
           </Button>
         </DialogClose>
-        <Button variant="button">
+        <Button onClick={handleClick} variant="button">
           <Save /> Update Assign
         </Button>
       </div>

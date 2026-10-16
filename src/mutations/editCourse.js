@@ -15,7 +15,6 @@
 //           Authorization: `Bearer ${token}`,
 //         },
 //       });
-//       console.log("payload", payload);
 //       return data;
 //     },
 //     onSuccess: () => {
@@ -47,7 +46,6 @@ export const editCourse = (id) => {
 
       const url = `${import.meta.env.VITE_API_URL}/course/update/${id}`;
 
-      console.log("PATCH URL:", url);
 
       const { data } = await axios.patch(url, payload, {
         headers: {

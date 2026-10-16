@@ -70,7 +70,7 @@ function WelcomeDashboard() {
                 {" "}
                 <Button variant="button" className="w-fit mt-4">
                   {" "}
-                  View Courses <ArrowRight />{" "}
+                  {t("AdminWel.view")} <ArrowRight />{" "}
                 </Button>{" "}
               </Link>{" "}
             </div>{" "}

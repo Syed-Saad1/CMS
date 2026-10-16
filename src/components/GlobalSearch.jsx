@@ -5,7 +5,9 @@ import { CardDescription, CardTitle } from "./ui/card";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 function GlobalSearch({ Loading }) {
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
 
   const role = Cookies.get("role");
@@ -87,7 +89,7 @@ function GlobalSearch({ Loading }) {
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search courses, users, teachers, or categories..."
+            placeholder={t("ui.searchAll")}
             className={"pt-0 pl-8"}
           />
         </div>

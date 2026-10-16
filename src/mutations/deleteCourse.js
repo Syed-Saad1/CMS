@@ -15,7 +15,6 @@ export const deleteCourse = () => {
 
       const url = `${import.meta.env.VITE_API_URL}/course/delete/${id}`;
 
-      console.log("DELETE URL:", url);
 
       const { data } = await axios.delete(url, {
         headers: {

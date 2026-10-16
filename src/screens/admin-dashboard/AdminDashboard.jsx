@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -23,19 +21,31 @@ import {
 } from "lucide-react";
 import WelcomeDashboardAdmin from "@/components/WelcomeDashboard";
 import RecentlyActivites from "@/components/RecentlyActivites";
+import UserChart from "@/charts/UserChart";
 
 export function AdminDashboard() {
   const navigate = useNavigate();
 
-  const { data: User, isLoading: UserLoading } = useGetUser();
   const { data: Course, isLoading: CourseLoading } = getAllCourses();
 
   const UserId = Cookies.get("userId");
   const token = Cookies.get("token");
+  const { data: User, isLoading: UserLoading } = useGetUser();
+  console.log("API response:", User);
+  console.log("User data:", User?.data);
+  console.log("Is array:", Array.isArray(User?.data));
+  const responseData = User?.data;
+
+  const userData = Array.isArray(responseData)
+    ? responseData
+    : Array.isArray(responseData?.users)
+      ? responseData.users
+      : Array.isArray(responseData?.data)
+        ? responseData.data
+        : [];
 
   const { data: UserById } = getUserById(UserId);
 
-  const userData = User?.data || [];
   const getCourses = Course?.data || [];
   const ProfileData = UserById?.UserById;
 
@@ -88,7 +98,7 @@ export function AdminDashboard() {
 
   return (
     <div className="h-full w-full mt-6 mx-6">
-      <div className="grid grid-cols-[60%_38%] gap-6 mt-4 ">
+      <div className="grid grid-cols-1 w-full gap-6 mt-4 ">
         {" "}
         <div>
           {" "}
@@ -118,7 +128,7 @@ export function AdminDashboard() {
               ))}
             </div>
           ) : (
-            <div className="flex justify-between items-center mt-8 gap-4">
+            <div className="flex justify-between w-full mb-4 items-center mt-8 gap-4">
               {AdminDashboardCard.map((item) => {
                 const IconCom = item.icon;
 
@@ -130,34 +140,35 @@ export function AdminDashboard() {
                   bg-card
                   flex
                   items-start
-                  px-2 py-2
+                  pl-6 py-2
                   pt-2
                   h-fit
                   gap-1.5
                   w-full
+                  relative
                   overflow-hidden
                 "
                   >
                     <div
                       className={cn(
-                        "size-12 rounded-sm items-center justify-center flex",
+                        "size-32 absolute rotate-38 -right-8 top-0 rounded-xl items-center justify-center flex",
                         item.iconclass,
                       )}
                     >
                       <IconCom
                         strokeWidth={1.3}
-                        className={cn(" size-8", item.iconcolor)}
+                        className={cn("size-10 -rotate-38", item.iconcolor)}
                       />
                     </div>
 
                     <div>
-                      <CardDescription className="text-muted-foreground text-xs font-medium">
+                      <CardTitle className="font-semibold">
                         {item.des}
-                      </CardDescription>
-
-                      <CardTitle className="text-dashboard-foreground-heading text-lg font-bold mt-">
-                        {item.title}
                       </CardTitle>
+
+                      <CardDescription className="text-lg">
+                        {item.title}
+                      </CardDescription>
                       <h1 className="text-accent-foreground w-fit flex pl-2 mt-2">
                         <ArrowUp className="size-4" />
                         <span className="size-6 flex justify-center items-center  p-1 text-xs rounded-full text-success-foreground bg-success">
@@ -173,24 +184,29 @@ export function AdminDashboard() {
               })}
             </div>
           )}
-          <RecentlyActivites UserLoading={UserLoading} />
+          {/* <RecentlyActivites UserLoading={UserLoading} /> */}
         </div>
         <div>
           {" "}
           <div className="grid gap-6">
-            <RecentlyAddedUsers
+            {/* <RecentlyAddedUsers
               UserLoading={UserLoading}
               userData={userData}
               ProfileData={ProfileData}
-            />
+            /> */}
 
-            <RecentlyAddedCourse
+            {/* <RecentlyAddedCourse
               CourseLoading={CourseLoading}
               getCourses={getCourses}
-            />
+            /> */}
           </div>
         </div>
       </div>
+      {UserLoading ? (
+        <div className="h-70 mb-10 animate-pulse rounded-xl bg-muted" />
+      ) : (
+        <UserChart userData={userData} />
+      )}
     </div>
   );
 }

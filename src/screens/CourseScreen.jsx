@@ -13,9 +13,11 @@ import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
 import { Input } from "@/components/ui/input";
 import UpdateAssignedTeacher from "@/components/UpdateAssignedTeacherModal";
+import { useTranslation } from "react-i18next";
 
 function CourseScreen() {
   const [search, setSearch] = useState("");
+  const { t } = useTranslation();
   const { data, isLoading } = getAllCourses();
   const getCourses = data?.data;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,18 +33,17 @@ function CourseScreen() {
           <div>
             {" "}
             <h1 className="text-dashboard-foreground text-2xl font-extrabold">
-              Course Managment{" "}
+              {t("course.management")}{" "}
             </h1>
             <p className="text-muted-foreground text-sm mt-1">
-              Manage curriculum, assign educators, and monitor course
-              status.{" "}
+              {t("course.managementDescription")}{" "}
             </p>
           </div>
           {userRole === "admin" && (
             <Link to={"/courses-create"}>
               <Button variant="button" className="text-sm py-4">
                 <Plus className="size-5 overflow-hidden" />
-                Create Course
+                {t("course.create")}
               </Button>
             </Link>
           )}
@@ -59,7 +60,7 @@ function CourseScreen() {
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Find a Course by Coursename,"
+                placeholder={t("course.find")}
                 className={"pt-0 pl-8"}
               />
             </div>

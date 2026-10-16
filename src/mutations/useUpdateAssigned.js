@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryKey } from "@/constant/query";
-import { api } from "@/lib/axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import api from "../lib/axios";
 
 export const useUpdateAssigned = (id) => {
   const token = Cookies.get("token");
@@ -10,7 +10,7 @@ export const useUpdateAssigned = (id) => {
 
   const mutationFn = async (payload) => {
     const { data } = await api.patch(
-      `/api/assignment/update-assignment/${id}`,
+      `/assignment/update-assignment/${id}`,
       payload,
       {
         headers: {
@@ -30,12 +30,12 @@ export const useUpdateAssigned = (id) => {
         queryKey: [QueryKey.getUser],
       });
 
-      toast.success("Password updated successfully");
+      toast.success("Assinged updated successfully");
     },
 
     onError: (error) => {
       toast.error(
-        error?.response?.data?.message || "Failed to update password",
+        error?.response?.data?.message || "Failed to update Assigned",
       );
     },
   });

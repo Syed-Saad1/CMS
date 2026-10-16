@@ -15,7 +15,6 @@ export const editUserData = (id) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("payload", payload);
       return data;
     },
     onSuccess: () => {

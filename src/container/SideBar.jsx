@@ -5,14 +5,16 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import Cookies from "js-cookie";
 import SidebarNavigation from "../container/SidebarNavigation";
+import { useTranslation } from "react-i18next";
 function SideBar() {
+  const { t } = useTranslation();
   const { theme } = useTheme();
 
   const navigation = useNavigate();
 
   const CurrentRole = Cookies.get("role") || "user";
 
-  const NavigationItem = SidebarNavigation(CurrentRole);
+  const NavigationItem = SidebarNavigation(CurrentRole, t);
 
   const location = useLocation();
 
@@ -69,7 +71,7 @@ function SideBar() {
     dark:hover:text-red-300"
         >
           <Icon className="size-5" icon="ic:baseline-logout" />
-          Logout
+          {t("common.logout")}
         </button>
       </div>
     </aside>

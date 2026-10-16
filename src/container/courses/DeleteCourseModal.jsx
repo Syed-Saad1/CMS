@@ -9,7 +9,6 @@ export const DeleteCourseModal = ({ handleOpenModal, item }) => {
   const navigate = useNavigate();
   const handleConfirmDelete = () => {
     if (!item?._id) {
-      console.error("Course ID is missing:", item);
       return;
     }
     deleteMutation.mutate(item._id, {

@@ -44,7 +44,6 @@ function AdminProfile() {
       await mutateAsync(payload);
       toast.success("Update User Data Successfully");
     } catch (error) {
-      console.error("Update user error:", error);
       toast.error(error?.response?.data?.message || "Failed to update user");
     }
   };

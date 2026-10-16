@@ -22,18 +22,18 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
     <div>
       {" "}
       <Card className="block! h-fit! w-full rounded-xl p-4 mb-5">
-        {" "}
         <div className="w-full flex justify-between items-center">
-          {" "}
-          <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
+          <div className="flex gap-2 justify-end text-lg items-end font-semibold text-shadow-muted">
             <User className="text-primary size-6" strokeWidth={1.4} />
-            {t("RecentAddedUser.title", { defaultValue: "Title" })}
-          </h1>
+            <CardTitle className={"min-w-54 line-clamp-1 max-w-48"}>
+              {t("RecentAddedUser.title", { defaultValue: "Title" })}
+            </CardTitle>
+          </div>
           <Link
             to={"/admin/users"}
             className="flex items-center gap-2 text-primary! text-sm font-normal "
           >
-            View All
+            {t("RecentAddedUser.ViewAll")}{" "}
             <ArrowRight className="size-4" strokeWidth={1.6} />
           </Link>
         </div>

@@ -66,63 +66,76 @@ function DashboardHeader() {
             />
           </button>
 
-          <div className="flex items-center gap-1 cursor-pointer min-w-0">
-            <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
-              {UserProfileData?.avatar ? (
-                <img
-                  className="size-full rounded-full object-cover"
-                  src={UserProfileData?.avatar}
-                  alt="Profile"
-                />
-              ) : (
-                <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
-                  {IntialFirst}
-                  {LastFirst}
-                </h1>
-              )}
-            </div>
+          {Loading ? (
+            <div className="flex items-center gap-1 min-w-0 animate-pulse">
+              <div className="flex size-8 shrink-0 items-center justify-center">
+                <div className="size-8 rounded-full bg-muted" />
+              </div>
 
-            <Popover>
-              <PopoverTrigger
-                asChild
-                className="
+              <div className="flex min-w-0 flex-col items-start gap-2 md:hidden lg:flex">
+                <div className="h-3.5 w-24 rounded-md bg-muted" />
+
+                <div className="h-3 w-32 rounded-md bg-muted" />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1 cursor-pointer min-w-0">
+              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                {UserProfileData?.avatar ? (
+                  <img
+                    className="size-full rounded-full object-cover"
+                    src={UserProfileData?.avatar}
+                    alt="Profile"
+                  />
+                ) : (
+                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                    {IntialFirst}
+                    {LastFirst}
+                  </h1>
+                )}
+              </div>
+
+              <Popover>
+                <PopoverTrigger
+                  asChild
+                  className="
                   flex flex-col justify-start items-start min-w-0 gap-y-0 md:hidden lg:flex cursor-pointer
                 "
-              >
-                <CardTitle>
-                  {UserProfileData?.firstName}
-                  {UserProfileData?.lastName}
-                </CardTitle>
+                >
+                  <CardTitle>
+                    {UserProfileData?.firstName}
+                    {UserProfileData?.lastName}
+                  </CardTitle>
 
-                <CardDescription className="text-xs -mt-1">
-                  {UserProfileData?.email || "---"}
-                </CardDescription>
-              </PopoverTrigger>
+                  <CardDescription className="text-xs -mt-1">
+                    {UserProfileData?.email || "---"}
+                  </CardDescription>
+                </PopoverTrigger>
 
-              <PopoverContent className="w-fit">
-                <div className="flex flex-col justify-center items-center gap-2 bg-transparent">
-                  {role === "admin" && (
-                    <Link to={"/admin/profile"}>
-                      <Button variant="button" className={" w-30"}>
-                        Profile
-                      </Button>
-                    </Link>
-                  )}
-                  {role === "user" && (
-                    <Link to={"/user/profile"}>
-                      <Button variant="button" className={" w-30"}>
-                        Profile
-                      </Button>
-                    </Link>
-                  )}
+                <PopoverContent className="w-fit">
+                  <div className="flex flex-col justify-center items-center gap-2 bg-transparent">
+                    {role === "admin" && (
+                      <Link to={"/admin/profile"}>
+                        <Button variant="button" className={" w-30"}>
+                          Profile
+                        </Button>
+                      </Link>
+                    )}
+                    {role === "user" && (
+                      <Link to={"/user/profile"}>
+                        <Button variant="button" className={" w-30"}>
+                          Profile
+                        </Button>
+                      </Link>
+                    )}
 
-                  <Button
-                    onClick={() => {
-                      Cookies.remove("token");
-                      Cookies.remove("role");
-                      navigate("/auth/login");
-                    }}
-                    className=" group flex w-full items-center gap-3
+                    <Button
+                      onClick={() => {
+                        Cookies.remove("token");
+                        Cookies.remove("role");
+                        navigate("/auth/login");
+                      }}
+                      className=" group flex w-full items-center gap-3
     rounded-lg px-4 py-3
     text-sm font-medium
     text-red-600
@@ -135,14 +148,15 @@ function DashboardHeader() {
     dark:text-red-400
     dark:hover:bg-red-950/50
     dark:hover:text-red-300"
-                    variant="ghost"
-                  >
-                    Logout
-                  </Button>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
+                      variant="ghost"
+                    >
+                      Logout
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          )}
         </div>
         <DialogContent className={"min-h-88"}>
           <GlobalSearch Loading={Loading} />

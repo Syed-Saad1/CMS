@@ -13,7 +13,9 @@ import {
 import { Camera, Loader } from "lucide-react";
 import { useUploadAvatar } from "@/mutations/useUploadAvatar";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 function PriviewProfileCard({ user, isLoading }) {
+  const { t } = useTranslation();
   const UserProfileData = user;
 
   const { mutateAsync: uploadAvatar, isPending: isUploading } = useUploadAvatar(
@@ -32,21 +34,20 @@ function PriviewProfileCard({ user, isLoading }) {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+      toast.error(t("ui.selectImage"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be smaller than 5MB");
+      toast.error(t("ui.imageSmall"));
       return;
     }
 
     try {
       await uploadAvatar(file);
 
-      toast.success("Profile picture updated successfully");
+      toast.success(t("ui.profileUpdated"));
     } catch (error) {
-      console.error("Avatar upload error:", error);
 
       toast.error(
         error?.response?.data?.message || "Failed to update profile picture",

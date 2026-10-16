@@ -18,8 +18,10 @@ import {
 } from "./ui/table";
 import { StatusBadge } from "./ui/status";
 import { Skeleton } from "./ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 function RecentlyAddedCourse({ CourseLoading, getCourses }) {
+  const { t } = useTranslation();
   return (
     <div>
       {" "}
@@ -28,13 +30,13 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
             <GraduationCap className="text-primary size-6" strokeWidth={1.4} />
-            Recently Added Courses
+            {t("course.recentlyAdded")}
           </h1>
           <Link
             to={"/courses"}
             className="flex items-center gap-2 text-primary! text-sm font-normal "
           >
-            View All
+            {t("common.viewAll")}
             <ArrowRight className="size-4" strokeWidth={1.6} />
           </Link>
         </div>
@@ -45,9 +47,9 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-36">Course</TableHead>
-                  <TableHead className="w-34">Instructor</TableHead>
-                  <TableHead className="w-20">Status</TableHead>
+                  <TableHead className="w-36">{t("common.course")}</TableHead>
+                  <TableHead className="w-34">{t("course.instructor")}</TableHead>
+                  <TableHead className="w-20">{t("common.status")}</TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -83,9 +85,9 @@ function RecentlyAddedCourse({ CourseLoading, getCourses }) {
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
-                  <TableHead className={"w-36"}>Course</TableHead>
-                  <TableHead className={"w-34"}>Instructor</TableHead>
-                  <TableHead className={"w-20"}>Status</TableHead>
+                  <TableHead className={"w-36"}>{t("common.course")}</TableHead>
+                  <TableHead className={"w-34"}>{t("course.instructor")}</TableHead>
+                  <TableHead className={"w-20"}>{t("common.status")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

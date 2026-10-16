@@ -23,8 +23,10 @@ import { Icon } from "@iconify/react";
 import { RoleBadge } from "@/components/RoleBadge";
 import { getUserById } from "@/query/getUserById";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 
 export const UserDashboard = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
@@ -35,7 +37,7 @@ export const UserDashboard = () => {
       .then((data) => {
         setUsers(data.users);
       })
-      .catch((error) => console.error(error));
+      .catch(() => {});
   }, []);
   const { data, isLoading } = useGetUser();
   const userData = data?.data || [];
@@ -57,15 +59,15 @@ export const UserDashboard = () => {
         <div>
           {" "}
           <h1 className="text-dashboard-foreground text-2xl font-extrabold">
-            Our Users
+            {t("ui.ourUsers")}
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Manage user roles and access permissions across the platform.{" "}
+            {t("ui.userManage")}{" "}
           </p>
         </div>
         <div className="flex gap-3">
           <Button variant={"button"} className="text-[13px]  py-4">
-            <ListSortAscending /> Filter
+            <ListSortAscending /> {t("ui.filter")}
           </Button>
         </div>
       </div>
@@ -81,7 +83,7 @@ export const UserDashboard = () => {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by name, email, or username..."
+              placeholder={t("ui.searchUsers")}
               className={"pt-0 pl-8"}
             />
           </div>
@@ -90,13 +92,13 @@ export const UserDashboard = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>User</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Rating</TableHead>
-              <TableHead>Socail Profile</TableHead>
-              <TableHead>Created at</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>{t("ui.user")}</TableHead>
+              <TableHead>{t("ui.role")}</TableHead>
+              <TableHead>{t("ui.status")}</TableHead>
+              <TableHead>{t("ui.rating")}</TableHead>
+              <TableHead>{t("ui.socialProfile")}</TableHead>
+              <TableHead>{t("ui.createdAt")}</TableHead>
+              <TableHead>{t("ui.action")}</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -167,7 +169,7 @@ export const UserDashboard = () => {
                                 }
                               />
                               <TooltipContent className="flex flex-col">
-                                <CardTitle>Course Enrollments</CardTitle>
+                                <CardTitle>{t("ui.courseEnrollments")}</CardTitle>
 
                                 {item?.enrolledCourses?.map((course, index) => (
                                   <p className="max-w-30" key={index}>
