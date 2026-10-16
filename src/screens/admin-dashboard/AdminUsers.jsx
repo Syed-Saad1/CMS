@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import { StatusBadge } from "@/components/ui/status";
 import { useGetUser } from "@/query/useGetUser";
-import { Button } from "@/components/ui/button";
 import { Link, useParams } from "react-router-dom";
 import {
   Tooltip,
@@ -24,6 +23,7 @@ import { RoleBadge } from "@/components/RoleBadge";
 import { getUserById } from "@/query/getUserById";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
+import PaginationControls from "@/container/Pagination";
 
 export const UserDashboard = () => {
   const { t } = useTranslation();
@@ -40,10 +40,19 @@ export const UserDashboard = () => {
       .catch(() => {});
   }, []);
   const { data, isLoading } = useGetUser();
+  const [currentPage, setCurrentPage] = useState(1);
   const userData = data?.data || [];
   const UserId = Cookies.get("userId");
   const { data: UserById } = getUserById(UserId);
   const ProfileData = UserById?.UserById;
+  const user = Array.from({ length: 47 }, (_, index) => ({
+    id: index + 1,
+    firstName: `Name ${index + 1}`,
+    email: "email",
+    role: "admmin" + index * 10,
+  }));
+  const itemsPerPage = 10;
+
   const filteredUsers = userData.filter((user) => {
     const searchValue = search.toLowerCase();
 
@@ -53,8 +62,25 @@ export const UserDashboard = () => {
       user?.email?.toLowerCase().includes(searchValue)
     );
   });
+
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+
+  const currentUser = filteredUsers.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
   return (
-    <div className="h-full w-full mt-6 mx-6">
+    <div
+      className="w-full mt-60
+     min-w-0 p-6"
+    >
+      {" "}
       <div className="flex justify-between items-end  ">
         <div>
           {" "}
@@ -66,9 +92,9 @@ export const UserDashboard = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant={"button"} className="text-[13px]  py-4">
+          {/* <Button variant={"button"} className="text-[13px]  py-4">
             <ListSortAscending /> {t("ui.filter")}
-          </Button>
+          </Button> */}
         </div>
       </div>
       <Card className="block! w-full rounded-xl mt-2 p-6">
@@ -101,7 +127,6 @@ export const UserDashboard = () => {
               <TableHead>{t("ui.action")}</TableHead>
             </TableRow>
           </TableHeader>
-
           {isLoading ? (
             <TableBody>
               {[...Array(5)].map((_, index) => (
@@ -130,8 +155,8 @@ export const UserDashboard = () => {
             </TableBody>
           ) : (
             <TableBody>
-              {filteredUsers.length ? (
-                filteredUsers?.map((item) => {
+              {currentUser.length ? (
+                currentUser?.map((item) => {
                   const IntialFirst = item?.firstName
                     ?.trim()
                     .charAt(0)
@@ -169,7 +194,9 @@ export const UserDashboard = () => {
                                 }
                               />
                               <TooltipContent className="flex flex-col">
-                                <CardTitle>{t("ui.courseEnrollments")}</CardTitle>
+                                <CardTitle>
+                                  {t("ui.courseEnrollments")}
+                                </CardTitle>
 
                                 {item?.enrolledCourses?.map((course, index) => (
                                   <p className="max-w-30" key={index}>
@@ -235,6 +262,21 @@ export const UserDashboard = () => {
             </TableBody>
           )}
         </Table>
+        <div className="mt-4 flex w-full items-center justify-between gap-4 border-t pt-4">
+          <p className="shrink-0  text-sm text-muted-foreground">
+            Showing {filteredUsers.length === 0 ? 0 : startIndex + 1}–
+            {Math.min(startIndex + itemsPerPage, filteredUsers.length)} of{" "}
+            {filteredUsers.length} users
+          </p>
+
+          <div className="shrink-0">
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        </div>
       </Card>
     </div>
   );

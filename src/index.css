@@ -108,6 +108,16 @@
   --invert-foreground: var(--color-zinc-50);
 }
 
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
 .dark {
   --background: #0b1120;
   --foreground: #faf8fc;

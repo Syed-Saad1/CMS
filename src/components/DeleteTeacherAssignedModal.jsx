@@ -14,7 +14,6 @@ export default function DeleteTeacherAssignedModal({
   teacher,
 }) {
   const id = selectedTeacherId?.assignId;
-  console.log("ID", id);
   const { mutateAsync: Delete } = useDeleteAssigment(id);
   const handleClick = async () => {
     try {

@@ -12,7 +12,7 @@ function DashboardLayout() {
   }
 
   return (
-    <div className="h-screen overflow-hidden w-full flex">
+    <div className="h-screen overflow-hidden overflow-y-hidden bg-pink-900 w-full flex">
       <div className=" w-56 shrink-0 text-primary-foreground bg-sidebar h-full">
         <SideBar />
       </div>
@@ -20,7 +20,7 @@ function DashboardLayout() {
         <div className=" h-16 w-full border-b border-b-border">
           <DashboardHeader />
         </div>
-        <div className=" size-full overflow-y-auto overflow-hidden flex justify-center items-center text-2xl">
+        <div className=" size-full overflow-y-auto scrollbar-thin flex justify-center items-center text-2xl ">
           <Outlet />{" "}
         </div>
       </div>

@@ -31,9 +31,6 @@ export function AdminDashboard() {
   const UserId = Cookies.get("userId");
   const token = Cookies.get("token");
   const { data: User, isLoading: UserLoading } = useGetUser();
-  console.log("API response:", User);
-  console.log("User data:", User?.data);
-  console.log("Is array:", Array.isArray(User?.data));
   const responseData = User?.data;
 
   const userData = Array.isArray(responseData)

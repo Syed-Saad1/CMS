@@ -30,6 +30,11 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import axios from "axios";
 import remarkGfm from "remark-gfm";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 export const CourseDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = getCourseById(id);
@@ -58,16 +63,16 @@ export const CourseDetail = () => {
 
   return (
     <Dialog>
-      <ScrollArea className={"max-h-full scrollbar-thin"}>
+      <ScrollArea className={"max-h-full  w-full scrollbar-thin"}>
         <div className="h-full w-full grid grid-cols-1 p-4 gap-4">
           {isLoading ? (
-            <Card className="flex flex-col h-full animate-pulse">
+            <Card className="flex w-full flex-col h-full animate-pulse">
               <div className="w-full h-72 shrink-0 relative bg-muted overflow-hidden">
                 <div className="absolute bottom-4 left-4 w-32 h-7 rounded-2xl bg-muted-foreground/20" />
               </div>
 
               <ScrollArea className="max-h-full w-full pl-4 pr-8 mt-2">
-                <div className="flex flex-col">
+                <div className="flex w-full flex-col">
                   <Skeleton className="h-9 w-3/4 mt-5" />
 
                   <div className="space-y-2 mt-3 min-h-20">
@@ -119,32 +124,49 @@ export const CourseDetail = () => {
             <Card className="flex flex-col">
               <div className="w-full h-72 shrink-0 relative bg-accent overflow-hidden">
                 <img
-                  className="w-full object-cover h-full"
+                  className="aspect-video w-full object-cover h-full"
                   src={data?.data?.thumbnail || "/DeafultThumbinal.png"}
                   alt="thumbnail"
                 />
                 <div className="flex items-center  right-0 left-2 bottom-1 gap-2 absolute z-50">
-                  {" "}
-                  <DialogTrigger
-                    className=" cursor-pointer  bottom-0
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <DialogTrigger
+                        className=" cursor-pointer  bottom-0
                  inline-flex px-2 w-fit gap-1 py-2 opacity-100 bg-muted text-destructive rounded-sm justify-center items-center"
-                  >
-                    <Trash size={18} />
-                  </DialogTrigger>
-                  <Link
-                    className="
+                      >
+                        <Trash size={18} />
+                      </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>Delete Course</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    {" "}
+                    <TooltipTrigger>
+                      {" "}
+                      <Link
+                        className="
                  inline-flex size-8 opacity-100 bg-muted text-primary rounded-sm justify-center items-center px-2 w-fit gap-1 py-2"
-                    to={`/courses/edit/${data?.data?._id}`}
-                  >
-                    <Pencil size={18} />
-                  </Link>
-                  <Link
-                    className="
+                        to={`/courses/edit/${data?.data?._id}`}
+                      >
+                        <Pencil size={18} />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>Edit Course</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    {" "}
+                    <TooltipTrigger>
+                      <Link
+                        className="
                  inline-flex size-8 opacity-100 bg-muted text-primary rounded-sm justify-center items-center px-2 w-fit gap-1 py-2"
-                    to={`/courses/assign/${data?.data?._id}`}
-                  >
-                    <UserRoundArrowLeft size={18} />
-                  </Link>
+                        to={`/courses/assign/${data?.data?._id}`}
+                      >
+                        <UserRoundArrowLeft size={18} />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>Assign Course Teacher</TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
 

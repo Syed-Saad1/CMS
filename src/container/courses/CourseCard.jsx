@@ -1,5 +1,5 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { EllipsisVertical } from "lucide-react";
+import { ArrowRight, EllipsisVertical } from "lucide-react";
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { DeleteCourseModal } from "./DeleteCourseModal";
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/popover";
 
 export const CourseCard = ({ item }) => {
-  console.log("Item", item);
   const [selectItem, setselectItem] = useState(null);
 
   const UserRole = Cookies.get("role");
@@ -27,7 +26,7 @@ export const CourseCard = ({ item }) => {
         >
           <div className="group relative h-32 bg-accent overflow-hidden">
             <img
-              className="absolute inset-0 text-center flex justify-center items-center text-red-500 font-bold w-full h-full object-cover"
+              className="absolute aspect-video inset-0 text-center flex justify-center items-center text-red-500 font-bold w-full h-full object-cover"
               src={item?.thumbnail || "/DeafultThumbinal.png"}
             />
 
@@ -84,13 +83,12 @@ export const CourseCard = ({ item }) => {
             </CardDescription>
 
             <div className="flex justify-between items-center mt-2 ">
-              <CardTitle className="flex w-24 font-bold line-clamp-1 min-w-20">
-                {item?.price}
-                <span className="text-primary pl-1">$</span>
+              <CardTitle className="flex w-24 text-lg font-bold line-clamp-1 min-w-20">
+                ${item?.price}
               </CardTitle>
 
-              <Button variant="button" className="mr-3 px-2 text-sm">
-                Explore More
+              <Button variant="button" className="mr-3 px-4 py-1 text-sm">
+                Explore More <ArrowRight />
               </Button>
             </div>
           </div>
