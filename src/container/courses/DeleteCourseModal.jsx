@@ -2,21 +2,22 @@ import { Button } from "@/components/ui/button";
 import { DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { deleteCourse } from "@/mutations/deleteCourse";
 import React from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const DeleteCourseModal = ({ handleOpenModal, item }) => {
-  const deleteMutation = deleteCourse();
+  const { mutateAsync } = deleteCourse();
   const navigate = useNavigate();
-  const handleConfirmDelete = () => {
-    if (!item?._id) {
-      return;
-    }
-    deleteMutation.mutate(item._id, {
-      onSuccess: () => {
-        handleOpenModal?.(false);
-      },
-    });
-    navigate("/courses");
+  const handleConfirmDelete = async () => {
+    try {
+      if (!item?._id) {
+        return;
+      }
+      const response = await mutateAsync(item._id);
+      const result = response;
+      toast.success(result?.message || "Delete Course");
+      navigate("/courses");
+    } catch (error) {}
   };
 
   if (!item) {
@@ -39,9 +40,9 @@ export const DeleteCourseModal = ({ handleOpenModal, item }) => {
         <Button
           variant="destructive"
           onClick={handleConfirmDelete}
-          disabled={deleteMutation.isPending}
+          disabled={mutateAsync.isPending}
         >
-          {deleteMutation.isPending ? "Deleting..." : "Delete"}
+          {mutateAsync.isPending ? "Deleting..." : "Delete"}
         </Button>
       </div>
     </div>

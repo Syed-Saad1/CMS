@@ -40,9 +40,9 @@ function UpdatePassword() {
         newPassword: values?.newPassword,
       };
       const Response = await mutateAsync(payload);
-
+      const result = Response;
       if (Response.success === 200) {
-        toast.success("Password updated successfully");
+        toast.success(result?.message || "Password updated successfully");
       }
       Navigate("/auth/login");
     } catch (error) {

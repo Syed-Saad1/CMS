@@ -13,6 +13,7 @@ import PriviewProfileCard from "@/components/AllUserPriviewProfileCard";
 import toast from "react-hot-toast";
 import DeleteUserAccount from "@/components/DeleteUserAccount";
 import UpdatePassword from "@/container/UpdatePassword";
+import axios from "axios";
 
 function AdminProfile() {
   const [selectItem, setselectItem] = useState(null);
@@ -46,10 +47,17 @@ function AdminProfile() {
         lastName: values.lastName,
         role: values.role,
       };
-      await mutateAsync(payload);
-      toast.success("Update User Data Successfully");
+      const Response = await mutateAsync(payload);
+      const Result = Response;
+      toast.success(Result?.message || "Update User Data Successfully");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Failed to update user");
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
     }
   };
   const { values, handleChange, handleSubmit, setFieldValue, errors } =

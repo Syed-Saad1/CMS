@@ -77,11 +77,11 @@ export const UserDashboard = () => {
 
   return (
     <div
-      className="w-full mt-60
-     min-w-0 p-6"
+      className="w-full 
+     min-w-0 p-6 h-full"
     >
       {" "}
-      <div className="flex justify-between items-end  ">
+      <div className="flex justify-between items-end ">
         <div>
           {" "}
           <h1 className="text-dashboard-foreground text-2xl font-extrabold">

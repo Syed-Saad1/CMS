@@ -23,15 +23,27 @@ import { useSignup } from "@/mutations/useSignup";
 import { useTranslation } from "react-i18next";
 
 export const SignupScreen = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const ValidationScheme = Yup.object({
-    firstName: Yup.string().max(8, t("auth.firstNameMax")).min(3, t("auth.firstNameMin")).required(t("auth.firstNameRequired")),
-    lastName: Yup.string().max(8, t("auth.lastNameMax")).min(3, t("auth.lastNameMin")).required(t("auth.lastNameRequired")),
-    email: Yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
-    password: Yup.string().min(8, t("auth.passwordMin")).required(t("auth.passwordRequired")),
-    confrimpassword: Yup.string().required(t("auth.passwordRequired")).oneOf([Yup.ref("password")], t("auth.passwordsMatch")),
+    firstName: Yup.string()
+      .max(8, t("auth.firstNameMax"))
+      .min(3, t("auth.firstNameMin"))
+      .required(t("auth.firstNameRequired")),
+    lastName: Yup.string()
+      .max(8, t("auth.lastNameMax"))
+      .min(3, t("auth.lastNameMin"))
+      .required(t("auth.lastNameRequired")),
+    email: Yup.string()
+      .email(t("auth.invalidEmail"))
+      .required(t("auth.emailRequired")),
+    password: Yup.string()
+      .min(8, t("auth.passwordMin"))
+      .required(t("auth.passwordRequired")),
+    confrimpassword: Yup.string()
+      .required(t("auth.passwordRequired"))
+      .oneOf([Yup.ref("password")], t("auth.passwordsMatch")),
   });
-  const navigate = useNavigate();
 
   const initialValues = {
     firstName: "",
@@ -42,8 +54,17 @@ export const SignupScreen = () => {
   };
   const { mutateAsync, isPending } = useSignup();
   const token = Cookies.get("token");
+  console.log("GetToken", token);
+  const role = Cookies.get("role");
+  console.log("GetRole", role);
+
   if (token) {
-    return <Navigate to={"/admin/dashboard"} replace />;
+    return (
+      <Navigate
+        to={role === "admin" ? "/admin/dashboard" : "/user/dashboard"}
+        replace
+      />
+    );
   }
   const onSubmit = async (values, { resetForm }) => {
     try {
@@ -55,33 +76,49 @@ export const SignupScreen = () => {
       };
 
       const response = await mutateAsync(payload);
-      if (response?.data?.success === false) {
-        toast.error(response?.data?.message || t("auth.registrationFailed"));
+
+      const result = response;
+
+      if (result?.success !== true) {
+        toast.error(result?.message || t("auth.registrationFailed"));
         return;
       }
-      const accessToken = response?.data?.data?.accessToken;
-      const role = response?.data?.data?.user?.role;
-      if (accessToken) {
-        Cookies.set("token", accessToken);
-      }
-      if (role) {
-        Cookies.set("role", role);
-      }
-      toast.success(response?.data?.message || t("auth.accountCreated"));
-      resetForm();
-      navigate("/user/dashboard");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message =
-          error?.response?.data?.message || t("messages.somethingWrong");
 
-        toast.error(message);
+      const accessToken = result?.data?.accessToken;
+      const role = result?.data?.user?.role;
+      const userId = result?.data?.user?._id;
+      console.log("Result", result?.data);
+      console.log("GetId", userId);
+      if (!accessToken || !["admin", "user"].includes(role)) {
+        toast.error(t("auth.registrationFailed"));
+        return;
+      }
+
+      Cookies.set("token", accessToken);
+      Cookies.set("role", role);
+      Cookies.set("userId", userId);
+
+      toast.success(result?.message || t("auth.accountCreated"));
+
+      resetForm();
+
+      if (role === "admin") {
+        navigate("/admin/dashboard", { replace: true });
+      } else if (role === "user") {
+        navigate("/user/dashboard", { replace: true });
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
       } else {
         toast.error(t("messages.somethingWrong"));
       }
     }
   };
-
   const { errors, values, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: ValidationScheme,
@@ -197,7 +234,7 @@ export const SignupScreen = () => {
           <CardFooter>
             <Button
               type="submit"
-              className="mt-6 w-full bg-[#180289] text-base hover:bg-blue-900 h-12!"
+              className="mt-6 w-full bg-primary text-primary-foreground text-base hover:bg-primary/80 h-12!"
               variant={"default"}
               disabled={isPending}
             >

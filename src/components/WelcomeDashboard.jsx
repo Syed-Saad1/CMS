@@ -29,65 +29,43 @@ function WelcomeDashboard() {
   const name = ProfileData?.firstName + " " + ProfileData?.lastName;
   return (
     <div>
-      {isLoading ? (
-        <Card className="flex flex-col dark:bg-[url('/WelcomeCardImageDark.jpeg')] bg-[url('/WelcomeCardImageLight.jpeg')] bg-cover bg-no-repeat p-6 h-fit">
-          <div className="flex justify-between items-center">
-            <div className="flex-1">
-              <Skeleton className="h-10 w-64 rounded-md" />
-
-              <Skeleton className="h-7 w-52 rounded-md mt-2" />
-
-              <Skeleton className="h-5 w-full max-w-xl rounded-md mt-2" />
-
-              <Skeleton className="h-10 w-32 rounded-md mt-4" />
-            </div>
-
-            <div className="flex gap-2 justify-center">
-              {Role === "user" && <Skeleton className="size-40 rounded-md" />}
-
-              <Skeleton className="size-40 rounded-md" />
-            </div>
-          </div>
-        </Card>
-      ) : (
-        <Card className="flex flex-col dark:bg-[url('/WelcomeCardImageDark.jpeg')] bg-[url('/WelcomeCardImageLight.jpeg')] bg-cover bg-no-repeat p-6 h-fit">
+      <Card className="flex flex-col dark:bg-[url('/WelcomeCardImageDark.jpeg')] bg-[url('/WelcomeCardImageLight.jpeg')] bg-cover bg-no-repeat p-6 h-fit">
+        {" "}
+        <div className="flex justify-between items-center">
           {" "}
-          <div className="flex justify-between items-center">
+          <div>
             {" "}
-            <div>
+            <CardTitle className="text-4xl font-bold">
+              {greeting},👋
+            </CardTitle>{" "}
+            <CardTitle className={"text-xl mt-1 flex items-center"}>
               {" "}
-              <CardTitle className="text-4xl font-bold">
-                {greeting},👋
-              </CardTitle>{" "}
-              <CardDescription className={"text-xl mt-1"}>
-                {" "}
-                {t("AdminWel.title")}, {name}{" "}
-              </CardDescription>{" "}
-              <CardDescription className={"text-sm mt-1 text-muted-foreground"}>
-                {t("AdminWel.des")}
-              </CardDescription>{" "}
-              <Link to="/courses">
-                {" "}
-                <Button variant="button" className="w-fit mt-4">
-                  {" "}
-                  {t("AdminWel.view")} <ArrowRight />{" "}
-                </Button>{" "}
-              </Link>{" "}
-            </div>{" "}
-            <div className="flex gap-2 justify-center">
+              {t("AdminWel.title")}, {isLoading ? " * * * * *" : name}
+            </CardTitle>{" "}
+            <CardDescription className={"text-sm mt-1 text-muted-foreground"}>
+              {t("AdminWel.des")}
+            </CardDescription>{" "}
+            <Link to="/courses">
               {" "}
-              {Role === "user" && (
-                <img className="size-40" src="/Cap.png" alt="" />
-              )}{" "}
-              <img
-                className="size-40 object-contain"
-                src="/Book.png"
-                alt=""
-              />{" "}
-            </div>{" "}
+              <Button variant="button" className="w-fit mt-4">
+                {" "}
+                {t("AdminWel.view")} <ArrowRight />{" "}
+              </Button>{" "}
+            </Link>{" "}
           </div>{" "}
-        </Card>
-      )}
+          <div className="flex gap-2 justify-center">
+            {" "}
+            {Role === "user" && (
+              <img className="size-40" src="/Cap.png" alt="" />
+            )}{" "}
+            <img
+              className="size-40 object-contain"
+              src="/Book.png"
+              alt=""
+            />{" "}
+          </div>{" "}
+        </div>{" "}
+      </Card>
     </div>
   );
 }

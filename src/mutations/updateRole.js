@@ -21,7 +21,6 @@ export const useUpdateRole = (id) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKey.getUpdateRole] });
       queryClient.invalidateQueries({ queryKey: [QueryKey.getUser] });
-      toast.success("User Role Change Succesfully");
     },
   });
 };

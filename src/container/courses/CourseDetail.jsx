@@ -2,27 +2,23 @@ import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { WhatWillLearn } from "@/container/AdminDashboardCard";
 import { getCourseById } from "@/query/getCourseById";
 import {
   ArrowRight,
   BookOpenCheck,
   CalendarSync,
-  CircleCheckBig,
   Loader,
   Lock,
   MailBadge,
-  Pen,
   Pencil,
   Plus,
   RotateCwFadingClock,
   Trash,
   UserRoundArrowLeft,
 } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { DeleteCourseModal } from "./DeleteCourseModal";
 import { useEnrollCourse } from "@/mutations/useEnrollCourse";
@@ -39,6 +35,7 @@ export const CourseDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = getCourseById(id);
   const { mutateAsync, isPending } = useEnrollCourse();
+  const role = Cookies.get("role");
   const userId = Cookies.get("userId");
   const payload = {
     userId: userId,
@@ -60,11 +57,10 @@ export const CourseDetail = () => {
       }
     }
   };
-
   return (
     <Dialog>
-      <ScrollArea className={"max-h-full  w-full scrollbar-thin"}>
-        <div className="h-full w-full grid grid-cols-1 p-4 gap-4">
+      <ScrollArea className={"max-h-full relative w-full scrollbar-thin"}>
+        <div className="h-full w-full  grid grid-cols-[72%_27%] p-4 gap-4">
           {isLoading ? (
             <Card className="flex w-full flex-col h-full animate-pulse">
               <div className="w-full h-72 shrink-0 relative bg-muted overflow-hidden">
@@ -128,46 +124,50 @@ export const CourseDetail = () => {
                   src={data?.data?.thumbnail || "/DeafultThumbinal.png"}
                   alt="thumbnail"
                 />
-                <div className="flex items-center  right-0 left-2 bottom-1 gap-2 absolute z-50">
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <DialogTrigger
-                        className=" cursor-pointer  bottom-0
+                {role === "admin" && (
+                  <div className="flex justify-between  right-0 left-0  bottom-1 px-4 absolute z-50">
+                    <div className="flex items-center  gap-2">
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <DialogTrigger
+                            className=" cursor-pointer  bottom-0
                  inline-flex px-2 w-fit gap-1 py-2 opacity-100 bg-muted text-destructive rounded-sm justify-center items-center"
-                      >
-                        <Trash size={18} />
-                      </DialogTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>Delete Course</TooltipContent>
-                  </Tooltip>
-                  <Tooltip>
-                    {" "}
-                    <TooltipTrigger>
-                      {" "}
-                      <Link
-                        className="
+                          >
+                            <Trash size={18} />
+                          </DialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>Delete Course</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        {" "}
+                        <TooltipTrigger>
+                          {" "}
+                          <Link
+                            className="
                  inline-flex size-8 opacity-100 bg-muted text-primary rounded-sm justify-center items-center px-2 w-fit gap-1 py-2"
-                        to={`/courses/edit/${data?.data?._id}`}
-                      >
-                        <Pencil size={18} />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>Edit Course</TooltipContent>
-                  </Tooltip>
-                  <Tooltip>
-                    {" "}
-                    <TooltipTrigger>
-                      <Link
-                        className="
+                            to={`/courses/edit/${data?.data?._id}`}
+                          >
+                            <Pencil size={18} />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>Edit Course</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        {" "}
+                        <TooltipTrigger>
+                          <Link
+                            className="
                  inline-flex size-8 opacity-100 bg-muted text-primary rounded-sm justify-center items-center px-2 w-fit gap-1 py-2"
-                        to={`/courses/assign/${data?.data?._id}`}
-                      >
-                        <UserRoundArrowLeft size={18} />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>Assign Course Teacher</TooltipContent>
-                  </Tooltip>
-                </div>
+                            to={`/courses/assign/${data?.data?._id}`}
+                          >
+                            <UserRoundArrowLeft size={18} />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>Assign Course Teacher</TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div
@@ -215,6 +215,7 @@ export const CourseDetail = () => {
                     </CardDescription>
                   </div>
                 </div>
+
                 <Card className="flex flex-col min-h-140! w-full mt-8 pl-6  bg-transparent pt-6">
                   <CardTitle className="flex gap-2 items-center text-2xl font-semibold">
                     <BookOpenCheck
@@ -296,138 +297,125 @@ export const CourseDetail = () => {
               </div>
             </Card>
           )}
-          {/* {isLoading ? (
-          <div className="flex flex-col gap-2 animate-pulse">
-            <Card className="h-70 flex flex-col items-center justify-center gap-4 px-6">
-              <Skeleton className="h-5 w-36" />
-              <Skeleton className="h-9 w-28 my-1" />
-              <div className="border border-border w-full" />
+          <div>
+            {isLoading ? (
+              <div className="flex h-full lg:self-start lg:sticky lg:top-6  flex-col gap-2 animate-pulse">
+                <Card className="h-70 flex lg:sticky lg:top-6 flex-col items-center justify-center gap-4 px-6">
+                  <Skeleton className="h-5 w-36" />
+                  <Skeleton className="h-9 w-28 my-1" />
+                  <div className="border border-border w-full" />
 
-              <div className="grid grid-cols-2 gap-2 items-center w-full">
-                <Skeleton className="h-10 w-full rounded-md" />
-                <Skeleton className="h-10 w-full rounded-md" />
+                  <div className="grid grid-cols-2 gap-2 items-center w-full">
+                    <Skeleton className="h-10 w-full rounded-md" />
+                    <Skeleton className="h-10 w-full rounded-md" />
+                  </div>
+
+                  <Skeleton className="h-4 w-48 mt-1" />
+                  <div className="border border-border w-full" />
+
+                  <div className="grid grid-cols-2 gap-4 w-full">
+                    <div className="flex flex-col items-center gap-1.5">
+                      <Skeleton className="h-6 w-12" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                    <div className="flex flex-col  items-center gap-1.5 pl-4">
+                      <Skeleton className="h-6 w-12" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                  </div>
+                </Card>
               </div>
-
-              <Skeleton className="h-4 w-48 mt-1" />
-              <div className="border border-border w-full" />
-
-              <div className="grid grid-cols-2 gap-4 w-full">
-                <div className="flex flex-col items-center gap-1.5">
-                  <Skeleton className="h-6 w-12" />
-                  <Skeleton className="h-3 w-16" />
-                </div>
-                <div className="flex flex-col  items-center gap-1.5 pl-4">
-                  <Skeleton className="h-6 w-12" />
-                  <Skeleton className="h-3 w-16" />
-                </div>
+            ) : (
+              <div className="flex flex-col gap-2 w-full mt-1">
+                <Card className="h-70 w-full flex flex-col items-center justify-center gap-3 px-6">
+                  <CardTitle className="text-xl font-bold">
+                    Build Your Future
+                  </CardTitle>
+                  <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
+                    <span className="pr-2 text-primary">$</span>
+                    {data?.data?.price}
+                  </CardTitle>
+                  <div className="border border-border w-full" />
+                  <div className="grid grid-cols-2 gap-2 items-center w-full">
+                    <Button
+                      variant="button"
+                      onClick={handleEnroll}
+                      disabled={isPending}
+                      className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
+                    >
+                      {" "}
+                      {isPending ? (
+                        <>
+                          <Loader className="size-4 animate-spin" />
+                          Enrolling...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="size-4" />
+                          Enroll{" "}
+                        </>
+                      )}{" "}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
+                    >
+                      Try ForFree
+                    </Button>
+                  </div>
+                  <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
+                    <Lock size={16} />
+                    Secure Payment. 100% Refundable
+                  </CardDescription>
+                  <div className="border border-border w-full" />
+                  <div className=" grid grid-cols-2 gap-4 w-full ">
+                    <div className="flex flex-col items-center">
+                      <CardTitle>24K</CardTitle>
+                      <CardDescription>STUDENTS</CardDescription>
+                    </div>
+                    <div className="flex flex-col border-l border-border items-center">
+                      <CardTitle>100%</CardTitle>
+                      <CardDescription>ONLINE</CardDescription>
+                    </div>
+                  </div>
+                </Card>
+                {/* <Card
+                  className="h-58 flex flex-col gap-4 pt-4
+          px-6"
+                >
+                  <Label className="text-xs font-semibold text-primary">
+                    COURSE INSTRUCTOR
+                  </Label>
+                  <div className="grid grid-cols-[32%_65%] gap-3">
+                    <div>
+                      {" "}
+                      <img
+                        className="w-24 h-24 rounded-2xl object-cover"
+                        src="/COURSEINSTRUCTOR.png"
+                        alt="Instructor"
+                      />
+                    </div>
+                    <div className="pl-2">
+                      <CardTitle className="text-lg font-bold ">
+                        Dr. Alan Turing
+                      </CardTitle>
+                      <CardDescription className="text-xs max-h-26 text-justify line-clamp-6  mt-2  leading-4.5 text-muted-foreground">
+                        Former Senior Staff Engineer at major tech firm with
+                        over 15 years of experience in distributed systems. Dr.
+                        Turing specializes in algorithmic optimization and has
+                        been teaching advanced computer science concepts to
+                        bridge the gap between academic theory and industry
+                        practice.
+                      </CardDescription>
+                      <Link className="mt-1 h-10 flex items-center gap-2 text-primary">
+                        View Profile <ArrowRight size={18} />
+                      </Link>
+                    </div>
+                  </div>
+                </Card> */}
               </div>
-            </Card>
-
-            <Card className="h-58 flex flex-col gap-4 pt-4 px-6">
-              <Skeleton className="h-3 w-28" />
-              <div className="grid grid-cols-[32%_65%] gap-3">
-                <div>
-                  <Skeleton className="w-24 h-24 rounded-2xl" />
-                </div>
-                <div className="space-y-2 pl-2">
-                  <Skeleton className="h-5 w-32" />
-                  <Skeleton className="h-3 w-full" />
-                  <Skeleton className="h-3 w-full" />
-                  <Skeleton className="h-3 w-4/5" />
-                  <Skeleton className="h-4 w-24 mt-2" />
-                </div>
-              </div>
-            </Card>
+            )}
           </div>
-        ) : (
-        //   <div className="flex flex-col gap-2 ">
-        //     <Card className="h-70 flex flex-col items-center justify-center gap-3 px-6">
-        //       <CardTitle className="text-xl font-bold">
-        //         Build Your Future
-        //       </CardTitle>
-        //       <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
-        //         <span className="pr-2 text-primary">$</span>
-        //         {data?.data?.price}
-        //       </CardTitle>
-        //       <div className="border border-border w-full" />
-        //       <div className="grid grid-cols-2 gap-2 items-center w-full">
-        //         <Button
-        //           variant="button"
-        //           onClick={handleEnroll}
-        //           disabled={isPending}
-        //           className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
-        //         >
-        //           {" "}
-        //           {isPending ? (
-        //             <>
-        //               <Loader className="size-4 animate-spin" />
-        //               Enrolling...
-        //             </>
-        //           ) : (
-        //             <>
-        //               <Plus className="size-4" />
-        //               Enroll{" "}
-        //             </>
-        //           )}{" "}
-        //         </Button>
-        //         <Button
-        //           variant="outline"
-        //           className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
-        //         >
-        //           Try ForFree
-        //         </Button>
-        //       </div>
-        //       <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
-        //         <Lock size={16} />
-        //         Secure Payment. 100% Refundable
-        //       </CardDescription>
-        //       <div className="border border-border w-full" />
-        //       <div className=" grid grid-cols-2 gap-4 w-full ">
-        //         <div className="flex flex-col items-center">
-        //           <CardTitle>24K</CardTitle>
-        //           <CardDescription>STUDENTS</CardDescription>
-        //         </div>
-        //         <div className="flex flex-col border-l border-border items-center">
-        //           <CardTitle>100%</CardTitle>
-        //           <CardDescription>ONLINE</CardDescription>
-        //         </div>
-        //       </div>
-        //     </Card>
-        //     <Card
-        //       className="h-58 flex flex-col gap-4 pt-4
-        //  px-6"
-        //     >
-        //       <Label className="text-xs font-semibold text-primary">
-        //         COURSE INSTRUCTOR
-        //       </Label>
-        //       <div className="grid grid-cols-[32%_65%] gap-3">
-        //         <div>
-        //           {" "}
-        //           <img
-        //             className="w-24 h-24 rounded-2xl object-cover"
-        //             src="/COURSEINSTRUCTOR.png"
-        //             alt="Instructor"
-        //           />
-        //         </div>
-        //         <div className="pl-2">
-        //           <CardTitle className="text-lg font-bold ">
-        //             Dr. Alan Turing
-        //           </CardTitle>
-        //           <CardDescription className="text-xs max-h-26 text-justify line-clamp-6  mt-2  leading-4.5 text-muted-foreground">
-        //             Former Senior Staff Engineer at major tech firm with over 15
-        //             years of experience in distributed systems. Dr. Turing
-        //             specializes in algorithmic optimization and has been
-        //             teaching advanced computer science concepts to bridge the
-        //             gap between academic theory and industry practice.
-        //           </CardDescription>
-        //           <Link className="mt-1 h-10 flex items-center gap-2 text-primary">
-        //             View Profile <ArrowRight size={18} />
-        //           </Link>
-        //         </div>
-        //       </div>
-        //     </Card>
-        //   </div>
-        )} */}
         </div>
       </ScrollArea>
       <DialogContent className="h-40! w-130!">

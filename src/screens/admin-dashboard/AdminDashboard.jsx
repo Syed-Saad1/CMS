@@ -46,6 +46,23 @@ export function AdminDashboard() {
   const getCourses = Course?.data || [];
   const ProfileData = UserById?.UserById;
 
+  const today = new Date().toISOString().split("T")[0];
+
+  const filteredData =
+    responseData?.filter((item) => {
+      if (!item?.createdAt) return false;
+
+      const date = new Date(item.createdAt);
+
+      if (Number.isNaN(date.getTime())) return false;
+
+      return date.toISOString().split("T")[0] === today;
+    }) ?? [];
+
+  const visibleUsers = filteredData.slice(0, 3);
+
+  const remainingCount = Math.max(filteredData.length - 3, 0);
+
   useEffect(() => {
     if (!token) {
       navigate("/auth/login");
@@ -136,12 +153,12 @@ export function AdminDashboard() {
                   border-border/40!
                   bg-card
                   flex
-                  items-start
                   pl-6 py-2
                   pt-2
-                  h-fit
+                  h-30
                   gap-1.5
                   w-full
+                  items-center
                   relative
                   overflow-hidden
                 "
@@ -159,22 +176,43 @@ export function AdminDashboard() {
                     </div>
 
                     <div>
-                      <CardTitle className="font-semibold">
+                      <CardTitle className="font-semibold text-lg">
                         {item.des}
                       </CardTitle>
-
-                      <CardDescription className="text-lg">
+                      <CardDescription className="text-2xl">
                         {item.title}
                       </CardDescription>
-                      <h1 className="text-accent-foreground w-fit flex pl-2 mt-2">
-                        <ArrowUp className="size-4" />
-                        <span className="size-6 flex justify-center items-center  p-1 text-xs rounded-full text-success-foreground bg-success">
-                          12%
-                        </span>
-                      </h1>
-                      <CardDescription className={"text-xs mt-1"}>
-                        vs last month
-                      </CardDescription>
+                      <div>
+                        {!visibleUsers || visibleUsers?.length === 0 ? (
+                          <CardDescription className="text-xs line-clamp-1">
+                            No Create User found for today.
+                          </CardDescription>
+                        ) : (
+                          <div className="flex gap-5 relative">
+                            {visibleUsers?.map((item) => {
+                              const Name = item?.firstName?.charAt();
+                              const LastName = item?.lastName?.charAt();
+                              return (
+                                <div key={item?._id}>
+                                  {item?.avatar ? (
+                                    <img
+                                      className="size-6 absolute rounded-xl object-cover"
+                                      src={item.avatar}
+                                    />
+                                  ) : (
+                                    <div className="bg-muted size-6 rounded-xl object-cover absolute flex justify-center items-center">
+                                      <h1 className="text-[12px]  text-muted-foreground">
+                                        {Name}
+                                        {LastName}
+                                      </h1>
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </Card>
                 );

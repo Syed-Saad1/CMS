@@ -5,15 +5,24 @@ import { Button } from "./ui/button";
 import { useUpdateRole } from "@/mutations/updateRole";
 import { useParams } from "react-router-dom";
 import { Check, Loader } from "lucide-react";
+import toast from "react-hot-toast";
 
 function UpdateRole({ userRole }) {
   const { id } = useParams();
   const [selectedRole, setSelectedRole] = useState(userRole);
   const { mutateAsync: updateRoleFc, isPending } = useUpdateRole(id);
 
-  const rolePayload = {
-    role: selectedRole,
+  const handle = async () => {
+    try {
+      const payload = {
+        role: selectedRole,
+      };
+      const Response = await updateRoleFc(payload);
+      const result = Response;
+      toast.success(result?.message || "User Role Update ");
+    } catch (error) {}
   };
+
   const roles = [
     {
       id: "admin",
@@ -119,7 +128,7 @@ function UpdateRole({ userRole }) {
           </div>
           <div className="flex justify-end items-end ">
             <Button
-              onClick={() => updateRoleFc(rolePayload)}
+              onClick={handle}
               className={""}
               type="button"
               variant="button"

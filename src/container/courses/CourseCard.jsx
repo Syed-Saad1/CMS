@@ -22,55 +22,13 @@ export const CourseCard = ({ item }) => {
       <Link to={`${item?._id}`}>
         <Card
           key={item?._id}
-          className="h-fit pb-2 hover:shadow-2xl hover:h-62 hover:w-64 rounded-xl border border-border w-full flex flex-col gap-2"
+          className="h-fit pb-2 hover:shadow-xs hover:h-62 hover:w-64 rounded-xl border border-border w-full flex flex-col gap-2"
         >
           <div className="group relative h-32 bg-accent overflow-hidden">
             <img
               className="absolute aspect-video inset-0 text-center flex justify-center items-center text-red-500 font-bold w-full h-full object-cover"
               src={item?.thumbnail || "/DeafultThumbinal.png"}
             />
-
-            {/* {UserRole === "admin" && (
-              <Popover>
-                <PopoverTrigger
-                  asChild
-                  className="
-                  absolute top-0.5 right-0.5
-                  rounded-lg
-                  opacity-0 group-hover:opacity-100
-                "
-                >
-                  <Button variant="button">
-                    <EllipsisVertical />
-                  </Button>
-                </PopoverTrigger>
-
-                <PopoverContent className="w-fit">
-                  <div className="flex flex-col justify-center items-center gap-2 bg-transparent">
-                    <Link to={`/courses/edit/${item?._id}`}>
-                      <Button variant="outline" className={" w-30"}>
-                        Edit
-                      </Button>
-                    </Link>
-                    <Link to={`/courses/assign/${item?._id}`}>
-                      <Button variant="outline" className={" w-30"}>
-                        Assign Course
-                      </Button>
-                    </Link>
-
-                    <DialogTrigger>
-                      <Button
-                        className="bg-destructive hover:bg-destructive/80! text-primary-foreground w-30"
-                        onClick={() => setselectItem(item)}
-                        variant="ghost"
-                      >
-                        Delete
-                      </Button>
-                    </DialogTrigger>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            )} */}
           </div>
 
           <div className="flex flex-col pl-2">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useTransition } from "react";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
@@ -13,10 +13,11 @@ import DeleteUserAccount from "@/components/DeleteUserAccount";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import TeacherAssigned from "@/components/TeacherAssigned";
+import axios from "axios";
 
 function UserView() {
   const { id } = useParams();
-
+  const { t } = useTransition();
   const { data, isLoading } = getUserById(id);
 
   const UserProfileData = data?.data;
@@ -49,8 +50,15 @@ function UserView() {
 
       const res = await mutateAsync(payload);
 
-      toast.success("Update User Data Successfully");
+      toast.success(res?.message || "Update User Data Successfully");
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
     }
   };
 

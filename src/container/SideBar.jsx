@@ -55,6 +55,7 @@ function SideBar() {
             Cookies.remove("token");
             navigation("/auth/login");
             Cookies.remove("role");
+            Cookies.remove("userId");
           }}
           className=" group flex w-full items-center gap-3
     rounded-lg px-4 py-3

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFormik } from "formik";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 
@@ -27,8 +27,12 @@ import { useTranslation } from "react-i18next";
 export const LoginScreen = () => {
   const { t } = useTranslation();
   const ValidationScheme = Yup.object({
-    email: Yup.string().email(t("auth.invalidEmail")).required(t("auth.emailRequired")),
-    password: Yup.string().min(8, t("auth.passwordMin")).required(t("auth.passwordRequired")),
+    email: Yup.string()
+      .email(t("auth.invalidEmail"))
+      .required(t("auth.emailRequired")),
+    password: Yup.string()
+      .min(8, t("auth.passwordMin"))
+      .required(t("auth.passwordRequired")),
   });
   const initialValues = {
     email: "",
@@ -46,13 +50,11 @@ export const LoginScreen = () => {
         password: values.password,
       };
       const response = await mutateAsync(payload);
-
-
+      const result = response;
       const userRole = response?.data?.user?.role;
       const userId = response?.data?.user?._id;
       const accessToken = response?.data?.accessToken;
-
-
+      toast.success(result?.message || t("auth.accountCreated"));
       if (response?.success === true) {
         if (userRole === "admin") {
           navigate("/admin/dashboard");
@@ -65,7 +67,11 @@ export const LoginScreen = () => {
       Cookies.set("userId", userId);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error?.message || t("messages.serverError"));
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
       }
     } finally {
       resetForm();
@@ -154,7 +160,7 @@ export const LoginScreen = () => {
                 </div>
               </div>
               <Button
-                className="mt-6 w-full bg-primary text-base hover:bg-primary/90 h-12!"
+                className="mt-6 w-full bg-primary text-primary-foreground text-base hover:bg-primary/90 h-12!"
                 type="submit"
                 variant={"default"}
                 disabled={isPending}

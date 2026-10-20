@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { Card, CardDescription, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { CircleCheckBig, Loader, Trash } from "lucide-react";
@@ -8,6 +8,7 @@ import { deleteUser } from "@/mutations/deleteUser";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 function DeleteUserAccount({ item }) {
   const queryClient = useQueryClient();
 
@@ -15,15 +16,22 @@ function DeleteUserAccount({ item }) {
   const { id } = useParams();
   const [selectItem, setselectItem] = useState(null);
   const { mutateAsync, isPending } = deleteUser();
-
   const handleDelete = async () => {
     try {
-      await mutateAsync(id);
+      const Response = await mutateAsync(id);
+      console.log("Response", Response);
+      const result = Response;
 
-      toast.success("User Delete Successfully");
-    } catch (error) {
-    } finally {
+      toast.success(result?.message || "User Delete Successfully");
       navigate("/admin/users");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("Error", error.response?.data?.message);
+
+        toast.error(error.response?.data?.message || "messages.somethingWrong");
+      } else {
+        toast.error("Something Went Wrong");
+      }
     }
   };
   return (

@@ -3,7 +3,7 @@ import { QueryKey } from "@/constant/query";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const useEnrollCourse = () => {
+export const useEnrollCourse = (id) => {
   const token = Cookies.get("token");
   const queryClient = useQueryClient();
 

@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 const options = [
   { value: "Programing", label: "Programing" },
@@ -82,7 +83,9 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   const ValidationScheme = Yup.object({
     title: Yup.string().trim().required(t("ui.courseTitleRequired")),
 
-    description: Yup.string().trim().required(t("ui.courseDescriptionRequired")),
+    description: Yup.string()
+      .trim()
+      .required(t("ui.courseDescriptionRequired")),
 
     price: Yup.string().required(t("ui.coursePriceRequired")),
   });
@@ -116,10 +119,8 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
         courseTime: values.courseTime.startTime,
         courseTime: values.courseTime.endTime,
       };
-      toast.success(t("ui.courseCreateSuccess"));
-      navigate("/courses");
+
       await editCourseMutation(payload);
-      toast.success(t("ui.userUpdated"));
       const formData = new FormData();
 
       formData.append("tags", JSON.stringify(values.tags || []));
@@ -145,6 +146,20 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
           },
         ),
       );
+      if (isEdit === false) {
+        const CreateCourse = await createCourseMutation(formData);
+        const CreateResult = CreateCourse;
+        console.log("Error", CreateResult);
+        toast.success(createCourse?.message || t("ui.courseCreateSuccess"));
+      } else {
+        const EditResponse = await editCourseMutation(formData);
+
+        const Editresult = EditResponse;
+
+        toast.success(Editresult?.message || t("ui.courseUpdateSuccess"));
+      }
+      navigate("/courses");
+      resetForm();
 
       if (values.thumbnail instanceof File) {
         formData.append("thumbnail", values.thumbnail);
@@ -152,18 +167,6 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
 
       for (const [key, value] of formData.entries()) {
       }
-
-      if (isEdit) {
-        await editCourseMutation(formData);
-
-        toast.success(t("ui.courseUpdateSuccess"));
-      } else {
-        await createCourseMutation(formData);
-
-        toast.success(t("ui.courseCreateSuccess"));
-      }
-
-      resetForm();
 
       if (thumbnail?.preview && !thumbnail?.existing) {
         URL.revokeObjectURL(thumbnail.preview);
@@ -174,7 +177,15 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
       if (ImgRef.current) {
         ImgRef.current.value = "";
       }
-    } catch (error) {}
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
+    }
   }
 
   const handleThumbnailFile = (file) => {
@@ -254,202 +265,203 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
     }
   };
   return (
-    <form
-      className="w-full h-screen px-6  mt-34 mb-6
+    <>
+      <form
+        className="w-full h-screen px-6  mt-34 mb-6
     "
-      onSubmit={handleSubmit}
-    >
-      {isCourseLoading ? (
-        <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
-          <Card className="flex flex-col w-full py-6 px-4 overflow-hidden">
-            <div>
-              <Skeleton className="h-8 w-52" />
-              <Skeleton className="h-4 w-72 mt-2" />
-            </div>
-
-            <Skeleton className="h-px w-full mt-4" />
-
-            <div className="mt-4">
-              <Skeleton className="h-4 w-28" />
-              <Skeleton className="h-10 w-full mt-2 rounded-md" />
-            </div>
-
-            <div className="mt-4">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-24 w-full mt-2 rounded-md" />
-            </div>
-
-            <Card className="grid grid-cols-2 mt-4 items-center w-full gap-4 p-4">
+        onSubmit={handleSubmit}
+      >
+        {isCourseLoading ? (
+          <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
+            <Card className="flex flex-col w-full py-6 px-4 overflow-hidden">
               <div>
+                <Skeleton className="h-8 w-52" />
+                <Skeleton className="h-4 w-72 mt-2" />
+              </div>
+
+              <Skeleton className="h-px w-full mt-4" />
+
+              <div className="mt-4">
                 <Skeleton className="h-4 w-28" />
-                <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                <Skeleton className="h-10 w-full mt-2 rounded-md" />
               </div>
 
-              <div>
+              <div className="mt-4">
                 <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                <Skeleton className="h-24 w-full mt-2 rounded-md" />
               </div>
 
-              <div>
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-8 w-full mt-2 rounded-md" />
-              </div>
+              <Card className="grid grid-cols-2 mt-4 items-center w-full gap-4 p-4">
+                <div>
+                  <Skeleton className="h-4 w-28" />
+                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                </div>
 
-              <div>
-                <Skeleton className="h-4 w-28" />
-                <Skeleton className="h-8 w-full mt-2 rounded-md" />
-              </div>
-            </Card>
+                <div>
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                </div>
 
-            <div className="space-y-2 mt-6">
-              <div className="flex items-center justify-between">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-6 w-20 rounded-md" />
-              </div>
+                <div>
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                </div>
 
-              <Skeleton className="h-64 w-full rounded-md" />
-            </div>
-
-            <div className="flex items-center justify-end gap-4 mt-4">
-              <Skeleton className="h-10 w-24 rounded-md" />
-              <Skeleton className="h-10 w-36 rounded-md" />
-            </div>
-          </Card>
-
-          <div>
-            <Card className="flex flex-col py-8 px-6 h-fit">
-              <Skeleton className="h-6 w-44" />
+                <div>
+                  <Skeleton className="h-4 w-28" />
+                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
+                </div>
+              </Card>
 
               <div className="space-y-2 mt-6">
-                <Skeleton className="h-64 w-full rounded-lg" />
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-6 w-20 rounded-md" />
+                </div>
+
+                <Skeleton className="h-64 w-full rounded-md" />
+              </div>
+
+              <div className="flex items-center justify-end gap-4 mt-4">
+                <Skeleton className="h-10 w-24 rounded-md" />
+                <Skeleton className="h-10 w-36 rounded-md" />
               </div>
             </Card>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
-          {" "}
-          <Card className="flex flex-col w-full py-6 px-4  overflow-y-auto scrollbar-thin">
+
             <div>
-              <h1 className="text-dashboard-foreground text-2xl font-extrabold">
-                {location.pathname === "/courses-create"
-                  ? " Create New Course"
-                  : "Edit Course"}
-              </h1>
+              <Card className="flex flex-col py-8 px-6 h-fit">
+                <Skeleton className="h-6 w-44" />
 
-              <p className="text-muted-foreground text-sm mt-1">
-                {location.pathname === "/courses-create"
-                  ? "Add a new educational module to the portal."
-                  : "Update your course information."}
-              </p>
+                <div className="space-y-2 mt-6">
+                  <Skeleton className="h-64 w-full rounded-lg" />
+                </div>
+              </Card>
             </div>
-            <hr className="mt-4" />
-
-            <div className="mt-4">
-              <Label htmlFor="Tit">
-                Course Title <span className="text-blue-500">*</span>
-              </Label>
-
-              <Input
-                value={values?.title}
-                onChange={handleChange}
-                name="title"
-                className={"mt-2"}
-                type="text"
-                id="Tit"
-                placeholder={t("ui.titleExample")}
-              />
-
-              {errors?.title && (
-                <FieldDescription>{errors.title}</FieldDescription>
-              )}
-            </div>
-
-            <div className="mt-4">
-              <Label htmlFor="des">
-                Description <span className="text-blue-500">*</span>
-              </Label>
-
-              <Textarea
-                value={values?.description}
-                onChange={handleChange}
-                id="des"
-                name="description"
-                className="mt-2 text-xs h-24! overflow-x-scroll overflow-y-scroll"
-                placeholder={t("ui.descriptionExample")}
-              />
-
-              {errors?.description && (
-                <FieldDescription>{errors.description}</FieldDescription>
-              )}
-            </div>
-
-            <Card className="grid grid-cols-2 mt-4 items-center justify-center w-full gap-4">
+          </div>
+        ) : (
+          <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
+            {" "}
+            <Card className="flex flex-col w-full py-6 px-4  overflow-y-auto scrollbar-thin">
               <div>
-                <Label htmlFor="Pri">
-                  Course Pricing <span className="text-blue-500">*</span>
+                <h1 className="text-dashboard-foreground text-2xl font-extrabold">
+                  {location.pathname === "/courses-create"
+                    ? " Create New Course"
+                    : "Edit Course"}
+                </h1>
+
+                <p className="text-muted-foreground text-sm mt-1">
+                  {location.pathname === "/courses-create"
+                    ? "Add a new educational module to the portal."
+                    : "Update your course information."}
+                </p>
+              </div>
+              <hr className="mt-4" />
+
+              <div className="mt-4">
+                <Label htmlFor="Tit">
+                  Course Title <span className="text-blue-500">*</span>
                 </Label>
 
                 <Input
-                  value={values?.price}
-                  id="Pri"
+                  value={values?.title}
                   onChange={handleChange}
-                  name="price"
-                  placeholder={t("ui.priceExample")}
-                  type="number"
-                  className="h-8 mt-2"
+                  name="title"
+                  className={"mt-2"}
+                  type="text"
+                  id="Tit"
+                  placeholder={t("ui.titleExample")}
                 />
 
-                {errors?.price && (
-                  <FieldDescription>{errors.price}</FieldDescription>
+                {errors?.title && (
+                  <FieldDescription>{errors.title}</FieldDescription>
                 )}
               </div>
-              <div>
-                <Label htmlFor="tags">
-                  Course Tag <span className="text-destructive">*</span>
-                </Label>{" "}
-                <MultiSelect
-                  name="tags"
-                  className="h-8! w-full!"
-                  value={values?.tags}
-                  options={options}
-                  onChange={(tags) => setFieldValue("tags", tags)}
-                />
-              </div>
-              <div>
-                <Label htmlFor="ClassDays">
-                  Class Days <span className="text-destructive">*</span>
-                </Label>{" "}
-                <MultiSelect
-                  name="ClassDays"
-                  className="h-8! w-full! "
-                  value={values?.courseDays}
-                  options={Daysoptions}
-                  onChange={(courseDays) =>
-                    setFieldValue("courseDays", courseDays)
-                  }
-                />
-              </div>
-              <TimeRangePicker
-                value={values?.courseTime}
-                setFieldValue={setFieldValue}
-              />
-            </Card>
-            <div className="space-y-2 mt-6">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">
-                  Course Overview <span className="text-destructive">*</span>
-                </label>
 
-                <span className="rounded-md bg-primary/10 px-2 py-1 text-xs text-primary">
-                  Markdown
-                </span>
+              <div className="mt-4">
+                <Label htmlFor="des">
+                  Description <span className="text-blue-500">*</span>
+                </Label>
+
+                <Textarea
+                  value={values?.description}
+                  onChange={handleChange}
+                  id="des"
+                  name="description"
+                  className="mt-2 text-xs h-24! overflow-x-scroll overflow-y-scroll"
+                  placeholder={t("ui.descriptionExample")}
+                />
+
+                {errors?.description && (
+                  <FieldDescription>{errors.description}</FieldDescription>
+                )}
               </div>
 
-              <MarkdownEditor
-                value={values?.courseOverview}
-                onChange={setCourseOverview}
-                placeholder={`## Course Overview
+              <Card className="grid grid-cols-2 mt-4 items-center justify-center w-full gap-4">
+                <div>
+                  <Label htmlFor="Pri">
+                    Course Pricing <span className="text-blue-500">*</span>
+                  </Label>
+
+                  <Input
+                    value={values?.price}
+                    id="Pri"
+                    onChange={handleChange}
+                    name="price"
+                    placeholder={t("ui.priceExample")}
+                    type="number"
+                    className="h-8 mt-2"
+                  />
+
+                  {errors?.price && (
+                    <FieldDescription>{errors.price}</FieldDescription>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="tags">
+                    Course Tag <span className="text-destructive">*</span>
+                  </Label>{" "}
+                  <MultiSelect
+                    name="tags"
+                    className="h-8! w-full!"
+                    value={values?.tags}
+                    options={options}
+                    onChange={(tags) => setFieldValue("tags", tags)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="ClassDays">
+                    Class Days <span className="text-destructive">*</span>
+                  </Label>{" "}
+                  <MultiSelect
+                    name="ClassDays"
+                    className="h-8! w-full! "
+                    value={values?.courseDays}
+                    options={Daysoptions}
+                    onChange={(courseDays) =>
+                      setFieldValue("courseDays", courseDays)
+                    }
+                  />
+                </div>
+                <TimeRangePicker
+                  value={values?.courseTime}
+                  setFieldValue={setFieldValue}
+                />
+              </Card>
+              <div className="space-y-2 mt-6">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium">
+                    Course Overview <span className="text-destructive">*</span>
+                  </label>
+
+                  <span className="rounded-md bg-primary/10 px-2 py-1 text-xs text-primary">
+                    Markdown
+                  </span>
+                </div>
+
+                <MarkdownEditor
+                  value={values?.courseOverview}
+                  onChange={setCourseOverview}
+                  placeholder={`## Course Overview
 
 Describe what students will learn in this course...
 
@@ -458,54 +470,56 @@ Describe what students will learn in this course...
 - Topic one
 - Topic two
 - Topic three`}
-              />
-            </div>
-            <div className="flex items-center justify-end gap-4 mt-4">
-              <Link to="/courses">
+                />
+              </div>
+              <div className="flex items-center justify-end gap-4 mt-4">
+                <Link to="/courses">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="text-sm px-4"
+                  >
+                    <X />
+                    Cancel
+                  </Button>
+                </Link>
                 <Button
-                  type="button"
-                  variant="outline"
-                  className="text-sm px-4"
+                  type="submit"
+                  variant="button"
+                  className="text-sm w-38"
+                  disabled={isPending}
                 >
-                  <X />
-                  Cancel
+                  {isPending ? (
+                    <>
+                      <Loader className="size-4 animate-spin" />
+                      {isEdit ? "Updating..." : "Creating..."}
+                    </>
+                  ) : (
+                    <>
+                      {isEdit ? (
+                        <Save className="size-4" />
+                      ) : (
+                        <Plus className="size-4" />
+                      )}
+                      {isEdit ? "Update Course" : "Create Course"}
+                    </>
+                  )}
                 </Button>
-              </Link>
-              <Button
-                type="submit"
-                variant="button"
-                className="text-sm w-38"
-                disabled={isPending}
-              >
-                {isPending ? (
-                  <>
-                    <Loader className="size-4 animate-spin" />
-                    {isEdit ? "Updating..." : "Creating..."}
-                  </>
-                ) : (
-                  <>
-                    {isEdit ? (
-                      <Save className="size-4" />
-                    ) : (
-                      <Plus className="size-4" />
-                    )}
-                    {isEdit ? "Update Course" : "Create Course"}
-                  </>
-                )}
-              </Button>
-            </div>
-          </Card>
-          <div>
-            <Card className="flex flex-col py-8 px-6 h-fit">
-              <CardTitle className="text-xl">{t("ui.courseThumbnail")}</CardTitle>
+              </div>
+            </Card>
+            <div>
+              <Card className="flex flex-col py-8 px-6 h-fit">
+                <CardTitle className="text-xl">
+                  {t("ui.courseThumbnail")}
+                </CardTitle>
 
-              <div className="space-y-2 mt-6">
-                <div
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => ImgRef.current?.click()}
-                  className={`
+                <div className="space-y-2 mt-6">
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => ImgRef.current?.click()}
+                    className={`
                    relative
                    flex
                    h-64
@@ -524,41 +538,41 @@ Describe what students will learn in this course...
                        : "border-[#b0adb4] dark:border-[#8b8694] bg-accent"
                    }
                  `}
-                >
-                  {thumbnail ? (
-                    <>
-                      <img
-                        src={thumbnail.preview}
-                        alt="Course thumbnail preview"
-                        className="h-full w-full object-cover"
-                      />
+                  >
+                    {thumbnail ? (
+                      <>
+                        <img
+                          src={thumbnail.preview}
+                          alt="Course thumbnail preview"
+                          className="h-full w-full object-cover"
+                        />
 
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity">
-                        <div className="flex flex-col items-center text-white">
-                          <ImagePlus className="size-8 mb-2" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity">
+                          <div className="flex flex-col items-center text-white">
+                            <ImagePlus className="size-8 mb-2" />
 
-                          <span className="text-sm font-medium">
-                            Change Thumbnail
-                          </span>
+                            <span className="text-sm font-medium">
+                              Change Thumbnail
+                            </span>
+                          </div>
                         </div>
-                      </div>
 
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
 
-                          handleRemoveThumbnail();
-                        }}
-                        className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black"
-                      >
-                        <X className="size-4" />
-                      </button>
-                    </>
-                  ) : (
-                    <div className="flex flex-col items-center text-center px-4">
-                      <div
-                        className={`
+                            handleRemoveThumbnail();
+                          }}
+                          className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black"
+                        >
+                          <X className="size-4" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center text-center px-4">
+                        <div
+                          className={`
                          mb-3 flex size-12 items-center justify-center rounded-full
                          ${
                            isDragging
@@ -566,46 +580,47 @@ Describe what students will learn in this course...
                              : "bg-muted text-muted-foreground"
                          }
                        `}
-                      >
-                        <Upload className="size-6" />
+                        >
+                          <Upload className="size-6" />
+                        </div>
+
+                        <span className="text-sm font-medium">
+                          {isDragging
+                            ? "Drop your thumbnail here"
+                            : "Upload Course Thumbnail"}
+                        </span>
+
+                        <span className="mt-1 text-xs text-muted-foreground">
+                          Drag & drop or click to browse
+                        </span>
+
+                        <span className="mt-2 text-xs text-gray-500">
+                          PNG, JPG or WEBP • Max 5MB
+                        </span>
                       </div>
+                    )}
 
-                      <span className="text-sm font-medium">
-                        {isDragging
-                          ? "Drop your thumbnail here"
-                          : "Upload Course Thumbnail"}
-                      </span>
+                    <input
+                      ref={ImgRef}
+                      id="thumbnail"
+                      type="file"
+                      name="thumbnail"
+                      accept="image/png,image/jpeg,image/webp"
+                      onChange={handleThumbnailChange}
+                      className="hidden"
+                    />
+                  </div>
 
-                      <span className="mt-1 text-xs text-muted-foreground">
-                        Drag & drop or click to browse
-                      </span>
-
-                      <span className="mt-2 text-xs text-gray-500">
-                        PNG, JPG or WEBP • Max 5MB
-                      </span>
-                    </div>
+                  {errors.thumbnail && (
+                    <FieldDescription>{errors.thumbnail}</FieldDescription>
                   )}
-
-                  <input
-                    ref={ImgRef}
-                    id="thumbnail"
-                    type="file"
-                    name="thumbnail"
-                    accept="image/png,image/jpeg,image/webp"
-                    onChange={handleThumbnailChange}
-                    className="hidden"
-                  />
                 </div>
-
-                {errors.thumbnail && (
-                  <FieldDescription>{errors.thumbnail}</FieldDescription>
-                )}
-              </div>
-            </Card>
+              </Card>
+            </div>
           </div>
-        </div>
-      )}
-    </form>
+        )}
+      </form>
+    </>
   );
 }
 
