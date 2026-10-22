@@ -77,11 +77,10 @@ export const UserDashboard = () => {
 
   return (
     <div
-      className="w-full 
-     min-w-0 p-6 h-full"
+      className="w-full min-w-0 p-3 sm:p-6 h-full"
     >
       {" "}
-      <div className="flex justify-between items-end ">
+      <div className="flex flex-wrap justify-between items-end gap-3">
         <div>
           {" "}
           <h1 className="text-dashboard-foreground text-2xl font-extrabold">
@@ -101,7 +100,7 @@ export const UserDashboard = () => {
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
-          <div className="relative w-88">
+          <div className="relative w-full max-w-88">
             <Icon
               className="absolute left-3 top-1/2 text-gray-400 -translate-y-2 cursor-pointer"
               icon="bx:search"
@@ -115,7 +114,8 @@ export const UserDashboard = () => {
           </div>
         </div>
         <hr className="mt-4" />
-        <Table>
+        <div className="w-full overflow-x-auto">
+        <Table className="min-w-[760px]">
           <TableHeader>
             <TableRow>
               <TableHead>{t("ui.user")}</TableHead>
@@ -262,7 +262,8 @@ export const UserDashboard = () => {
             </TableBody>
           )}
         </Table>
-        <div className="mt-4 flex w-full items-center justify-between gap-4 border-t pt-4">
+        </div>
+        <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4 border-t pt-4">
           <p className="shrink-0  text-sm text-muted-foreground">
             Showing {filteredUsers.length === 0 ? 0 : startIndex + 1}–
             {Math.min(startIndex + itemsPerPage, filteredUsers.length)} of{" "}

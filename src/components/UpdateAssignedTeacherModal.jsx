@@ -40,7 +40,7 @@ function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
     }
   };
   return (
-    <div className="w-120 h-140 shrink-0">
+    <div className="w-full max-w-120 min-w-0 shrink-0">
       <div>
         <CardTitle>Update Teacher Assigned</CardTitle>
         <CardDescription>
@@ -90,7 +90,7 @@ function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
           <Repeat />
           <CardTitle>Assigned Preview</CardTitle>
         </div>
-        <div className="grid grid-cols-[45%_10%_45%] justify-center items-center mt-4 w-full ">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,45%)_10%_minmax(0,45%)] justify-center items-center mt-4 w-full gap-2">
           <Card className={"p-2 min-h-35 gap-1 flex flex-col "}>
             <div
               className="bg-primary/30 w-fit text-primary-foreground px-2 py-0.5 mt-1

@@ -90,7 +90,7 @@ export const LoginScreen = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="bg-background lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center">
-          <Card className={cn("min-w-90 md:w-110 flex flex-col px-6! py-6!")}>
+          <Card className={cn("w-[calc(100%-2rem)] max-w-110 min-w-0 flex flex-col px-6! py-6!")}>
             <CardHeader>
               <Link
                 className="lg:hidden flex justify-center items-center mb-4"

@@ -131,7 +131,7 @@ export const SignupScreen = () => {
       <div className="bg-background lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center ">
         <Card
           className={cn(
-            "min-w-90 md:w-110 flex flex-col  p-6! border-red-600!",
+            "w-[calc(100%-2rem)] max-w-110 min-w-0 flex flex-col p-6! border-red-600!",
           )}
         >
           <CardHeader>
@@ -154,7 +154,7 @@ export const SignupScreen = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="mt-10">
-            <div className=" grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Field>
                 <Label>{t("auth.firstName")}</Label>
                 <Input

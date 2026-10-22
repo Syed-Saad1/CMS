@@ -81,7 +81,7 @@ function GlobalSearch({ Loading }) {
     <div className="w-full  mt-6">
       <div className="w-full flex justify-between items-center">
         {" "}
-        <div className="relative w-88">
+        <div className="relative w-full max-w-88 min-w-0">
           <Icon
             className="absolute left-3 top-1/2 text-gray-400 -translate-y-2 cursor-pointer"
             icon="bx:search"

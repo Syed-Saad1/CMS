@@ -36,7 +36,7 @@ function AllUserUpdateProfile({
           </div>
 
           <CardContent className="mt-2">
-            <div className="grid grid-cols-2 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-4">
               <Field>
                 <Skeleton className="h-4 w-20 mb-2 rounded-md" />
                 <Skeleton className="h-10 w-full rounded-md" />
@@ -72,7 +72,7 @@ function AllUserUpdateProfile({
             </div>
 
             <CardContent className="mt-2">
-              <div className="grid grid-cols-2 items-center gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-4">
                 <Field>
                   <Label htmlFor="firstName">{t("ui.firstName")}</Label>
 

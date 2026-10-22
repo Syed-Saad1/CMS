@@ -28,8 +28,8 @@ function CourseScreen() {
   });
   return (
     <>
-      <div className="h-full w-full mt-12 mx-6">
-        <div className="flex justify-between items-end  ">
+      <div className="w-full min-w-0 py-4 px-3 sm:px-6">
+        <div className="flex flex-wrap justify-between items-end gap-4">
           <div>
             {" "}
             <h1 className="text-dashboard-foreground text-2xl font-extrabold">
@@ -52,7 +52,7 @@ function CourseScreen() {
           {" "}
           <div className="w-full flex justify-between items-center">
             {" "}
-            <div className="relative w-88">
+            <div className="relative w-full max-w-88">
               <Icon
                 className="absolute left-3 top-1/2 text-gray-400 -translate-y-2 cursor-pointer"
                 icon="bx:search"
@@ -66,7 +66,7 @@ function CourseScreen() {
             </div>
           </div>
           <hr className="mt-2" />
-          <div className="grid grid-cols-4 gap-y-6 gap-x-4 mt-4">
+          <div className="grid grid-cols-1 gap-y-6 gap-x-4 mt-4 sm:grid-cols-2 xl:grid-cols-4">
             {isLoading
               ? Array.from({ length: 4 }).map((i) => (
                   <div className="h-70 rounded-md  p-1 border-border w-full flex flex-col gap-2">

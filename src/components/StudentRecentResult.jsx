@@ -2,7 +2,6 @@ import React from "react";
 import { Card, CardTitle } from "./ui/card";
 import { ArrowRight, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -59,7 +58,7 @@ function StudentRecentResult() {
   return (
     <div>
       {" "}
-      <Card className="block! h-72! w-full rounded-xl p-4 mb-5">
+      <Card className="block! h-72! w-full rounded-xl p-4">
         {" "}
         <div className="w-full px-2 flex justify-between items-center">
           {" "}
@@ -71,8 +70,6 @@ function StudentRecentResult() {
           </Link>
         </div>
         <hr className="mt-2" />
-        <ScrollArea orientation="horizontal" className={"w-full max-w-full"}>
-          {" "}
           <Table>
             <TableHeader>
               <TableRow>
@@ -107,8 +104,6 @@ function StudentRecentResult() {
               })}
             </TableBody>
           </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
       </Card>
     </div>
   );

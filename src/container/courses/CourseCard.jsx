@@ -52,7 +52,7 @@ export const CourseCard = ({ item }) => {
           </div>
         </Card>
       </Link>
-      <DialogContent className="h-38! w-130!">
+      <DialogContent className="h-38! w-full! max-w-[calc(100vw-2rem)]! sm:w-130!">
         <DeleteCourseModal item={item} selectItem={selectItem} />
       </DialogContent>
     </Dialog>

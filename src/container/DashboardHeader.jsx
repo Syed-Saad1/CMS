@@ -17,8 +17,9 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteTeacherAssignedModal from "@/components/DeleteTeacherAssignedModal";
 import GlobalSearch from "@/components/GlobalSearch";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { Menu } from "lucide-react";
 
-function DashboardHeader() {
+function DashboardHeader({ onMenuClick }) {
   const { theme, setTheme } = useTheme();
 
   const UserId = Cookies.get("userId");
@@ -35,11 +36,21 @@ function DashboardHeader() {
   const navigate = useNavigate();
   return (
     <Dialog>
-      <ItemHeader className="h-full px-8 md:px-4 sm:px-3 flex justify-between items-center bg-sidebar gap-4">
+      <ItemHeader className="h-full min-w-0 px-2 sm:px-3 md:px-4 lg:px-8 flex justify-between items-center bg-sidebar gap-2 sm:gap-4">
+        {onMenuClick && (
+          <button
+            type="button"
+            aria-label="Open navigation menu"
+            onClick={onMenuClick}
+            className="flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-muted xl:hidden"
+          >
+            <Menu className="size-5" />
+          </button>
+        )}
         {role === "admin" && (
           <DialogTrigger>
             <Input
-              className="h-8 w-64 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none"
+              className="h-8 w-32 min-w-0 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none sm:w-48 xl:w-64"
               placeholder="Search courses, teachers, students..."
             />
           </DialogTrigger>
@@ -47,7 +58,7 @@ function DashboardHeader() {
         {role === "user" && (
           <DialogTrigger>
             <Input
-              className="h-8 w-64 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none"
+              className="h-8 w-32 min-w-0 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none sm:w-48 xl:w-64"
               placeholder="Search courses and learning resources..."
             />
           </DialogTrigger>

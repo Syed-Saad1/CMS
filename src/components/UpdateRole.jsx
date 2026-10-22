@@ -57,7 +57,7 @@ function UpdateRole({ userRole }) {
           </CardDescription>
 
           <hr className="mt-2" />
-          <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-120">
+          <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-full max-w-120">
             {roles.map((role) => {
               const isSelected = selectedRole === role.id;
 

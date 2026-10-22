@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export function AuthLayout() {
   return (
-    <div className=" h-screen w-full overflow-hidden bg-gray-300 lg:grid lg:grid-cols-2 justify-center items-center rounded-xl">
+    <div className="min-h-screen w-full overflow-x-hidden bg-gray-300 lg:h-screen lg:grid lg:grid-cols-2 justify-center items-center rounded-xl">
       {" "}
       <div className="lg:flex hidden  bg-[url('/FormSide.png')] bg-cover  overflow-hidden  h-full bg-no-repeat  ">
         <div className="flex flex-col bg-linear-to-t from-white/70 to-transparent size-full justify-between px-14">

@@ -65,7 +65,7 @@ function TeacherAssigned() {
     <div className="p-6 w-full flex-col justify-start items-start flex h-full">
       <CardTitle className={"text-xl"}>{t("ui.teacherTitle")}</CardTitle>
       <CardDescription>{t("ui.assignTeacherDescription")}</CardDescription>
-      <div className="grid grid-cols-[58%_38%] w-full gap-4 mt-4">
+      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] w-full min-w-0 gap-4 mt-4">
         <CourseDataAssignedTeacher Data={Data} isLoading={isLoading} />
         <Card className={"h- p-4 flex flex-col"}>
           <div>
@@ -145,14 +145,14 @@ function TeacherAssigned() {
           </div>
         </Card>
       </div>
-      <div className="grid grid-cols-[58%_38%] gap-4  w-full mt-8">
+      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] gap-4 w-full min-w-0 mt-8">
         <div className="p-4 h-fit w-full rounded-xl bg-card mb-6">
           <CardTitle>{t("ui.availableTeacher")}</CardTitle>
           <CardDescription>
             Here's are a list of teacher's you can assign this Course
           </CardDescription>
           <hr className="my-4" />
-          <div className="grid grid-cols-4 gap-4 mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-2">
             {TeacherData?.slice(0, 4)?.map((item) => {
               const IntialFirst = setSelectedTeacher?.firstName
                 ?.charAt()

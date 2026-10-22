@@ -19,7 +19,7 @@ function HomeScreen() {
   }
 
   return (
-    <div className="h-screen w-screen bg-blue-900">
+    <div className="min-h-screen w-full overflow-x-hidden bg-blue-900">
       <div className="flex flex-col justify-center items-center h-full">
         <h1 className="text-6xl font-bold text-white">{t("common.home")}</h1>
         <p className="text-xl text-white font-semibold mt-4">

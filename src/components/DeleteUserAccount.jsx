@@ -53,7 +53,7 @@ function DeleteUserAccount({ item }) {
           </CardDescription>
         </div>
       </div>
-      <div className="grid grid-cols-2 p-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
         {DeletePoints?.map((item) => (
           <div className="flex items-start gap-4" key={item.id}>
             <CircleCheckBig size={18} className="text-red-400" />
@@ -65,7 +65,7 @@ function DeleteUserAccount({ item }) {
         {" "}
         <Button
           onClick={handleDelete}
-          className={"h-10 text-sm w-60"}
+          className={"h-10 w-full max-w-60 text-sm"}
           variant="destructive"
         >
           {isPending ? (

@@ -1,29 +1,58 @@
 import DashboardHeader from "@/container/DashboardHeader";
 import SideBar from "@/container/SideBar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 function DashboardLayout() {
   const token = Cookies.get("token");
   const role = Cookies.get("role");
+  const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isSidebarOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isSidebarOpen]);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
+
   if (!token) {
     return <Navigate to={"/auth/login"} replace />;
   }
 
   return (
-    <div className="h-screen overflow-hidden overflow-y-hidden bg-pink-900 w-full flex">
-      <div className=" w-56 shrink-0 text-primary-foreground bg-sidebar h-full">
+    <div className="flex h-dvh w-full flex-col overflow-hidden bg-pink-900 xl:flex-row">
+      <div className="hidden w-56 shrink-0 text-primary-foreground bg-sidebar xl:block xl:h-full">
         <SideBar />
       </div>
-      <div className=" flex h-full w-full flex-col bg-dashboard-main">
-        <div className=" h-16 w-full border-b border-b-border">
-          <DashboardHeader />
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-dashboard-main">
+        <div className="h-16 w-full shrink-0 border-b border-b-border">
+          <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
         </div>
-        <div className=" size-full overflow-y-auto scrollbar-thin flex justify-center items-center text-2xl ">
-          <Outlet />{" "}
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-thin text-2xl">
+          <Outlet />
         </div>
       </div>
+      {isSidebarOpen && (
+        <div className="fixed inset-0 z-50 xl:hidden">
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            onClick={() => setIsSidebarOpen(false)}
+            className="absolute inset-0 bg-black/40"
+          />
+          <div className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-sidebar text-primary-foreground shadow-xl">
+            <SideBar onClose={() => setIsSidebarOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

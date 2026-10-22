@@ -58,8 +58,8 @@ export const CourseDetail = () => {
     }
   };
   return (
-    <div className="h-full w-full  overflow-y-auto overflow-hidden p-4 gap-4">
-      <div className="relative grid grid-cols-[72%_27%] items-start gap-4">
+    <div className="w-full min-w-0 overflow-x-hidden p-3 sm:p-4">
+      <div className="relative grid min-w-0 grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,72%)_minmax(0,27%)]">
         {isLoading ? (
           <Card className="flex w-full flex-col h-full animate-pulse">
             <div className="w-full h-72 shrink-0 relative bg-muted overflow-hidden">
@@ -134,7 +134,7 @@ export const CourseDetail = () => {
                         >
                           <Trash size={18} />
                         </DialogTrigger>
-                        <DialogContent className="h-40! w-130!">
+                        <DialogContent className="h-40! w-full! max-w-[calc(100vw-2rem)]! sm:w-130!">
                           {data?.data ? (
                             <DeleteCourseModal item={data?.data} />
                           ) : null}{" "}

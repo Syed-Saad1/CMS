@@ -269,12 +269,12 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   return (
     <>
       <form
-        className="w-full h-screen px-6  mt-34 mb-6
+        className="w-full min-w-0 min-h-screen px-3 sm:px-6 mt-6 xl:mt-34 mb-6
     "
         onSubmit={handleSubmit}
       >
         {isCourseLoading ? (
-          <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
+          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68%)_minmax(0,30%)] items-start justify-center gap-6 xl:h-[calc(100vh-180px)]">
             <Card className="flex flex-col w-full py-6 px-4 overflow-hidden">
               <div>
                 <Skeleton className="h-8 w-52" />
@@ -341,7 +341,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
             </div>
           </div>
         ) : (
-          <div className="w-full grid grid-cols-[68%_30%] items-start justify-center gap-6 h-[calc(100vh-180px)]">
+          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68%)_minmax(0,30%)] items-start justify-center gap-6 xl:h-[calc(100vh-180px)]">
             {" "}
             <Card className="flex flex-col w-full py-6 px-4  overflow-y-auto scrollbar-thin">
               <div>
@@ -398,7 +398,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 mt-4 items-center justify-center w-full gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 items-center justify-center w-full gap-4">
                 <div>
                   <Label htmlFor="Pri">
                     Course Pricing <span className="text-blue-500">*</span>
@@ -432,7 +432,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 mt-4 gap-4 w-full justify-start items-start">
+              <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 gap-4 w-full justify-start items-start">
                 <div className="w-full">
                   {" "}
                   <Label htmlFor="ClassDays">

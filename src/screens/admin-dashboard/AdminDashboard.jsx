@@ -127,13 +127,13 @@ export function AdminDashboard() {
   const isDashboardLoading = UserLoading || CourseLoading;
 
   return (
-    <div className="max-h-full h-full w-full mt-6 mx-6">
+    <div className="min-h-full w-full min-w-0 mt-6 px-3 sm:px-6">
       {" "}
       <div>
         {" "}
         <WelcomeDashboardAdmin />
         {isDashboardLoading ? (
-          <div className="flex justify-between items-center mt-8 gap-4">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {Array.from({ length: 4 }).map((_, index) => (
               <Card
                 key={index}
@@ -161,7 +161,7 @@ export function AdminDashboard() {
             ))}
           </div>
         ) : (
-          <div className="flex justify-between w-full mb-4 items-center mt-4 gap-4">
+          <div className="mb-4 mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {AdminDashboardCard.map((item) => {
               const IconCom = item.icon;
               return (
@@ -204,7 +204,7 @@ export function AdminDashboard() {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-[60%_40%]  mt-4 gap-2 w-full">
+      <div className="mt-4 grid w-full min-w-0 grid-cols-1 gap-2 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         {" "}
         <div>
           {" "}

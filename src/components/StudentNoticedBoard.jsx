@@ -36,7 +36,7 @@ function StudentNoticedBoard() {
   ];
   return (
     <div>
-      <Card className={"block! h-72! w-full rounded-xl p-4 mb-5"}>
+      <Card className={"block! h-72! w-full rounded-xl p-4"}>
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}

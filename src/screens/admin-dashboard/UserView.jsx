@@ -72,7 +72,7 @@ function UserView() {
 
   const UserRole = Cookies.get("role");
   return (
-    <div className="grid grid-cols-[24%_74%] gap-6 justify-center items-start p-4 w-full h-full">
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-6 justify-center items-start p-3 sm:p-4 w-full min-w-0 h-full">
       <PriviewProfileCard user={UserProfileData} isLoading={isLoading} />
 
       <div className="flex flex-col gap-4 w-full">
@@ -104,7 +104,7 @@ function UserView() {
 
               <hr className="mt-2" />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-120 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-full max-w-120 gap-3">
                 <Card className="relative min-h-26 w-38 flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
                   <Skeleton className="size-10 rounded-full" />
                   <Skeleton className="h-4 w-16 rounded-md" />

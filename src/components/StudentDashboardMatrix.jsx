@@ -51,7 +51,7 @@ function StudentDashboardMatrix() {
   return (
     <div>
       {" "}
-      <div className="flex items-start justify-start mt-4 gap-5 shrink-0">
+      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
         {loading
           ? Array.from({ length: StudentDashboardMatrix?.length || 4 }).map(
               (_, index) => (
