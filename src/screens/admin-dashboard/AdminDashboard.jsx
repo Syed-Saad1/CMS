@@ -168,7 +168,7 @@ export function AdminDashboard() {
                 <Card
                   key={item.id}
                   className={cn(
-                    "border-border/40! bg-card flex pl-4 py-2 pt-2 h-30 gap-3.5 w-full  rounded-lg  justify-start items-start ",
+                    "border-border/40! bg-card flex md:pr-0 pr-4 pl-4 py-2 pt-2 h-30 gap-3.5 w-full rounded-lg justify-between md:justify-start items-start ",
                     item.cardBg,
                   )}
                 >

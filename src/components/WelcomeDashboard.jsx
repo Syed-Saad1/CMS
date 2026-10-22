@@ -29,7 +29,10 @@ function WelcomeDashboard() {
   const name = ProfileData?.firstName + " " + ProfileData?.lastName;
   return (
     <div>
-      <Card className="flex flex-col dark:bg-[url('/WelcomeCardImageDark.jpeg')] bg-[url('/WelcomeCardImageLight.jpeg')] bg-cover bg-no-repeat p-4 sm:p-6 h-fit">
+      <Card
+        className="flex flex-col dark:bg-[url('/WelcomeCardImageDark.jpeg')] bg-[url('/WelcomeCardImageLight.jpeg')] bg-cover bg-no-repeat px-4
+      pt-2 sm:p-6 h-fit relative"
+      >
         {" "}
         <div className="flex flex-col justify-between items-start gap-4 sm:flex-row sm:items-center">
           {" "}
@@ -38,7 +41,9 @@ function WelcomeDashboard() {
             <CardTitle className="text-2xl sm:text-4xl font-bold">
               {greeting},👋
             </CardTitle>{" "}
-            <CardTitle className={"mt-1 flex min-w-0 items-center text-lg sm:text-xl"}>
+            <CardTitle
+              className={"mt-1 flex min-w-0 items-center text-lg sm:text-xl"}
+            >
               {" "}
               {t("AdminWel.title")}, {isLoading ? " * * * * *" : name}
             </CardTitle>{" "}
@@ -53,13 +58,9 @@ function WelcomeDashboard() {
               </Button>{" "}
             </Link>{" "}
           </div>{" "}
-          <div className="flex shrink-0 items-center justify-center gap-2 self-center sm:self-auto">
-            {" "}
-            {Role === "user" && (
-              <img className="size-20 sm:size-28 xl:size-40 object-contain" src="/Cap.png" alt="" />
-            )}{" "}
+          <div className="flex shrink-0 items-center justify-center gap-2 self-center sm:self-auto ">
             <img
-              className="size-20 sm:size-28 xl:size-40 object-contain"
+              className="size-20 md:opacity-100 bottom-2 right-2 absolute opacity-25 sm:size-28 xl:size-40 object-contain"
               src="/Book.png"
               alt=""
             />{" "}

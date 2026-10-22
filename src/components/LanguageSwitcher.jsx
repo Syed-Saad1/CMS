@@ -20,11 +20,11 @@ export default function LanguageSwitcher() {
       value={i18n.resolvedLanguage || i18n.language}
       onValueChange={(language) => i18n.changeLanguage(language)}
     >
-      <SelectTrigger className="w-20">
+      <SelectTrigger className="w-29 md:w-20">
         <SelectValue placeholder={t("common.language")} />
       </SelectTrigger>
-      <SelectContent className=" w-20 min-w-16">
-        <SelectGroup className="w-30">
+      <SelectContent className="w-26! min-w-26 md:w-20 md:min-w-16">
+        <SelectGroup className="w-26! min-w-26 md:w-30">
           {items.map((item) => (
             <SelectItem key={item.value} value={item.value}>
               {item.label}

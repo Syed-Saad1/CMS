@@ -31,7 +31,7 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
           </div>
           <Link
             to={"/admin/users"}
-            className="flex items-center gap-2 text-primary! text-sm font-normal "
+            className="flex items-center md:gap-2 gap-1 text-primary! md:text-sm text-xs font-normal "
           >
             {t("RecentAddedUser.ViewAll")}{" "}
             <ArrowRight className="size-4" strokeWidth={1.6} />

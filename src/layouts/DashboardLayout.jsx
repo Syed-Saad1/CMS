@@ -3,6 +3,7 @@ import SideBar from "@/container/SideBar";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import DashboardBottom from "@/components/DashboardBottom";
 
 function DashboardLayout() {
   const token = Cookies.get("token");
@@ -39,20 +40,10 @@ function DashboardLayout() {
         <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-thin text-2xl">
           <Outlet />
         </div>
-      </div>
-      {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 xl:hidden">
-          <button
-            type="button"
-            aria-label="Close navigation menu"
-            onClick={() => setIsSidebarOpen(false)}
-            className="absolute inset-0 bg-black/40"
-          />
-          <div className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-sidebar text-primary-foreground shadow-xl">
-            <SideBar onClose={() => setIsSidebarOpen(false)} />
-          </div>
+        <div className="fixed inset-x-0 bottom-0 z-50 bg-background pb-[env(safe-area-inset-bottom)] lg:hidden">
+          <DashboardBottom />
         </div>
-      )}
+      </div>
     </div>
   );
 }

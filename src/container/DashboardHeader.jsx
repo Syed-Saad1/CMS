@@ -37,20 +37,96 @@ function DashboardHeader({ onMenuClick }) {
   return (
     <Dialog>
       <ItemHeader className="h-full min-w-0 px-2 sm:px-3 md:px-4 lg:px-8 flex justify-between items-center bg-sidebar gap-2 sm:gap-4">
-        {onMenuClick && (
-          <button
-            type="button"
-            aria-label="Open navigation menu"
-            onClick={onMenuClick}
-            className="flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-muted xl:hidden"
-          >
-            <Menu className="size-5" />
-          </button>
-        )}
+        <div className="md:hidden flex justify-between items-center w-full">
+          {" "}
+          <div>
+            {" "}
+            <img
+              className="h-14 w-44 ml-2 object-contain text-primary! cursor-pointer"
+              src={theme === "light" ? "/lightlogo.png" : "/darklogo.png"}
+            />
+          </div>
+          <Popover>
+            <PopoverTrigger>
+              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                {UserProfileData?.avatar ? (
+                  <img
+                    className="size-full rounded-full object-cover"
+                    src={UserProfileData?.avatar}
+                    alt="Profile"
+                  />
+                ) : (
+                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                    {IntialFirst}
+                    {LastFirst}
+                  </h1>
+                )}
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className={"w-34"}>
+              <div>
+                {role === "admin" && (
+                  <Link to={"/admin/profile"}>
+                    <Button
+                      variant="button"
+                      className={"flex justify-start w-30"}
+                    >
+                      Profile
+                    </Button>
+                  </Link>
+                )}
+                {role === "user" && (
+                  <Link to={"/user/profile"}>
+                    <Button
+                      variant="button"
+                      className={"flex justify-start w-30"}
+                    >
+                      Profile
+                    </Button>
+                  </Link>
+                )}
+              </div>
+              <div>
+                {" "}
+                <LanguageSwitcher />
+              </div>
+              <div className="flex justify-start gap-2 items-center">
+                {" "}
+                <button
+                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                  className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center"
+                >
+                  <Icon
+                    className="size-4.5 cursor-pointer"
+                    icon={
+                      theme === "light" ? "akar-icons:sun" : "boxicons:moon"
+                    }
+                  />
+                </button>
+                <CardTitle>{theme === "light" ? "Light" : "Dark"}</CardTitle>
+              </div>
+              <Button
+                onClick={() => {
+                  Cookies.remove("token");
+                  Cookies.remove("role");
+                  navigate("/auth/login");
+                }}
+                className="flex justify-start w-full gap-3
+                bg-destructive text-white
+    rounded-lg px-4 py-3
+    text-sm font-medium
+   "
+                variant="ghost"
+              >
+                Logout
+              </Button>
+            </PopoverContent>
+          </Popover>
+        </div>{" "}
         {role === "admin" && (
           <DialogTrigger>
             <Input
-              className="h-8 w-32 min-w-0 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none sm:w-48 xl:w-64"
+              className="h-8 w-32 min-w-0 md:block hidden rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none  xl:w-64"
               placeholder="Search courses, teachers, students..."
             />
           </DialogTrigger>
@@ -58,14 +134,13 @@ function DashboardHeader({ onMenuClick }) {
         {role === "user" && (
           <DialogTrigger>
             <Input
-              className="h-8 w-32 min-w-0 rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none sm:w-48 xl:w-64"
+              className="h-8 w-32 min-w-0 md:block hidden rounded-md outline-non focus:outline-none focus:ring-0 focus:border-none sm:w-48 xl:w-64"
               placeholder="Search courses and learning resources..."
             />
           </DialogTrigger>
         )}
-
-        <div className="flex lg:gap-2 justify-center items-center shrink-0 ">
-          <LanguageSwitcher />
+        <div className="md:flex hidden lg:gap-2 justify-center items-center shrink-0 ">
+          <LanguageSwitcher className="" />
 
           <button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
