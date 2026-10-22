@@ -218,7 +218,7 @@ export function AdminDashboard() {
             />
           )}
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 md:mb-0 pb-6 mb-20">
           <RecentlyAddedUsers
             UserLoading={UserLoading}
             userData={userData}

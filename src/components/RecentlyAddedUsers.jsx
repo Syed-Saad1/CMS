@@ -21,7 +21,7 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
   return (
     <div>
       {" "}
-      <Card className="block! h-100 w-full rounded-xl p-4 mb-10">
+      <Card className="block! h-100 w-full rounded-xl p-4 ">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 justify-end text-lg items-end font-semibold text-shadow-muted">
             <User className="text-primary size-6" strokeWidth={1.4} />
@@ -31,10 +31,19 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
           </div>
           <Link
             to={"/admin/users"}
-            className="flex items-center md:gap-2 gap-1 text-primary! md:text-sm text-xs font-normal "
+            className="flex items-center md:gap-2 gap-1  "
           >
-            {t("RecentAddedUser.ViewAll")}{" "}
-            <ArrowRight className="size-4" strokeWidth={1.6} />
+            <div className="min-w-0 pr-2">
+              <CardTitle
+                className={
+                  "text-primary! line-clamp-1 md:text-sm text-xs font-normal truncate"
+                }
+              >
+                {" "}
+                {t("RecentAddedUser.ViewAll")}{" "}
+              </CardTitle>
+            </div>
+            <ArrowRight className="md:block hidden size-4" strokeWidth={1.6} />
           </Link>
         </div>
         <hr className="mt-2" />

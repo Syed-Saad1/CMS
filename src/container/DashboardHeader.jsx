@@ -17,7 +17,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteTeacherAssignedModal from "@/components/DeleteTeacherAssignedModal";
 import GlobalSearch from "@/components/GlobalSearch";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { Menu } from "lucide-react";
+import { LogOut, Menu, User } from "lucide-react";
 
 function DashboardHeader({ onMenuClick }) {
   const { theme, setTheme } = useTheme();
@@ -42,86 +42,138 @@ function DashboardHeader({ onMenuClick }) {
           <div>
             {" "}
             <img
-              className="h-14 w-44 ml-2 object-contain text-primary! cursor-pointer"
+              className="h-11 w-44 pr-3 object-contain text-primary! cursor-pointer"
               src={theme === "light" ? "/lightlogo.png" : "/darklogo.png"}
             />
           </div>
-          <Popover>
-            <PopoverTrigger>
-              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
-                {UserProfileData?.avatar ? (
-                  <img
-                    className="size-full rounded-full object-cover"
-                    src={UserProfileData?.avatar}
-                    alt="Profile"
-                  />
-                ) : (
-                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
-                    {IntialFirst}
-                    {LastFirst}
-                  </h1>
-                )}
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className={"w-34"}>
-              <div>
-                {role === "admin" && (
-                  <Link to={"/admin/profile"}>
-                    <Button
-                      variant="button"
-                      className={"flex justify-start w-30"}
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <Popover>
+              <PopoverTrigger>
+                <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                  {UserProfileData?.avatar ? (
+                    <img
+                      className="size-full rounded-full object-cover"
+                      src={UserProfileData?.avatar}
+                      alt="Profile"
+                    />
+                  ) : (
+                    <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                      {IntialFirst}
+                      {LastFirst}
+                    </h1>
+                  )}
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className={"w-50"}>
+                <div className="flex gap-2 items-center">
+                  {" "}
+                  {UserProfileData?.avatar ? (
+                    <img
+                      className="size-10 rounded-full object-cover"
+                      src={UserProfileData?.avatar}
+                      alt="Profile"
+                    />
+                  ) : (
+                    <h1 className="size-10 text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                      {IntialFirst}
+                      {LastFirst}
+                    </h1>
+                  )}
+                  <div className="flex flex-col">
+                    {" "}
+                    <div className="min-w-0">
+                      {" "}
+                      <CardTitle className={"truncate text-sm -mt-1"}>
+                        {UserProfileData?.firstName}
+                        {UserProfileData?.lastName}
+                      </CardTitle>
+                    </div>
+                    <div className="min-w-0">
+                      {" "}
+                      <CardDescription className="truncate text-xs -mt-1">
+                        {UserProfileData?.email || "---"}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-1 flex-col">
+                  <div className="mt-2 flex flex-col justify-start gap-2 items-start">
+                    {role === "admin" && (
+                      <Link
+                        className="flex gap-2 items-center"
+                        to={"/admin/profile"}
+                      >
+                        {" "}
+                        <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                          <User className="size-4.5" />
+                        </div>
+                        Profile
+                      </Link>
+                    )}
+                    {role === "user" && (
+                      <Link to={"/user/profile"}>
+                        {" "}
+                        <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                          <User className="size-4.5" />
+                        </div>
+                        Profile
+                      </Link>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-1 flex-col">
+                  <div className="flex justify-start gap-2 items-center">
+                    {" "}
+                    <button
+                      onClick={() => setTheme("light")}
+                      className="flex items-center gap-2"
                     >
-                      Profile
-                    </Button>
-                  </Link>
-                )}
-                {role === "user" && (
-                  <Link to={"/user/profile"}>
-                    <Button
-                      variant="button"
-                      className={"flex justify-start w-30"}
+                      <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                        <Icon
+                          className="size-4.5 cursor-pointer"
+                          icon={"akar-icons:sun"}
+                        />
+                      </div>
+                      <CardTitle>Light</CardTitle>
+                    </button>
+                  </div>
+                  <div className="flex justify-start gap-2 items-center">
+                    {" "}
+                    <button
+                      className="flex gap-2 items-center"
+                      onClick={() => setTheme("dark")}
                     >
-                      Profile
-                    </Button>
-                  </Link>
-                )}
-              </div>
-              <div>
-                {" "}
-                <LanguageSwitcher />
-              </div>
-              <div className="flex justify-start gap-2 items-center">
-                {" "}
-                <button
-                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                  className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center"
-                >
-                  <Icon
-                    className="size-4.5 cursor-pointer"
-                    icon={
-                      theme === "light" ? "akar-icons:sun" : "boxicons:moon"
-                    }
-                  />
-                </button>
-                <CardTitle>{theme === "light" ? "Light" : "Dark"}</CardTitle>
-              </div>
-              <Button
-                onClick={() => {
-                  Cookies.remove("token");
-                  Cookies.remove("role");
-                  navigate("/auth/login");
-                }}
-                className="flex justify-start w-full gap-3
-                bg-destructive text-white
-    rounded-lg px-4 py-3
-    text-sm font-medium
-   "
-                variant="ghost"
-              >
-                Logout
-              </Button>
-            </PopoverContent>
-          </Popover>
+                      <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                        <Icon
+                          className="size-4.5 cursor-pointer"
+                          icon={"boxicons:moon"}
+                        />
+                      </div>
+                      <CardTitle>Dark</CardTitle>
+                    </button>
+                  </div>
+                  <div>
+                    {" "}
+                    <button
+                      className="flex gap-2 items-center text-destructive"
+                      onClick={() => {
+                        Cookies.remove("token");
+                        Cookies.remove("role");
+                        navigate("/auth/login");
+                      }}
+                    >
+                      <div className="shrink-0 bg-muted! size-8 rounded-full text-destructive flex justify-center items-center">
+                        <LogOut className="size-4.5" />
+                      </div>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>{" "}
         {role === "admin" && (
           <DialogTrigger>
@@ -188,11 +240,11 @@ function DashboardHeader({ onMenuClick }) {
                   flex flex-col justify-start items-start min-w-0 gap-y-0 md:hidden lg:flex cursor-pointer
                 "
                 >
+                  {" "}
                   <CardTitle>
                     {UserProfileData?.firstName}
                     {UserProfileData?.lastName}
                   </CardTitle>
-
                   <CardDescription className="text-xs -mt-1">
                     {UserProfileData?.email || "---"}
                   </CardDescription>
