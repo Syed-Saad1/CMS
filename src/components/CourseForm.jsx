@@ -269,12 +269,12 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   return (
     <>
       <form
-        className="w-full min-w-0 min-h-screen px-3 sm:px-6 mt-6 xl:mt-34 mb-6
+        className="w-full min-w-0 min-h-full px-3 sm:px-6 mt-4 mb-6
     "
         onSubmit={handleSubmit}
       >
         {isCourseLoading ? (
-          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68%)_minmax(0,30%)] items-start justify-center gap-6 xl:h-[calc(100vh-180px)]">
+          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68fr)_minmax(0,30fr)] items-start justify-center gap-6">
             <Card className="flex flex-col w-full py-6 px-4 overflow-hidden">
               <div>
                 <Skeleton className="h-8 w-52" />
@@ -341,9 +341,9 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
             </div>
           </div>
         ) : (
-          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68%)_minmax(0,30%)] items-start justify-center gap-6 xl:h-[calc(100vh-180px)]">
+          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68fr)_minmax(0,30fr)] items-start justify-center gap-6">
             {" "}
-            <Card className="flex flex-col w-full py-6 px-4  overflow-y-auto scrollbar-thin">
+            <Card className="flex min-w-0 flex-col w-full py-6 px-4">
               <div>
                 <h1 className="text-dashboard-foreground text-2xl font-extrabold">
                   {location.pathname === "/courses-create"

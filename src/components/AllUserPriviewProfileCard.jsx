@@ -57,9 +57,9 @@ function PriviewProfileCard({ user, isLoading }) {
     event.target.value = "";
   };
   return (
-    <div className="h-64 sticky w-full">
+    <div className="h-fit w-full min-w-0">
       {isLoading ? (
-        <Card className="h-126 sticky flex flex-col items-center px-4 py-4">
+        <Card className="h-fit min-h-126 flex flex-col items-center px-4 py-4">
           <div className="relative w-full">
             <Skeleton className="h-24 w-full rounded-none" />
             <div className="absolute left-1/2 top-10 -translate-x-1/2">
@@ -74,7 +74,7 @@ function PriviewProfileCard({ user, isLoading }) {
           <div className="border-b w-full mt-4 border-accent" />
 
           <div className="flex flex-col mt-4 w-full gap-2">
-            <Card className="flex px-2 py-2 gap-4">
+            <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
               <Skeleton className="size-8 rounded-sm" />
 
               <div className="flex flex-col gap-1">
@@ -112,7 +112,7 @@ function PriviewProfileCard({ user, isLoading }) {
           </div>
         </Card>
       ) : (
-        <Card className="h-126 sticky flex flex-col items-center px-4 py-4">
+        <Card className="h-fit min-h-126 flex flex-col items-center px-4 py-4">
           <div className="relative w-full">
             <div className="h-24 w-full bg-linear-to-b rounded-t-xl from-[#E8F2FE] to-white dark:from-[#1B304A] dark:via-[#20252D] dark:to-[#202020]" />
 
@@ -175,7 +175,7 @@ function PriviewProfileCard({ user, isLoading }) {
                 <StatusBadge status="active" />
               </div>
             </Card>
-            <Card className=" flex px-2 py-2 gap-4  ">
+            <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
               <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
                 <UserShield className="size-4 text-accent-foreground" />
               </div>
@@ -186,20 +186,20 @@ function PriviewProfileCard({ user, isLoading }) {
                 </CardDescription>
               </div>
             </Card>
-            <Card className="flex px-2 py-2 gap-4">
+            <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
               <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
                 <Mail className="size-4 text-accent-foreground" />
               </div>
-              <div>
+              <div className="min-w-0 break-all">
                 <CardTitle className={"text-xs"}>Email</CardTitle>
                 <CardDescription>{UserProfileData?.email}</CardDescription>
               </div>
             </Card>
-            <Card className="flex px-2 py-2 gap-4 ">
+            <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
               <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
                 <IdCardLanyard className="size-4 text-accent-foreground" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <CardTitle className={"text-xs"}>UserID</CardTitle>
                 <CardDescription>
                   #USR {UserProfileData?._id?.slice(0, 8).toUpperCase()}

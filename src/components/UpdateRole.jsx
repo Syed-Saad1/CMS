@@ -46,18 +46,18 @@ function UpdateRole({ userRole }) {
 
   return (
     <form>
-      <Card className={"flex flex-col w-full h-62! gap-y-4 px-6 py-2 pb-4"}>
+      <Card className={"flex h-fit min-h-62 w-full flex-col gap-y-4 px-4 py-2 pb-4 sm:px-6"}>
         <div>
           <CardTitle className={"text-lg"}>Update Role</CardTitle>
 
-          <CardDescription className="mt-1 line-clamp-1 max-w-104">
+            <CardDescription className="mt-1 max-w-104">
             An administrator typically navigates to the identity management or
             access control settings panel, selects the specific role, and
             modifies its text fields{" "}
           </CardDescription>
 
           <hr className="mt-2" />
-          <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-full max-w-120">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 mt-5 w-full max-w-120">
             {roles.map((role) => {
               const isSelected = selectedRole === role.id;
 
@@ -66,11 +66,11 @@ function UpdateRole({ userRole }) {
                   type="button"
                   key={role.title}
                   onClick={() => setSelectedRole(role.id)}
-                  className="text-left"
+                  className="w-full text-left"
                 >
                   <Card
                     className={`
-            relative min-h-26 w-38
+            relative min-h-26 w-full
             flex flex-col items-center justify-center
             gap-1.5 p-5
             rounded-xl

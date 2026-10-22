@@ -77,7 +77,7 @@ export const UserDashboard = () => {
 
   return (
     <div
-      className="w-full min-w-0 p-3 sm:p-6 h-full"
+      className="w-full min-w-0 min-h-full p-3 sm:p-6"
     >
       {" "}
       <div className="flex flex-wrap justify-between items-end gap-3">
@@ -114,7 +114,6 @@ export const UserDashboard = () => {
           </div>
         </div>
         <hr className="mt-4" />
-        <div className="w-full overflow-x-auto">
         <Table className="min-w-[760px]">
           <TableHeader>
             <TableRow>
@@ -262,7 +261,6 @@ export const UserDashboard = () => {
             </TableBody>
           )}
         </Table>
-        </div>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4 border-t pt-4">
           <p className="shrink-0  text-sm text-muted-foreground">
             Showing {filteredUsers.length === 0 ? 0 : startIndex + 1}–

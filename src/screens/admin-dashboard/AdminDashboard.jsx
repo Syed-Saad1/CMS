@@ -206,7 +206,7 @@ export function AdminDashboard() {
       </div>
       <div className="mt-4 grid w-full min-w-0 grid-cols-1 gap-2 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         {" "}
-        <div>
+        <div className="min-w-0">
           {" "}
           {UserLoading ? (
             <div className="h-full animate-pulse rounded-xl bg-muted" />
@@ -218,7 +218,7 @@ export function AdminDashboard() {
             />
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <RecentlyAddedUsers
             UserLoading={UserLoading}
             userData={userData}

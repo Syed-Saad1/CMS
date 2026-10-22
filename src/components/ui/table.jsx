@@ -3,7 +3,7 @@ import { cn } from "cn";
 
 function Table({ className, ...props }) {
   return (
-    <div data-slot="table-container" className="relative w-full min-w-0 overflow-x-auto">
+    <div data-slot="table-container" className="relative w-full min-w-0 overflow-x-auto overflow-y-hidden">
       <table
         data-slot="table"
         className={cn("w-full caption-bottom text-sm", className)}

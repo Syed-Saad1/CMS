@@ -72,7 +72,7 @@ function UserView() {
 
   const UserRole = Cookies.get("role");
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-6 justify-center items-start p-3 sm:p-4 w-full min-w-0 h-full">
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-6 justify-center items-start p-3 sm:p-4 w-full min-w-0 min-h-full">
       <PriviewProfileCard user={UserProfileData} isLoading={isLoading} />
 
       <div className="flex flex-col gap-4 w-full">
@@ -95,27 +95,27 @@ function UserView() {
             <UpdateRole userRole={UserProfileData?.role} />
           )
         ) : (
-          <Card className="flex flex-col w-full h-62! gap-y-4 px-6 py-2 pb-4">
+          <Card className="flex h-fit min-h-62 w-full flex-col gap-y-4 px-4 py-2 pb-4 sm:px-6">
             <div>
               <Skeleton className="h-5 w-28 rounded-md" />
 
-              <Skeleton className="h-4 w-104 mt-2 rounded-md" />
-              <Skeleton className="h-4 w-96 mt-1 rounded-md" />
+              <Skeleton className="h-4 w-104 max-w-full mt-2 rounded-md" />
+              <Skeleton className="h-4 w-96 max-w-full mt-1 rounded-md" />
 
               <hr className="mt-2" />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 mt-5 w-full max-w-120 gap-3">
-                <Card className="relative min-h-26 w-38 flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 mt-5 w-full max-w-120">
+                <Card className="relative min-h-26 w-full flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
                   <Skeleton className="size-10 rounded-full" />
                   <Skeleton className="h-4 w-16 rounded-md" />
                 </Card>
 
-                <Card className="relative min-h-26 w-38 flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
+                <Card className="relative min-h-26 w-full flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
                   <Skeleton className="size-10 rounded-full" />
                   <Skeleton className="h-4 w-16 rounded-md" />
                 </Card>
 
-                <Card className="relative min-h-26 w-38 flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
+                <Card className="relative min-h-26 w-full flex flex-col items-center justify-center gap-2 p-5 rounded-xl">
                   <Skeleton className="size-10 rounded-full" />
                   <Skeleton className="h-4 w-16 rounded-md" />
                 </Card>

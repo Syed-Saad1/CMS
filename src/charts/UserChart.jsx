@@ -46,7 +46,7 @@ export default function UserChart({ UserLoading, userData = EMPTY_USERS }) {
 
   return (
     <div>
-      <div className="w-full h-fit! min-w-0 rounded-xl border bg-card p-5 mb-10">
+      <div className="w-full h-fit! min-w-0 rounded-xl border bg-card p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h3 className="text-lg font-semibold">User Registrations</h3>
