@@ -22,7 +22,7 @@ export const useCreateAssigment = (id) => {
     mutationFn,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKey.getCourses] });
+      queryClient.invalidateQueries({ queryKey: [QueryKey.getCourseById] });
     },
   });
 };

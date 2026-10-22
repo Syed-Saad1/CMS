@@ -1,49 +1,75 @@
 import React, { useState } from "react";
 import { Card, CardDescription, CardTitle } from "./ui/card";
-import { ArrowRight, Repeat, Save, UserRoundCheck, X } from "lucide-react";
+import {
+  ArrowRight,
+  Loader,
+  Repeat,
+  Save,
+  UserRoundCheck,
+  X,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { DialogClose } from "./ui/dialog";
 import { useUpdateAssigned } from "@/mutations/useUpdateAssigned";
 import UpdateTeacherListDropDown from "./UpdateTeacherListDropDown";
 import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
   const [updateAssigned, setUpdateAssignedTeacher] = useState(null);
   const id = selectedTeacherId?.assignId;
-  const { mutateAsync } = useUpdateAssigned(id);
+  const { mutateAsync, isPending } = useUpdateAssigned(id);
   const handleClick = async () => {
     try {
       const payload = {
         teacherId: updateAssigned?._id,
       };
-      await mutateAsync(payload);
-      await Delete();
-    } catch (error) {}
+      const response = await mutateAsync(payload);
+
+      toast.success(response.message || "");
+      onclose;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
+    }
   };
   return (
-    <div>
+    <div className="w-120 h-140 shrink-0">
       <div>
         <CardTitle>Update Teacher Assigned</CardTitle>
         <CardDescription>
           update the teacher assigned to this course.
         </CardDescription>
       </div>
-      <div className="flex gap-4 border p-4 mt-4 border-muted w-full justify-start items-start">
+      <div className="flex gap-4 border border-border p-4 mt-4 bg-muted/60 rounded-sm w-full justify-start items-start">
         <div>
           <img
-            className="h-10 rounded-sm object-center"
+            className="h-14 w-18 rounded-sm object-center"
             src={Data?.thumbnail || "/DeafultThumbinal.png"}
             alt=""
           />
         </div>
-        <div className="flex justify-start gap-1 items-start">
-          <div className="max-w-50 flex-1 ">
-            <CardTitle className="truncate  text-lg font-normal">
-              {Data?.title}{" "}
+        <div className="flex flex-col gap-y-0">
+          <div className="max-w-60 w-62 flex-1 ">
+            <CardTitle className="truncate pt-0 pb-0 text-lg font-normal">
+              {Data?.title}
             </CardTitle>
           </div>
-          <div className="bg-primary/30 w-fit text-primary-foreground px-3 py-0.5 rounded-2xl overflow-hidden ">
-            {Data?.tags}
+
+          <div className="max-w-60 w-62 my-0 flex-1">
+            {" "}
+            <CardDescription className={"text-sm pt-0 flex"}>
+              {" "}
+              {Data?.tags?.slice(0, 2).map((item) => (
+                <div className={"pl-1"}>{item},</div>
+              ))}
+            </CardDescription>
           </div>
         </div>
       </div>
@@ -146,7 +172,17 @@ function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
           </Button>
         </DialogClose>
         <Button onClick={handleClick} variant="button">
-          <Save /> Update Assign
+          {isPending ? (
+            <>
+              <Loader className="animate-spin" />
+              Updating..
+            </>
+          ) : (
+            <>
+              {" "}
+              <Save /> Update Assign
+            </>
+          )}
         </Button>
       </div>
     </div>

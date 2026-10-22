@@ -113,13 +113,9 @@ function TimeRangePicker({ values, setFieldValue }) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col">
-      <Label className="mt-2">
-          {t("ui.classTiming")} <span className="text-destructive">*</span>
-      </Label>
-
-      <div className="mt-2 grid grid-cols-2 gap-4">
+      <div className=" grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-xs font-normal">{t("ui.startTime")}</label>
+          <Label className="text-xs font-normal">{t("ui.startTime")}</Label>
 
           <div className="relative">
             <Clock3 className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -128,16 +124,15 @@ function TimeRangePicker({ values, setFieldValue }) {
               type="time"
               value={values?.courseTime?.startTime || ""}
               onChange={(e) => {
-
                 setFieldValue("courseTime.startTime", e.target.value);
               }}
-              className="h-10 w-full rounded-md border pl-10 pr-3"
+              className="h-8 w-full rounded-md border pl-10 pr-3"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs font-normal">{t("ui.endTime")}</label>
+          <Label className="text-xs font-normal">{t("ui.endTime")}</Label>
 
           <div className="relative">
             <Clock3 className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -146,10 +141,9 @@ function TimeRangePicker({ values, setFieldValue }) {
               type="time"
               value={values?.courseTime?.endTime || ""}
               onChange={(e) => {
-
                 setFieldValue("courseTime.endTime", e.target.value);
               }}
-              className="h-10 w-full rounded-md border pl-10 pr-3"
+              className="h-8 w-full rounded-md border pl-10 pr-3"
             />
           </div>
         </div>

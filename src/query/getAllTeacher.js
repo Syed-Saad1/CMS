@@ -17,7 +17,7 @@ export const getAllTeacher = () => {
     return data;
   };
   return useQuery({
-    queryKey: [QueryKey.getUser],
+    queryKey: [QueryKey.getTeacher],
     queryFn: queryfn,
     enabled: !!token,
   });

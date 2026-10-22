@@ -58,10 +58,19 @@ export function AdminDashboard() {
 
       return date.toISOString().split("T")[0] === today;
     }) ?? [];
+  const filteredCourse =
+    getCourses?.filter((item) => {
+      if (!item?.createdAt) return false;
 
-  const visibleUsers = filteredData.slice(0, 3);
+      const date = new Date(item.createdAt);
 
-  const remainingCount = Math.max(filteredData.length - 3, 0);
+      if (Number.isNaN(date.getTime())) return false;
+
+      return date.toISOString().split("T")[0] === today;
+    }) ?? [];
+
+  const visibleUsers = filteredData;
+  const VisibaleCourses = filteredCourse;
 
   useEffect(() => {
     if (!token) {
@@ -75,11 +84,13 @@ export function AdminDashboard() {
 
   const AdminDashboardCard = [
     {
+      cardBg: "bg-primary/20",
       iconclass: "bg-[#FFFAEE] dark:bg-[#E29200]/10",
       iconcolor: "text-[#E29200]",
       id: "user",
       icon: FileText,
       des: "Total Users",
+      today: visibleUsers?.length,
       title: userData.length,
     },
     {
@@ -88,6 +99,8 @@ export function AdminDashboard() {
       id: "teacher",
       icon: IdCard,
       des: "Total Teacher",
+      today: 0,
+
       title: totalTeacher,
     },
     {
@@ -96,6 +109,8 @@ export function AdminDashboard() {
       id: "courses",
       icon: GraduationCap,
       des: "Total Courses",
+      today: VisibaleCourses?.length,
+
       title: getCourses.length,
     },
     {
@@ -103,6 +118,7 @@ export function AdminDashboard() {
       iconcolor: "text-[#E29200]",
       id: "enroll",
       icon: CopyCheck,
+      today: 18,
       des: "Total Enrolled",
       title: "324",
     },
@@ -111,137 +127,105 @@ export function AdminDashboard() {
   const isDashboardLoading = UserLoading || CourseLoading;
 
   return (
-    <div className="h-full w-full mt-6 mx-6">
-      <div className="grid grid-cols-1 w-full gap-6 mt-4 ">
+    <div className="max-h-full h-full w-full mt-6 mx-6">
+      {" "}
+      <div>
+        {" "}
+        <WelcomeDashboardAdmin />
+        {isDashboardLoading ? (
+          <div className="flex justify-between items-center mt-8 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Card
+                key={index}
+                className="flex h-30 w-full items-start justify-start gap-3.5 rounded-lg border-border/40 bg-card py-2 pl-4 pt-2"
+              >
+                <div className="flex w-34 flex-col items-start justify-start gap-5 pt-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="h-4 w-24 animate-pulse rounded-md bg-muted" />
+
+                    <div className="flex items-center gap-2">
+                      <div className="h-7 w-12 animate-pulse rounded-md bg-muted" />
+                      <div className="h-5 w-16 animate-pulse rounded-md bg-muted" />
+                    </div>
+                  </div>
+
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                    <div className="h-full w-[45%] animate-pulse rounded-full bg-muted-foreground/20" />
+                  </div>
+                </div>
+
+                <div className="flex size-14 shrink-0 animate-pulse items-center justify-center rounded-full bg-muted">
+                  <div className="size-8 rounded-full bg-muted-foreground/10" />
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-between w-full mb-4 items-center mt-4 gap-4">
+            {AdminDashboardCard.map((item) => {
+              const IconCom = item.icon;
+              return (
+                <Card
+                  key={item.id}
+                  className={cn(
+                    "border-border/40! bg-card flex pl-4 py-2 pt-2 h-30 gap-3.5 w-full  rounded-lg  justify-start items-start ",
+                    item.cardBg,
+                  )}
+                >
+                  <div className="flex justify-start items-start gap-5 pt-3 flex-col w-34">
+                    <div className="flex-col flex gap-2">
+                      <CardTitle className={"font-semibold"}>
+                        {item.des}
+                      </CardTitle>
+                      <CardDescription className="text-primary text-2xl font-bold tracking-tight">
+                        {item.title}
+                        <sub className="text-sm text-muted-foreground font-medium">
+                          {" "}
+                          +{item?.today} today
+                        </sub>
+                      </CardDescription>
+                    </div>
+                    <div className="w-full bg-primary/60 rounded-full h-2">
+                      <div
+                        className="bg-primary/80 h-2 rounded-full"
+                        style={{ width: 45 }}
+                      />
+                    </div>
+                  </div>
+                  <div className="size-14 flex justify-center items-center rounded-full bg-accent">
+                    <IconCom
+                      strokeWidth={1.3}
+                      className={cn("size-8  ", item.iconcolor)}
+                    />
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+      <div className="grid grid-cols-[60%_40%]  mt-4 gap-2 w-full">
         {" "}
         <div>
           {" "}
-          <WelcomeDashboardAdmin />
-          {isDashboardLoading ? (
-            <div className="flex justify-between items-center mt-8 gap-4">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <Card
-                  key={index}
-                  className="border-border/40! bg-card flex items-start px-2 pt-2 h-28 gap-1.5 w-full overflow-hidden"
-                >
-                  <Skeleton className="size-12 shrink-0 rounded-sm" />
-
-                  <div className="flex-1">
-                    <Skeleton className="h-3 w-20 rounded-sm" />
-
-                    <Skeleton className="h-5 w-16 rounded-sm mt-2" />
-
-                    <div className="flex items-center gap-1 mt-2">
-                      <Skeleton className="size-4 rounded-sm" />
-                      <Skeleton className="h-5 w-10 rounded-full" />
-                    </div>
-
-                    <Skeleton className="h-3 w-24 rounded-sm mt-1" />
-                  </div>
-                </Card>
-              ))}
-            </div>
+          {UserLoading ? (
+            <div className="h-full animate-pulse rounded-xl bg-muted" />
           ) : (
-            <div className="flex justify-between w-full mb-4 items-center mt-8 gap-4">
-              {AdminDashboardCard.map((item) => {
-                const IconCom = item.icon;
-
-                return (
-                  <Card
-                    key={item.id}
-                    className="
-                  border-border/40!
-                  bg-card
-                  flex
-                  pl-6 py-2
-                  pt-2
-                  h-30
-                  gap-1.5
-                  w-full
-                  items-center
-                  relative
-                  overflow-hidden
-                "
-                  >
-                    <div
-                      className={cn(
-                        "size-32 absolute rotate-38 -right-8 top-0 rounded-xl items-center justify-center flex",
-                        item.iconclass,
-                      )}
-                    >
-                      <IconCom
-                        strokeWidth={1.3}
-                        className={cn("size-10 -rotate-38", item.iconcolor)}
-                      />
-                    </div>
-
-                    <div>
-                      <CardTitle className="font-semibold text-lg">
-                        {item.des}
-                      </CardTitle>
-                      <CardDescription className="text-2xl">
-                        {item.title}
-                      </CardDescription>
-                      <div>
-                        {!visibleUsers || visibleUsers?.length === 0 ? (
-                          <CardDescription className="text-xs line-clamp-1">
-                            No Create User found for today.
-                          </CardDescription>
-                        ) : (
-                          <div className="flex gap-5 relative">
-                            {visibleUsers?.map((item) => {
-                              const Name = item?.firstName?.charAt();
-                              const LastName = item?.lastName?.charAt();
-                              return (
-                                <div key={item?._id}>
-                                  {item?.avatar ? (
-                                    <img
-                                      className="size-6 absolute rounded-xl object-cover"
-                                      src={item.avatar}
-                                    />
-                                  ) : (
-                                    <div className="bg-muted size-6 rounded-xl object-cover absolute flex justify-center items-center">
-                                      <h1 className="text-[12px]  text-muted-foreground">
-                                        {Name}
-                                        {LastName}
-                                      </h1>
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
+            <UserChart
+              UserLoading={UserLoading}
+              className=""
+              userData={userData}
+            />
           )}
-          {/* <RecentlyActivites UserLoading={UserLoading} /> */}
         </div>
         <div>
-          {" "}
-          <div className="grid gap-6">
-            {/* <RecentlyAddedUsers
-              UserLoading={UserLoading}
-              userData={userData}
-              ProfileData={ProfileData}
-            /> */}
-
-            {/* <RecentlyAddedCourse
-              CourseLoading={CourseLoading}
-              getCourses={getCourses}
-            /> */}
-          </div>
+          <RecentlyAddedUsers
+            UserLoading={UserLoading}
+            userData={userData}
+            ProfileData={ProfileData}
+          />{" "}
         </div>
       </div>
-      {UserLoading ? (
-        <div className="h-70 mb-10 animate-pulse rounded-xl bg-muted" />
-      ) : (
-        <UserChart userData={userData} />
-      )}
     </div>
   );
 }

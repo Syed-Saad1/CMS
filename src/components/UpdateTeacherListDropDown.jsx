@@ -18,17 +18,26 @@ function UpdateTeacherListDropDown({
   return (
     <div>
       {" "}
-      <div className=" w-full">
-        <DropdownMenu>
+      <div className="w-full">
+        <DropdownMenu className="h-full">
           {" "}
           <DropdownMenuTrigger
             render={<Button variant="outline" />}
-            className="flex w-full justify-between px-2"
+            className="flex h-10 bg-transparent  rounded-sm w-full justify-between px-2"
           >
-            {" "}
-            {updateAssigned
-              ? `${updateAssigned?.firstName} ${updateAssigned?.lastName}`
-              : "Select Teacher"}{" "}
+            <div className="flex gap-1">
+              <img
+                src={updateAssigned?.avatar}
+                className="size-5 rounded-full object-cover"
+                alt={updateAssigned?.firstName || "Teacher"}
+              />
+              <CardTitle>
+                {" "}
+                {updateAssigned
+                  ? `${updateAssigned?.firstName} ${updateAssigned?.lastName}`
+                  : "Select Teacher"}
+              </CardTitle>{" "}
+            </div>
             <ChevronDown className="ml-2 size-4" />
           </DropdownMenuTrigger>{" "}
           <DropdownMenuContent>

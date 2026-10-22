@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { deleteCourse } from "@/mutations/deleteCourse";
+import { Loader } from "lucide-react";
 import React from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const DeleteCourseModal = ({ handleOpenModal, item }) => {
-  const { mutateAsync } = deleteCourse();
+  const { mutateAsync, isPending } = deleteCourse();
   const navigate = useNavigate();
   const handleConfirmDelete = async () => {
     try {
@@ -40,9 +41,16 @@ export const DeleteCourseModal = ({ handleOpenModal, item }) => {
         <Button
           variant="destructive"
           onClick={handleConfirmDelete}
-          disabled={mutateAsync.isPending}
+          disabled={isPending}
         >
-          {mutateAsync.isPending ? "Deleting..." : "Delete"}
+          {isPending ? (
+            <>
+              <Loader className="animate-spin" />
+              Deleting...
+            </>
+          ) : (
+            "Delete"
+          )}
         </Button>
       </div>
     </div>

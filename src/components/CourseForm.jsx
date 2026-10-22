@@ -146,6 +146,9 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
           },
         ),
       );
+
+      navigate("/courses");
+
       if (isEdit === false) {
         const CreateCourse = await createCourseMutation(formData);
         const CreateResult = CreateCourse;
@@ -158,7 +161,6 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
 
         toast.success(Editresult?.message || t("ui.courseUpdateSuccess"));
       }
-      navigate("/courses");
       resetForm();
 
       if (values.thumbnail instanceof File) {
@@ -396,7 +398,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 )}
               </div>
 
-              <Card className="grid grid-cols-2 mt-4 items-center justify-center w-full gap-4">
+              <div className="grid grid-cols-2 mt-4 items-center justify-center w-full gap-4">
                 <div>
                   <Label htmlFor="Pri">
                     Course Pricing <span className="text-blue-500">*</span>
@@ -428,13 +430,17 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                     onChange={(tags) => setFieldValue("tags", tags)}
                   />
                 </div>
-                <div>
+              </div>
+
+              <div className="grid grid-cols-2 mt-4 gap-4 w-full justify-start items-start">
+                <div className="w-full">
+                  {" "}
                   <Label htmlFor="ClassDays">
                     Class Days <span className="text-destructive">*</span>
                   </Label>{" "}
                   <MultiSelect
                     name="ClassDays"
-                    className="h-8! w-full! "
+                    className="h-14! bg-transparent "
                     value={values?.courseDays}
                     options={Daysoptions}
                     onChange={(courseDays) =>
@@ -442,11 +448,14 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                     }
                   />
                 </div>
-                <TimeRangePicker
-                  value={values?.courseTime}
-                  setFieldValue={setFieldValue}
-                />
-              </Card>
+                <div className="w-full">
+                  {" "}
+                  <TimeRangePicker
+                    value={values?.courseTime}
+                    setFieldValue={setFieldValue}
+                  />
+                </div>
+              </div>
               <div className="space-y-2 mt-6">
                 <div className="flex items-center justify-between">
                   <label className="text-sm font-medium">

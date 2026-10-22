@@ -1,25 +1,36 @@
-import React from "react";
+import React, { useTransition } from "react";
 import { CardDescription, CardTitle } from "./ui/card";
 import { DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function DeleteTeacherAssignedModal({
   Data,
   selectedTeacher,
   selectedTeacherId,
-  setSelectedTeacherId,
-  teacher,
 }) {
+  const { t } = useTranslation();
   const id = selectedTeacherId?.assignId;
-  const { mutateAsync: Delete } = useDeleteAssigment(id);
+  const { mutateAsync: Delete, isPending } = useDeleteAssigment(id);
   const handleClick = async () => {
     try {
-      await Delete(id);
-      toast.success("Delete Assigment Successfully");
-    } catch (error) {}
+      const response = await Delete(id);
+      toast.success(response.message || "Delete Assigment Successfully");
+      onclose;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
+    }
   };
   return (
     <div>
@@ -35,8 +46,17 @@ export default function DeleteTeacherAssignedModal({
           {" "}
           <DialogTrigger>
             <Button onClick={() => handleClick()} variant="destructive">
-              <Trash />
-              Remove Permently
+              {isPending ? (
+                <>
+                  <Loader className="animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Trash /> Remove Permently
+                </>
+              )}{" "}
             </Button>
           </DialogTrigger>
         </div>{" "}

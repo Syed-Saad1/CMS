@@ -25,7 +25,7 @@ export const useDeleteAssigment = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKey.getCourses],
+        queryKey: [QueryKey.getCourseById],
       });
     },
   });

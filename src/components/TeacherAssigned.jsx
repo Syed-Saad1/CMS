@@ -8,8 +8,10 @@ import {
   ChartBarStacked,
   Clock,
   IdCardLanyard,
+  Loader,
   Pencil,
   Trash,
+  UserRoundArrowLeft,
   UserRoundCheck,
   UserRoundCog,
   X,
@@ -27,6 +29,7 @@ import { getAllTeacher } from "@/query/getAllTeacher";
 import { useTranslation } from "react-i18next";
 import { ScrollArea } from "./ui/scroll-area";
 import CourseDataAssignedTeacher from "./CourseDataAssignedTeacher";
+import axios from "axios";
 function TeacherAssigned() {
   const { t } = useTranslation();
   const [selectedTeacherId, setSelectedTeacherId] = useState(null);
@@ -37,17 +40,24 @@ function TeacherAssigned() {
   const Data = data?.data;
   const { data: UserData } = getAllTeacher();
   const TeacherData = UserData?.data;
-  const { mutateAsync } = useCreateAssigment(id);
+  const { mutateAsync, isPending } = useCreateAssigment(id);
   const payload = {
     courseId: id,
     teacherId: selectedTeacher?._id,
   };
-  const Submit = async () => {
+  const Submit = async ({ resetForm }) => {
     try {
-      await mutateAsync(payload);
-      toast.success(t("ui.assignSuccess"));
+      const response = await mutateAsync(payload);
+      toast.success(response?.message || t("ui.assignSuccess"));
+      setSelectedTeacher(null);
     } catch (error) {
-      toast.error(t("ui.assignFailure"));
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || t("messages.somethingWrong"),
+        );
+      } else {
+        toast.error(t("messages.somethingWrong"));
+      }
     }
   };
 
@@ -120,7 +130,16 @@ function TeacherAssigned() {
                 </Button>
               </Link>
               <Button type="submit" onClick={Submit} variant="button">
-                Assigned Teacher
+                {isPending ? (
+                  <>
+                    <Loader className="animate-spin" />
+                    Assiging..
+                  </>
+                ) : (
+                  <>
+                    <UserRoundArrowLeft /> Assigned Teacher
+                  </>
+                )}{" "}
               </Button>
             </div>
           </div>
@@ -238,7 +257,7 @@ function TeacherAssigned() {
                   </div>
                   <div className="mt-6 flex gap-2 items-center">
                     <Dialog>
-                      <DialogTrigger asChild>
+                      <DialogTrigger>
                         <Button
                           onClick={() =>
                             setSelectedTeacherId({
@@ -255,7 +274,7 @@ function TeacherAssigned() {
                       </DialogTrigger>
 
                       <DialogContent
-                        className={"max-w-lg! w-fit shrink-0 h-140!"}
+                        className={"max-w-lg! w-fit shrink-0 h-fit"}
                       >
                         <UpdateAssignedTeacher
                           TeacherData={TeacherData}

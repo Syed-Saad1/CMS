@@ -21,7 +21,7 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
   return (
     <div>
       {" "}
-      <Card className="block! h-fit! w-full rounded-xl p-4 mb-5">
+      <Card className="block! h-100 w-full rounded-xl p-4 mb-10">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 justify-end text-lg items-end font-semibold text-shadow-muted">
             <User className="text-primary size-6" strokeWidth={1.4} />
@@ -73,7 +73,7 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
             ) : (
               <TableBody>
                 {userData.length ? (
-                  userData?.slice(0, 5).map((item) => {
+                  userData?.slice(0, 6).map((item) => {
                     const IntialFirst = item?.firstName
                       ?.trim()
                       .charAt(0)

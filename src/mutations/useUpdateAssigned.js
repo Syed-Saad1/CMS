@@ -27,16 +27,8 @@ export const useUpdateAssigned = (id) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKey.getUser],
+        queryKey: [QueryKey.getCourseById],
       });
-
-      toast.success("Assinged updated successfully");
-    },
-
-    onError: (error) => {
-      toast.error(
-        error?.response?.data?.message || "Failed to update Assigned",
-      );
     },
   });
 };
