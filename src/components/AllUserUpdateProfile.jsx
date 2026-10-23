@@ -26,7 +26,7 @@ function AllUserUpdateProfile({
   return (
     <div>
       {isLoading ? (
-        <Card className="flex flex-col w-full h-76! gap-y-4 px-6 py-6 pb-4">
+        <Card className="flex flex-col w-full h-fit! gap-y-4 px-6 py-6 pb-4">
           <div>
             <Skeleton className="h-5 w-44 rounded-md" />
 
@@ -60,9 +60,11 @@ function AllUserUpdateProfile({
         </Card>
       ) : (
         <div>
-          <Card className="flex flex-col w-full h-76! gap-y-4 px-6 py-6 pb-4">
+          <Card className="flex flex-col w-full h-fit! gap-y-4 px-6 py-6 pb-4">
             <div>
-              <CardTitle className={"text-lg"}>{t("ui.personalInfo")}</CardTitle>
+              <CardTitle className={"text-lg"}>
+                {t("ui.personalInfo")}
+              </CardTitle>
 
               <CardDescription className="mt-1">
                 Update your basic profile details and contact information.

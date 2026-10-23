@@ -66,10 +66,10 @@ function UpdatePassword() {
   return (
     <form onSubmit={handleSubmit}>
       {isLoading ? (
-        <Card className="p-4 flex flex-col">
+        <Card className="p-4 md:mb-4 mb-18 h-full flex flex-col">
           <Skeleton className="h-7 w-44" />
 
-          <Skeleton className="mt-2 h-4 w-[420px] max-w-full" />
+          <Skeleton className="mt-2 h-4 w-105 max-w-full" />
 
           <Skeleton className="mt-4 h-px w-full" />
 
@@ -97,7 +97,7 @@ function UpdatePassword() {
           </div>
         </Card>
       ) : (
-        <Card className={"p-4 flex flex-col"}>
+        <Card className={"p-4 md:mb-4 mb-18 h-full flex flex-col"}>
           <CardTitle className={"text-xl font-bold"}>Update Password</CardTitle>
           <CardDescription>
             Ensure your account is using a long, random password to stay
@@ -126,7 +126,7 @@ function UpdatePassword() {
                 )}
               </Field>
             </div>
-            <div className="grid grid-cols-2 w-full gap-4">
+            <div className="grid md:grid-cols-2 grid-cols-1 w-full gap-4">
               <Field>
                 {" "}
                 <Label>New Password :</Label>

@@ -58,8 +58,14 @@ export const CourseDetail = () => {
     }
   };
   return (
-    <div className="w-full min-w-0 overflow-x-hidden p-3 sm:p-4">
-      <div className="relative grid min-w-0 grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,72%)_minmax(0,27%)]">
+    <div className="w-full md:mb-4 mb-18 min-w-0 overflow-x-hidden p-3 sm:p-4">
+      <div
+        className={`relative grid min-w-0 grid-cols-1 items-start gap-4 ${
+          role === "admin"
+            ? "w-full"
+            : "xl:grid-cols-[minmax(0,72%)_minmax(0,27%)]"
+        }`}
+      >
         {isLoading ? (
           <Card className="flex w-full flex-col h-full animate-pulse">
             <div className="w-full h-72 shrink-0 relative bg-muted overflow-hidden">
@@ -116,7 +122,7 @@ export const CourseDetail = () => {
             </ScrollArea>
           </Card>
         ) : (
-          <Card className="flex flex-col">
+          <Card className="flex flex-col w-full">
             <div className="w-full h-72 shrink-0 relative bg-accent overflow-hidden">
               <img
                 className="aspect-video w-full object-cover h-full"
@@ -175,7 +181,7 @@ export const CourseDetail = () => {
             </div>
 
             <div
-              className="max-h-full w-full pl-4 pr-8 mt-2 
+              className="max-h-fit w-fit pl-4 pr-8 mt-2 
         "
             >
               <div className="flex flex-col ">
@@ -186,41 +192,49 @@ export const CourseDetail = () => {
                   {data?.data?.description}
                 </CardDescription>
                 <hr className="my-4" />
-                <div className="flex items-center gap-4">
-                  <CardDescription className="flex items-center gap-2">
+                <div className="md:flex gap-4 flex-col  items-center md:gap-4">
+                  <div className="md:mt-0 mt-2">
                     {" "}
-                    <RotateCwFadingClock
-                      className="text-accent-foreground"
-                      strokeWidth={1.6}
-                      size={18}
-                    />
-                    6 Months
-                  </CardDescription>
-                  <CardDescription className="flex items-center gap-2">
+                    <CardDescription className="md:text-sm text-xs  flex items-center gap-2">
+                      {" "}
+                      <RotateCwFadingClock
+                        className="text-accent-foreground"
+                        strokeWidth={1.6}
+                        size={18}
+                      />
+                      6 Months
+                    </CardDescription>
+                  </div>
+                  <div className="md:mt-0 mt-2">
                     {" "}
-                    <CalendarSync
-                      className="text-accent-foreground"
-                      strokeWidth={1.6}
-                      size={18}
-                    />
-                    Days:{" "}
-                    {data?.data?.courseDays.map((item) => (
-                      <div>{item},</div>
-                    ))}
-                  </CardDescription>
-                  <CardDescription className="flex items-center gap-2">
-                    {" "}
-                    <MailBadge
-                      className="text-accent-foreground"
-                      strokeWidth={1.6}
-                      size={18}
-                    />
-                    Certificate Included
-                  </CardDescription>
+                    <CardDescription className="md:text-sm text-xs  flex items-center gap-2">
+                      {" "}
+                      <CalendarSync
+                        className="text-accent-foreground"
+                        strokeWidth={1.6}
+                        size={18}
+                      />
+                      Days:{" "}
+                      {data?.data?.courseDays.map((item) => (
+                        <div>{item},</div>
+                      ))}
+                    </CardDescription>
+                  </div>
+                  <div className="md:mt-0 mt-2">
+                    <CardDescription className="md:text-sm text-xs flex items-center gap-2">
+                      {" "}
+                      <MailBadge
+                        className="text-accent-foreground"
+                        strokeWidth={1.6}
+                        size={18}
+                      />
+                      Certificate Included
+                    </CardDescription>
+                  </div>
                 </div>
               </div>
 
-              <Card className="flex flex-col min-h-140! w-full mt-8 pl-6  bg-transparent pt-6">
+              <Card className="flex flex-col min-h-fit! pb-10 w-full mt-8 pl-6  bg-transparent pt-6">
                 <CardTitle className="flex gap-2 items-center text-2xl font-semibold">
                   <BookOpenCheck
                     className="text-[#3b82f6]"
@@ -302,88 +316,91 @@ export const CourseDetail = () => {
           </Card>
         )}
         <div className="sticky top-0 right-0 self-start h-fit w-full">
-          {isLoading ? (
-            <div className="flex h-full lg:top-6  flex-col gap-2 animate-pulse">
-              <Card className="h-70 flex  lg:top-6 flex-col items-center justify-center gap-4 px-6">
-                <Skeleton className="h-5 w-36" />
-                <Skeleton className="h-9 w-28 my-1" />
-                <div className="border border-border w-full" />
+          {role === "user" && (
+            <div>
+              {" "}
+              {isLoading ? (
+                <div className="flex h-full lg:top-6  flex-col gap-2 animate-pulse">
+                  <Card className="h-70 flex  lg:top-6 flex-col items-center justify-center gap-4 px-6">
+                    <Skeleton className="h-5 w-36" />
+                    <Skeleton className="h-9 w-28 my-1" />
+                    <div className="border border-border w-full" />
 
-                <div className="grid grid-cols-2 gap-2 items-center w-full">
-                  <Skeleton className="h-10 w-full rounded-md" />
-                  <Skeleton className="h-10 w-full rounded-md" />
-                </div>
+                    <div className="grid grid-cols-2 gap-2 items-center w-full">
+                      <Skeleton className="h-10 w-full rounded-md" />
+                      <Skeleton className="h-10 w-full rounded-md" />
+                    </div>
 
-                <Skeleton className="h-4 w-48 mt-1" />
-                <div className="border border-border w-full" />
+                    <Skeleton className="h-4 w-48 mt-1" />
+                    <div className="border border-border w-full" />
 
-                <div className="grid grid-cols-2 gap-4 w-full">
-                  <div className="flex flex-col items-center gap-1.5">
-                    <Skeleton className="h-6 w-12" />
-                    <Skeleton className="h-3 w-16" />
-                  </div>
-                  <div className="flex flex-col  items-center gap-1.5 pl-4">
-                    <Skeleton className="h-6 w-12" />
-                    <Skeleton className="h-3 w-16" />
-                  </div>
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                      <div className="flex flex-col items-center gap-1.5">
+                        <Skeleton className="h-6 w-12" />
+                        <Skeleton className="h-3 w-16" />
+                      </div>
+                      <div className="flex flex-col  items-center gap-1.5 pl-4">
+                        <Skeleton className="h-6 w-12" />
+                        <Skeleton className="h-3 w-16" />
+                      </div>
+                    </div>
+                  </Card>
                 </div>
-              </Card>
-            </div>
-          ) : (
-            <div className="flex  flex-col gap-2 w-full mt-1">
-              <Card className="h-70 w-full flex flex-col items-center justify-center gap-3 px-6">
-                <CardTitle className="text-xl font-bold">
-                  Build Your Future
-                </CardTitle>
-                <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
-                  <span className="pr-2 text-primary">$</span>
-                  {data?.data?.price}
-                </CardTitle>
-                <div className="border border-border w-full" />
-                <div className="grid grid-cols-2 gap-2 items-center w-full">
-                  <Button
-                    variant="button"
-                    onClick={handleEnroll}
-                    disabled={isPending}
-                    className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
-                  >
-                    {" "}
-                    {isPending ? (
-                      <>
-                        <Loader className="size-4 animate-spin" />
-                        Enrolling...
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="size-4" />
-                        Enroll{" "}
-                      </>
-                    )}{" "}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
-                  >
-                    Try ForFree
-                  </Button>
-                </div>
-                <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
-                  <Lock size={16} />
-                  Secure Payment. 100% Refundable
-                </CardDescription>
-                <div className="border border-border w-full" />
-                <div className=" grid grid-cols-2 gap-4 w-full ">
-                  <div className="flex flex-col items-center">
-                    <CardTitle>24K</CardTitle>
-                    <CardDescription>STUDENTS</CardDescription>
-                  </div>
-                  <div className="flex flex-col border-l border-border items-center">
-                    <CardTitle>100%</CardTitle>
-                    <CardDescription>ONLINE</CardDescription>
-                  </div>
-                </div>
-              </Card>
-              {/* <Card
+              ) : (
+                <div className="flex  flex-col gap-2 w-full mt-1">
+                  <Card className="h-70 w-full flex flex-col items-center justify-center gap-3 px-6">
+                    <CardTitle className="text-xl font-bold">
+                      Build Your Future
+                    </CardTitle>
+                    <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
+                      <span className="pr-2 text-primary">$</span>
+                      {data?.data?.price}
+                    </CardTitle>
+                    <div className="border border-border w-full" />
+                    <div className="grid grid-cols-2 gap-2 items-center w-full">
+                      <Button
+                        variant="button"
+                        onClick={handleEnroll}
+                        disabled={isPending}
+                        className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
+                      >
+                        {" "}
+                        {isPending ? (
+                          <>
+                            <Loader className="size-4 animate-spin" />
+                            Enrolling...
+                          </>
+                        ) : (
+                          <>
+                            <Plus className="size-4" />
+                            Enroll{" "}
+                          </>
+                        )}{" "}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
+                      >
+                        Try ForFree
+                      </Button>
+                    </div>
+                    <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
+                      <Lock size={16} />
+                      Secure Payment. 100% Refundable
+                    </CardDescription>
+                    <div className="border border-border w-full" />
+                    <div className=" grid grid-cols-2 gap-4 w-full ">
+                      <div className="flex flex-col items-center">
+                        <CardTitle>24K</CardTitle>
+                        <CardDescription>STUDENTS</CardDescription>
+                      </div>
+                      <div className="flex flex-col border-l border-border items-center">
+                        <CardTitle>100%</CardTitle>
+                        <CardDescription>ONLINE</CardDescription>
+                      </div>
+                    </div>
+                  </Card>
+                  {/* <Card
                   className="h-58 flex flex-col gap-4 pt-4
           px-6"
                 >
@@ -417,6 +434,8 @@ export const CourseDetail = () => {
                     </div>
                   </div>
                 </Card> */}
+                </div>
+              )}
             </div>
           )}
         </div>

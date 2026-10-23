@@ -28,7 +28,7 @@ function CourseScreen() {
   });
   return (
     <>
-      <div className="w-full min-w-0 py-4 px-3 sm:px-6">
+      <div className="w-full min-w-0 py-4 px-3 sm:px-6 mb-18 md:mb-4">
         <div className="flex flex-wrap justify-between items-end gap-4">
           <div>
             {" "}

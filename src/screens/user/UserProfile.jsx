@@ -73,7 +73,7 @@ function AdminProfile() {
   }
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-4 justify-center items-start p-3 sm:p-4 w-full min-w-0">
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-4 justify-center items-start p-3 sm:p-4 w-full min-w-0 md:mb-4 mb-18">
       <PriviewProfileCard user={UserProfileData} isLoading={isLoading} />
       <div className="flex flex-col gap-4 w-full">
         <form

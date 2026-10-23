@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 function UserDashboard() {
   return (
-    <div className="w-full min-w-0 px-3 py-4 sm:px-6">
+    <div className="w-full mb-18 md:mb-4 min-w-0 px-3 py-4 sm:px-6">
       <WelcomeDashboard />
       <StudentDashboardMatrix />
       <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-w-0 gap-4 mt-6">

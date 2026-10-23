@@ -76,9 +76,7 @@ export const UserDashboard = () => {
   }, [search]);
 
   return (
-    <div
-      className="w-full min-w-0 min-h-full p-3 sm:p-6"
-    >
+    <div className="flex h-full min-h-full w-full min-w-0 flex-col p-3 pb-20 sm:p-6 sm:pb-20 lg:pb-6 md:mb-4 mb-10">
       {" "}
       <div className="flex flex-wrap justify-between items-end gap-3">
         <div>
@@ -96,7 +94,7 @@ export const UserDashboard = () => {
           </Button> */}
         </div>
       </div>
-      <Card className="block! w-full rounded-xl mt-2 p-6">
+      <Card className="mt-2 flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-xl p-6 **:data-[slot=table-container]:min-h-0 **:data-[slot=table-container]:flex-1 **:data-[slot=table-container]:overflow-y-auto!">
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
@@ -114,7 +112,7 @@ export const UserDashboard = () => {
           </div>
         </div>
         <hr className="mt-4" />
-        <Table className="min-w-[760px]">
+        <Table className="min-w-190">
           <TableHeader>
             <TableRow>
               <TableHead>{t("ui.user")}</TableHead>

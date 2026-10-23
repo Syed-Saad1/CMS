@@ -36,14 +36,14 @@ function StudentNoticedBoard() {
   ];
   return (
     <div>
-      <Card className={"block! h-72! w-full rounded-xl p-4"}>
+      <Card className={"block! h-fit! w-full rounded-xl p-4"}>
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
             Notice Board{" "}
           </h1>
-          <Link className="flex items-center gap-2 text-primary! text-sm font-normal ">
+          <Link className="flex items-center gap-2 text-primary! text-xs md:text-smfont-normal ">
             View All Noticed
           </Link>
         </div>

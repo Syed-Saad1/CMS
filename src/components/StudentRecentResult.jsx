@@ -65,45 +65,43 @@ function StudentRecentResult() {
           <h1 className="flex gap-2 text-lg font-semibold text-shadow-muted">
             Recent Results
           </h1>
-          <Link className="flex items-center gap-2 text-primary! text-sm font-normal ">
+          <Link className="flex items-center gap-2 text-primary! text-xs md:text-sm font-normal ">
             View All Results
           </Link>
         </div>
         <hr className="mt-2" />
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className={"text-sm font-semibold"}>
-                  Course
-                </TableHead>
-                <TableHead className={"text-sm font-semibold"}>
-                  Exam Type
-                </TableHead>
-                <TableHead className={"text-sm font-semibold"}>Grade</TableHead>
-                <TableHead className={"text-sm font-semibold"}>Score</TableHead>
-                <TableHead className={"text-sm font-semibold"}>Date</TableHead>
-              </TableRow>
-            </TableHeader>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className={"text-sm font-semibold"}>Course</TableHead>
+              <TableHead className={"text-sm font-semibold"}>
+                Exam Type
+              </TableHead>
+              <TableHead className={"text-sm font-semibold"}>Grade</TableHead>
+              <TableHead className={"text-sm font-semibold"}>Score</TableHead>
+              <TableHead className={"text-sm font-semibold"}>Date</TableHead>
+            </TableRow>
+          </TableHeader>
 
-            <TableBody>
-              {RecentResult?.slice(0, 4).map((item) => {
-                return (
-                  <TableRow key={item?._id}>
-                    <TableCell>{item?.Subject}</TableCell>
-                    <TableCell>{item?.ExamType}</TableCell>
+          <TableBody>
+            {RecentResult?.slice(0, 4).map((item) => {
+              return (
+                <TableRow key={item?._id}>
+                  <TableCell>{item?.Subject}</TableCell>
+                  <TableCell>{item?.ExamType}</TableCell>
 
-                    <TableCell>
-                      <div className="bg-success/20  flex items-center justify-center rounded-full size-6 p-4 dark:bg-success/30 text-success/60 ">
-                        {item?.Grade}
-                      </div>
-                    </TableCell>
-                    <TableCell>{item?.Score}</TableCell>
-                    <TableCell>{item?.Date}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                  <TableCell>
+                    <div className="bg-success/20  flex items-center justify-center rounded-full size-6 p-4 dark:bg-success/30 text-success/60 ">
+                      {item?.Grade}
+                    </div>
+                  </TableCell>
+                  <TableCell>{item?.Score}</TableCell>
+                  <TableCell>{item?.Date}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </Card>
     </div>
   );

@@ -113,7 +113,10 @@ function DashboardHeader({ onMenuClick }) {
                       </Link>
                     )}
                     {role === "user" && (
-                      <Link to={"/user/profile"}>
+                      <Link
+                        className="flex gap-2 items-center"
+                        to={"/user/profile"}
+                      >
                         {" "}
                         <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
                           <User className="size-4.5" />

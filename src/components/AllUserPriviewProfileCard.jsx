@@ -48,7 +48,6 @@ function PriviewProfileCard({ user, isLoading }) {
 
       toast.success(t("ui.profileUpdated"));
     } catch (error) {
-
       toast.error(
         error?.response?.data?.message || "Failed to update profile picture",
       );
@@ -167,8 +166,8 @@ function PriviewProfileCard({ user, isLoading }) {
           <div className="flex flex-col mt-4 w-full justify-start items-start">
             {" "}
             <Card className="flex px-2 py-2 gap-4 ">
-              <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
-                <TrendingUp className="size-4 text-accent-foreground" />
+              <div className="opacity-45 rounded-sm p-2 size-8">
+                <TrendingUp className="size-5 text-accent-foreground " />
               </div>
               <div>
                 <CardTitle className={"text-sm"}>Status</CardTitle>{" "}
@@ -176,8 +175,8 @@ function PriviewProfileCard({ user, isLoading }) {
               </div>
             </Card>
             <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
-              <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
-                <UserShield className="size-4 text-accent-foreground" />
+              <div className="opacity-45 rounded-sm p-2 size-8">
+                <UserShield className="size-5 text-accent-foreground" />
               </div>
               <div>
                 <CardTitle className={"text-sm"}>Curent Role</CardTitle>
@@ -187,8 +186,8 @@ function PriviewProfileCard({ user, isLoading }) {
               </div>
             </Card>
             <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
-              <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
-                <Mail className="size-4 text-accent-foreground" />
+              <div className=" opacity-45 rounded-sm p-2 size-8">
+                <Mail className="size-5 text-accent-foreground" />
               </div>
               <div className="min-w-0 break-all">
                 <CardTitle className={"text-xs"}>Email</CardTitle>
@@ -196,8 +195,8 @@ function PriviewProfileCard({ user, isLoading }) {
               </div>
             </Card>
             <Card className="flex w-full min-w-0 px-2 py-2 gap-4">
-              <div className="bg-gray-400 opacity-45 rounded-sm p-2 size-8">
-                <IdCardLanyard className="size-4 text-accent-foreground" />
+              <div className=" opacity-45 rounded-sm p-2 size-8">
+                <IdCardLanyard className="size-5 text-accent-foreground" />
               </div>
               <div className="min-w-0">
                 <CardTitle className={"text-xs"}>UserID</CardTitle>

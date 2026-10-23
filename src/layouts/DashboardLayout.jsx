@@ -9,6 +9,7 @@ function DashboardLayout() {
   const token = Cookies.get("token");
   const role = Cookies.get("role");
   const location = useLocation();
+  const isUsersPage = location.pathname === "/admin/users";
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ function DashboardLayout() {
         <div className="h-16 w-full shrink-0 border-b border-b-border">
           <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
         </div>
-        <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-thin text-2xl">
+        <div className={`min-h-0 min-w-0 flex-1 text-2xl ${isUsersPage ? "overflow-hidden" : "overflow-x-hidden overflow-y-auto scrollbar-thin"}`}>
           <Outlet />
         </div>
         <div className="fixed inset-x-0 bottom-0 z-50 bg-background pb-[env(safe-area-inset-bottom)] lg:hidden">
