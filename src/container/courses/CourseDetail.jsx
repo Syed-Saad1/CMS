@@ -192,7 +192,7 @@ export const CourseDetail = () => {
                   {data?.data?.description}
                 </CardDescription>
                 <hr className="my-4" />
-                <div className="md:flex gap-4 flex-col  items-center md:gap-4">
+                <div className="md:flex gap-4 items-center md:gap-4">
                   <div className="md:mt-0 mt-2">
                     {" "}
                     <CardDescription className="md:text-sm text-xs  flex items-center gap-2">

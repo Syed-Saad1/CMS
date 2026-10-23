@@ -95,7 +95,7 @@ function TeacherAssigned() {
               <Card
                 key={selectedTeacher?.id}
                 className={
-                  "bg-transparent flex items-start justify-start gap-4 mt-2"
+                  "bg-transparent flex items-start pb-2 justify-start gap-4 mt-2"
                 }
               >
                 <div className="flex size-12 justify-center items-center">
@@ -111,11 +111,11 @@ function TeacherAssigned() {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <CardDescription>
+                  <CardDescription className={"font-semibold text-black"}>
                     {selectedTeacher?.firstName || "No Teacher Selected"}{" "}
                     {selectedTeacher?.lastName || ""}
                   </CardDescription>
-                  <CardDescription className={"mt-0"}>
+                  <CardDescription className={"mt-0 text-xs"}>
                     {selectedTeacher?.email ||
                       "Please Choose a teacher from a dropdown"}
                   </CardDescription>
@@ -273,21 +273,7 @@ function TeacherAssigned() {
                         </Button>
                       </DialogTrigger>
 
-                      <DialogContent
-                        className="
-    fixed inset-0 left-0 top-0
-    z-50 flex h-dvh w-screen max-w-none
-    translate-x-0 translate-y-0
-    flex-col gap-0 overflow-hidden
-    rounded-none border-0 p-0
-
-    md:left-1/2 md:top-1/2
-    md:h-auto md:max-h-[90dvh]
-    md:w-full md:max-w-3xl
-    md:-translate-x-1/2 md:-translate-y-1/2
-    md:rounded-xl md:border md:p-6
-  "
-                      >
+                      <DialogContent className="">
                         <UpdateAssignedTeacher
                           TeacherData={TeacherData}
                           setSelectedTeacher={setSelectedTeacher}
@@ -310,7 +296,7 @@ function TeacherAssigned() {
                           variant="destructive"
                         >
                           <Trash />
-                          Delete{" "}
+                          Delete
                         </Button>
                       </DialogTrigger>
                       <DialogContent>
