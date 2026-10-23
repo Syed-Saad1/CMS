@@ -65,7 +65,7 @@ function TeacherAssigned() {
     <div className="p-6 w-full flex-col justify-start items-start flex h-full">
       <CardTitle className={"text-xl"}>{t("ui.teacherTitle")}</CardTitle>
       <CardDescription>{t("ui.assignTeacherDescription")}</CardDescription>
-      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] w-full min-w-0 gap-4 mt-4">
+      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] w-full min-w-0 gap-4 mt-4 pb-2">
         <CourseDataAssignedTeacher Data={Data} isLoading={isLoading} />
         <Card className={"h- p-4 flex flex-col"}>
           <div>
@@ -152,7 +152,7 @@ function TeacherAssigned() {
             Here's are a list of teacher's you can assign this Course
           </CardDescription>
           <hr className="my-4" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-2 md:mb-6 mb-18">
             {TeacherData?.slice(0, 4)?.map((item) => {
               const IntialFirst = setSelectedTeacher?.firstName
                 ?.charAt()
@@ -215,14 +215,14 @@ function TeacherAssigned() {
         </div>
         <ScrollArea
           orientation="vertically"
-          className={"h-72 bg-card max-h-72 p-4  rounded-xl"}
+          className={"h-fit bg-card max-h-fit p-4 md:mb-6 mb-24  rounded-xl"}
         >
           <CardTitle>{t("ui.manageAssignments")}</CardTitle>
           <CardDescription className={"text-xs"}>
             View currently assigned teachers, update assignments, or remove.
           </CardDescription>
           <hr className="mt-5" />
-          <div className="grid gap-4 grid-rows-4  mt-4">
+          <div className="grid gap-4 grid-cols-1  mt-4">
             {" "}
             {Data?.teacherAssignments?.map((item) => {
               const teacher = item?.teacher;
@@ -268,13 +268,13 @@ function TeacherAssigned() {
                           }
                           variant="button"
                         >
-                          <Pencil />
+                          <Pencil className="md:block hidden" />
                           Change Teacher
                         </Button>
                       </DialogTrigger>
 
                       <DialogContent
-                        className={"max-w-lg! w-fit shrink-0 h-fit"}
+                        className={"max-w-full! w-fit shrink-0 h-fit"}
                       >
                         <UpdateAssignedTeacher
                           TeacherData={TeacherData}

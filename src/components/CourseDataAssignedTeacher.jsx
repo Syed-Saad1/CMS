@@ -17,7 +17,7 @@ function CourseDataAssignedTeacher({ isLoading, Data }) {
     <div>
       {" "}
       {isLoading ? (
-        <Card className="h-100 p-4 flex flex-col">
+        <Card className="h-fit pb-4 flex flex-col">
           <Skeleton className="h-7 w-48" />
 
           <hr className="mt-4 text-muted-foreground h-2 w-full" />
@@ -80,7 +80,7 @@ function CourseDataAssignedTeacher({ isLoading, Data }) {
           </div>
         </Card>
       ) : (
-        <Card className={"h-100 p-4 flex flex-col"}>
+        <Card className={"h-fit p-4  flex flex-col"}>
           <CardTitle className={"text-xl"}>
             {t("ui.courseInformation")}
           </CardTitle>
@@ -116,7 +116,7 @@ function CourseDataAssignedTeacher({ isLoading, Data }) {
                 <ChartBarStacked className="size-5 shrink-0" />
                 <Label className={"min-w-18 w-18"}>{t("ui.category")}</Label>
               </div>
-              <CardDescription className={"inline-flex gap-1"}>
+              <CardDescription className={"md:inline-flex flex-col gap-1"}>
                 {" "}
                 {Data?.tags.map((item) => (
                   <div>{item},</div>

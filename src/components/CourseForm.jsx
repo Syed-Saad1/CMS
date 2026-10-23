@@ -269,7 +269,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   return (
     <>
       <form
-        className="w-full min-w-0 min-h-full px-3 sm:px-6 mt-4 mb-6
+        className="w-full min-w-0 min-h-full px-3 sm:px-6 mt-4 md:mb-6 mb-18
     "
         onSubmit={handleSubmit}
       >
