@@ -54,23 +54,6 @@ function AdminProfile() {
       validationSchema: ValidationScheme,
       onSubmit,
     });
-  if (!userId) {
-    return (
-      <div className="p-4 text-red-500">
-        User ID not found. Please login again.
-      </div>
-    );
-  }
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return (
-      <div className="p-4 text-red-500">
-        Failed to Load User: {error?.message}
-      </div>
-    );
-  }
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,24%)_minmax(0,1fr)] gap-4 justify-center items-start p-3 sm:p-4 w-full min-w-0 md:mb-4 mb-18">

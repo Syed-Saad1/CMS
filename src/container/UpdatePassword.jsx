@@ -97,7 +97,7 @@ function UpdatePassword() {
           </div>
         </Card>
       ) : (
-        <Card className={"p-4 md:mb-4 mb-18 h-full flex flex-col"}>
+        <Card className={"p-4 md:mb-4 mb-10 h-full flex flex-col"}>
           <CardTitle className={"text-xl font-bold"}>Update Password</CardTitle>
           <CardDescription>
             Ensure your account is using a long, random password to stay

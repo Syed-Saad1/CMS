@@ -310,7 +310,7 @@ function TeacherAssigned() {
                           variant="destructive"
                         >
                           <Trash />
-                          Remove Assigned
+                          Delete{" "}
                         </Button>
                       </DialogTrigger>
                       <DialogContent>

@@ -23,9 +23,11 @@ export const App = () => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Route />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <div className=" overflow-hidden bg-amber-200">
+      <QueryClientProvider client={queryClient}>
+        <Route />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </div>
   );
 };

@@ -38,7 +38,9 @@ function DashboardLayout() {
         <div className="h-16 w-full shrink-0 border-b border-b-border">
           <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
         </div>
-        <div className={`min-h-0 min-w-0 flex-1 text-2xl ${isUsersPage ? "overflow-hidden" : "overflow-x-hidden overflow-y-auto scrollbar-thin"}`}>
+        <div
+          className={`min-h-0 min-w-0 scrollbar-thin flex-1 text-2xl ${isUsersPage ? "overflow-hidden scrollbar-thin" : "overflow-x-hidden overflow-y-auto scrollbar-thin"}`}
+        >
           <Outlet />
         </div>
         <div className="fixed inset-x-0 bottom-0 z-50 bg-background pb-[env(safe-area-inset-bottom)] lg:hidden">
