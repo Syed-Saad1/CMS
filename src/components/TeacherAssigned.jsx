@@ -274,7 +274,19 @@ function TeacherAssigned() {
                       </DialogTrigger>
 
                       <DialogContent
-                        className={"max-w-full! w-fit shrink-0 h-fit"}
+                        className="
+    fixed inset-0 left-0 top-0
+    z-50 flex h-dvh w-screen max-w-none
+    translate-x-0 translate-y-0
+    flex-col gap-0 overflow-hidden
+    rounded-none border-0 p-0
+
+    md:left-1/2 md:top-1/2
+    md:h-auto md:max-h-[90dvh]
+    md:w-full md:max-w-3xl
+    md:-translate-x-1/2 md:-translate-y-1/2
+    md:rounded-xl md:border md:p-6
+  "
                       >
                         <UpdateAssignedTeacher
                           TeacherData={TeacherData}
