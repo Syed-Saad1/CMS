@@ -89,10 +89,10 @@ export const LoginScreen = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <div className=" lg:h-full bg-transparent lg:mt-0 mt-0 flex flex-col justify-center items-center overflow-hidden overflow-y-auto">
+        <div className=" lg:h-full bg-transparent lg:mt-0 mt-20 flex flex-col justify-center items-center">
           <Card
             className={cn(
-              "w-[calc(100%-2rem)] max-w-110 min-w-0 h-fit flex flex-col px-6! py-6!",
+              "w-[calc(100%-2rem)] max-w-110 min-w-0 flex flex-col px-6! py-6!",
             )}
           >
             <CardHeader>
@@ -107,10 +107,10 @@ export const LoginScreen = () => {
                   alt=""
                 />
               </Link>
-              <CardTitle className="font-DmSans text-3xl font-bold">
+              <CardTitle className="font-DmSans md:text-3xl text-xl font-bold">
                 {t("auth.welcomeBack")}
               </CardTitle>
-              <CardDescription className="mt-1 text-base">
+              <CardDescription className=" md:text-sm text-xs">
                 {t("auth.signInPrompt")}
               </CardDescription>
             </CardHeader>

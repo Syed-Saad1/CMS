@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Card, CardDescription, CardTitle } from "./ui/card";
 import {
   ArrowRight,
   Loader,
@@ -8,13 +7,14 @@ import {
   UserRoundCheck,
   X,
 } from "lucide-react";
-import { Button } from "./ui/button";
-import { DialogClose } from "./ui/dialog";
+import { DialogClose } from "@/components/ui/dialog";
 import { useUpdateAssigned } from "@/mutations/useUpdateAssigned";
-import UpdateTeacherListDropDown from "./UpdateTeacherListDropDown";
 import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import UpdateTeacherListDropDown from "@/components/UpdateTeacherListDropDown";
 
 function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
   const [updateAssigned, setUpdateAssignedTeacher] = useState(null);

@@ -127,11 +127,11 @@ export const SignupScreen = () => {
     onSubmit,
   });
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="bg-transparent lg:h-full lg:mt-0 mt-0 flex flex-col justify-center items-center md:overflow-hidden overflow-y-auto">
+    <form className="h-full" onSubmit={handleSubmit}>
+      <div className="h-full! mt-0 flex flex-col justify-center items-center">
         <Card
           className={cn(
-            "w-[calc(100%-2rem)] h-fit max-w-110 min-w-0 flex flex-col p-6!",
+            "w-[calc(100%-2rem)]  h-full overflow-hidden overflow-y-auto max-w-110 min-w-0 flex flex-col p-6!",
           )}
         >
           <CardHeader>
@@ -146,14 +146,14 @@ export const SignupScreen = () => {
                 alt=""
               />
             </Link>
-            <CardTitle className=" text-3xl font-bold">
+            <CardTitle className="text-xl md:text-3xl font-bold">
               Create Account{" "}
             </CardTitle>
-            <CardDescription className="mt-1 text-base">
+            <CardDescription className="mt-1 lg:text-sm text-xs ">
               Enter your details to register for the platform{" "}
             </CardDescription>
           </CardHeader>
-          <CardContent className="mt-10">
+          <CardContent className="md:mt-10 mt-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Field>
                 <Label>{t("auth.firstName")}</Label>

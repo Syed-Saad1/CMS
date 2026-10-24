@@ -21,15 +21,15 @@ import { Skeleton } from "../components/ui/skeleton";
 import { Button } from "../components/ui/button";
 import { useCreateAssigment } from "@/mutations/useCreateAssigment";
 import toast from "react-hot-toast";
-import UpdateAssignedTeacher from "../components/UpdateAssignedTeacherModal";
-import TeacherListDropDown from "../components/CreateTeacherListDropDown";
-import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog";
+import TeacherListDropDown from "@/components/CreateTeacherListDropDown";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteTeacherAssignedModal from "./DeleteTeacherAssignedModal";
 import { getAllTeacher } from "@/query/getAllTeacher";
 import { useTranslation } from "react-i18next";
 import { ScrollArea } from "../components/ui/scroll-area";
 import CourseDataAssignedTeacher from "../components/CourseDataAssignedTeacher";
 import axios from "axios";
+import UpdateAssignedTeacher from "./UpdateAssignedTeacherModal";
 function TeacherAssigned() {
   const { t } = useTranslation();
   const [selectedTeacherId, setSelectedTeacherId] = useState(null);

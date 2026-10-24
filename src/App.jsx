@@ -23,7 +23,7 @@ export const App = () => {
   );
 
   return (
-    <div className=" overflow-hidden bg-amber-200">
+    <div className="">
       <QueryClientProvider client={queryClient}>
         <Route />
         <ReactQueryDevtools initialIsOpen={false} />
