@@ -31,7 +31,7 @@ export function AuthLayout() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="overflow-hidden overflow-y-auto scrollbar-thin">
         <Outlet />
       </div>
     </div>
