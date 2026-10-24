@@ -1,4 +1,4 @@
-import CourseForm from "@/components/CourseForm";
+import CourseForm from "@/container/CourseForm";
 import { editCourse } from "@/mutations/editCourse";
 import { getCourseById } from "@/query/getCourseById";
 import { IdCardLanyardIcon } from "lucide-react";

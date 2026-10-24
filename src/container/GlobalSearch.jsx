@@ -1,10 +1,10 @@
 import React, { Suspense, useState } from "react";
 import { Link } from "react-router-dom";
-import { Input } from "./ui/input";
-import { CardDescription, CardTitle } from "./ui/card";
+import { Input } from "../components/ui/input";
+import { CardDescription, CardTitle } from "../components/ui/card";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { useTranslation } from "react-i18next";
 function GlobalSearch({ Loading }) {
   const { t } = useTranslation();

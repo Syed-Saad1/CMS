@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card, CardDescription, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardTitle } from "../components/ui/card";
 import { Icon } from "@iconify/react";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { useUpdateRole } from "@/mutations/updateRole";
 import { useParams } from "react-router-dom";
 import { Check, Loader } from "lucide-react";
@@ -48,7 +48,7 @@ function UpdateRole({ userRole }) {
     <form>
       <Card
         className={
-          "flex h-fit min-h-62 w-full flex-col gap-y-4 px-4 py-2 pb-4 sm:px-6"
+          "flex border border-border h-fit min-h-62 w-full flex-col gap-y-4 px-4 py-2 pb-4 sm:px-6"
         }
       >
         <div>

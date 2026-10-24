@@ -22,6 +22,7 @@ import {
 import WelcomeDashboardAdmin from "@/components/WelcomeDashboard";
 import RecentlyActivites from "@/components/RecentlyActivites";
 import UserChart from "@/charts/UserChart";
+import AdminMetrixSkeleton from "@/skeleton/AdminMetrixSkeleton";
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -133,33 +134,7 @@ export function AdminDashboard() {
         {" "}
         <WelcomeDashboardAdmin />
         {isDashboardLoading ? (
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <Card
-                key={index}
-                className="flex h-30 w-full items-start justify-start gap-3.5 rounded-lg border-border/40 bg-card py-2 pl-4 pt-2"
-              >
-                <div className="flex w-34 flex-col items-start justify-start gap-5 pt-3">
-                  <div className="flex flex-col gap-2">
-                    <div className="h-4 w-24 animate-pulse rounded-md bg-muted" />
-
-                    <div className="flex items-center gap-2">
-                      <div className="h-7 w-12 animate-pulse rounded-md bg-muted" />
-                      <div className="h-5 w-16 animate-pulse rounded-md bg-muted" />
-                    </div>
-                  </div>
-
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                    <div className="h-full w-[45%] animate-pulse rounded-full bg-muted-foreground/20" />
-                  </div>
-                </div>
-
-                <div className="flex size-14 shrink-0 animate-pulse items-center justify-center rounded-full bg-muted">
-                  <div className="size-8 rounded-full bg-muted-foreground/10" />
-                </div>
-              </Card>
-            ))}
-          </div>
+          <AdminMetrixSkeleton />
         ) : (
           <div className="mb-4 mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {AdminDashboardCard.map((item) => {
@@ -168,7 +143,7 @@ export function AdminDashboard() {
                 <Card
                   key={item.id}
                   className={cn(
-                    "border-border/40! bg-card flex md:pr-0 pr-4 pl-4 py-2 pt-2 h-30 gap-3.5 w-full rounded-lg justify-between md:justify-start items-start ",
+                    "border-border border bg-card flex md:pr-0 pr-4 pl-4 py-2 pt-2 h-30 gap-3.5 w-full rounded-lg justify-between md:justify-start items-start ",
                     item.cardBg,
                   )}
                 >

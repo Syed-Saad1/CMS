@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
+import CourseDataAssignedSkeleton from "@/skeleton/CourseDataAssignedSkeleton";
 
 function CourseDataAssignedTeacher({ isLoading, Data }) {
   const { t } = useTranslation();
@@ -17,70 +18,9 @@ function CourseDataAssignedTeacher({ isLoading, Data }) {
     <div>
       {" "}
       {isLoading ? (
-        <Card className="h-fit pb-4 flex flex-col">
-          <Skeleton className="h-7 w-48" />
-
-          <hr className="mt-4 text-muted-foreground h-2 w-full" />
-
-          <div className="flex gap-2 justify-start items-start mt-2">
-            <Skeleton className="size-22 rounded-xl" />
-
-            <div className="flex flex-col gap-2">
-              <Skeleton className="h-6 w-48" />
-              <Skeleton className="h-6 w-24 rounded-2xl" />
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-3">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <Skeleton className="size-5 rounded" />
-                <Skeleton className="h-4 w-18" />
-              </div>
-
-              <Skeleton className="h-4 w-32" />
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <Skeleton className="size-5 rounded" />
-                <Skeleton className="h-4 w-18" />
-              </div>
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <Skeleton className="size-5 rounded" />
-                <Skeleton className="h-4 w-18" />
-              </div>
-
-              <Skeleton className="h-4 w-36" />
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <Skeleton className="size-5 rounded" />
-                <Skeleton className="h-4 w-18" />
-              </div>
-
-              <Skeleton className="h-4 w-20" />
-            </div>
-          </div>
-
-          <hr className="my-2 text-muted-foreground h-2 w-full" />
-
-          <Skeleton className="h-6 w-40 mb-2" />
-
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-[90%]" />
-            <Skeleton className="h-4 w-[75%]" />
-          </div>
-        </Card>
+        <CourseDataAssignedSkeleton />
       ) : (
-        <Card className={"h-fit p-4  flex flex-col"}>
+        <Card className={"border border-border h-fit p-4  flex flex-col"}>
           <CardTitle className={"text-xl"}>
             {t("ui.courseInformation")}
           </CardTitle>
@@ -116,7 +56,7 @@ function CourseDataAssignedTeacher({ isLoading, Data }) {
                 <ChartBarStacked className="size-5 shrink-0" />
                 <Label className={"min-w-18 w-18"}>{t("ui.category")}</Label>
               </div>
-              <CardDescription className={"md:inline-flex flex-col gap-1"}>
+              <CardDescription className={"md:inline-flex xs:flex-col gap-1"}>
                 {" "}
                 {Data?.tags.map((item) => (
                   <div>{item},</div>

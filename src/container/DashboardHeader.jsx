@@ -14,8 +14,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import DeleteTeacherAssignedModal from "@/components/DeleteTeacherAssignedModal";
-import GlobalSearch from "@/components/GlobalSearch";
+import DeleteTeacherAssignedModal from "@/container/DeleteTeacherAssignedModal";
+import GlobalSearch from "@/container/GlobalSearch";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { LogOut, Menu, User } from "lucide-react";
 

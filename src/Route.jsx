@@ -15,7 +15,7 @@ import CourseDetail from "./container/courses/CourseDetail";
 import UserProfile from "./screens/user/UserProfile";
 import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
 import EditCourseCard from "./container/courses/EditCourseForm";
-import TeacherAssigned from "./components/TeacherAssigned";
+import TeacherAssigned from "./container/TeacherAssigned";
 function RoutePack() {
   return (
     <BrowserRouter>

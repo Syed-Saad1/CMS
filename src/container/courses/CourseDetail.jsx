@@ -31,8 +31,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useGetUser } from "@/query/useGetUser";
+import CourseDetailedSkeleton from "@/skeleton/CourseDetailedSkeleton";
 export const CourseDetail = () => {
   const { id } = useParams();
+
   const { data, isLoading } = getCourseById(id);
   const { mutateAsync, isPending } = useEnrollCourse();
   const role = Cookies.get("role");
@@ -41,6 +44,7 @@ export const CourseDetail = () => {
     userId: userId,
     courseId: id,
   };
+
   const handleEnroll = async () => {
     try {
       const res = await mutateAsync(payload);
@@ -67,62 +71,9 @@ export const CourseDetail = () => {
         }`}
       >
         {isLoading ? (
-          <Card className="flex w-full flex-col h-full animate-pulse">
-            <div className="w-full h-72 shrink-0 relative bg-muted overflow-hidden">
-              <div className="absolute bottom-4 left-4 w-32 h-7 rounded-2xl bg-muted-foreground/20" />
-            </div>
-
-            <ScrollArea className="max-h-full w-full pl-4 pr-8 mt-2">
-              <div className="flex w-full flex-col">
-                <Skeleton className="h-9 w-3/4 mt-5" />
-
-                <div className="space-y-2 mt-3 min-h-20">
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-2/3" />
-                </div>
-
-                <hr className="my-4 border-border" />
-
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Skeleton className="h-4.5 w-4.5 rounded-full" />
-                    <Skeleton className="h-4 w-16" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Skeleton className="h-4.5 w-4.5 rounded-full" />
-                    <Skeleton className="h-4 w-28" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Skeleton className="h-4.5 w-4.5 rounded-full" />
-                    <Skeleton className="h-4 w-24" />
-                  </div>
-                </div>
-              </div>
-
-              <Card className="flex flex-col min-h-140! w-full mt-8 bg-muted/40 pl-6 pt-6 pb-6 pr-6 border-none">
-                <div className="flex gap-2 items-center">
-                  <Skeleton className="h-5 w-5 rounded-md" />
-                  <Skeleton className="h-6 w-44" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  {[...Array(4)].map((_, index) => (
-                    <div key={index} className="flex gap-2 items-start">
-                      <Skeleton className="h-4.5 w-4.5 rounded-full shrink-0 pt-0.5" />
-                      <div className="w-full space-y-1.5">
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-5/6" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </ScrollArea>
-          </Card>
+          <CourseDetailedSkeleton />
         ) : (
-          <Card className="flex flex-col w-full">
+          <Card className="flex border border-border flex-col w-full">
             <div className="w-full h-72 shrink-0 relative bg-accent overflow-hidden">
               <img
                 className="aspect-video w-full object-cover h-full"
@@ -140,7 +91,7 @@ export const CourseDetail = () => {
                         >
                           <Trash size={18} />
                         </DialogTrigger>
-                        <DialogContent className="h-40! w-full! max-w-[calc(100vw-2rem)]! sm:w-130!">
+                        <DialogContent className="h-fit! w-full! max-w-[calc(100vw-2rem)]! sm:w-88!">
                           {data?.data ? (
                             <DeleteCourseModal item={data?.data} />
                           ) : null}{" "}
@@ -234,7 +185,7 @@ export const CourseDetail = () => {
                 </div>
               </div>
 
-              <Card className="flex flex-col min-h-fit! pb-10 w-full mt-8 pl-6  bg-transparent pt-6">
+              <Card className="flex flex-col min-h-fit! pb-10 w-full mt-8  bg-transparent pt-6">
                 <CardTitle className="flex gap-2 items-center text-2xl font-semibold">
                   <BookOpenCheck
                     className="text-[#3b82f6]"
@@ -246,7 +197,7 @@ export const CourseDetail = () => {
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex gap-2 items-start">
                     <CardDescription className="text-[15px] leading-relaxed ">
-                      {data?.data?.content ? (
+                      {data?.data?.courseOverview ? (
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -321,7 +272,7 @@ export const CourseDetail = () => {
               {" "}
               {isLoading ? (
                 <div className="flex h-full lg:top-6  flex-col gap-2 animate-pulse">
-                  <Card className="h-70 flex  lg:top-6 flex-col items-center justify-center gap-4 px-6">
+                  <Card className="h-70 flex border border-border lg:top-6 flex-col items-center justify-center gap-4 px-6">
                     <Skeleton className="h-5 w-36" />
                     <Skeleton className="h-9 w-28 my-1" />
                     <div className="border border-border w-full" />
@@ -348,7 +299,7 @@ export const CourseDetail = () => {
                 </div>
               ) : (
                 <div className="flex  flex-col gap-2 w-full mt-1">
-                  <Card className="h-70 w-full flex flex-col items-center justify-center gap-3 px-6">
+                  <Card className="h-70 border border-border w-full flex flex-col items-center justify-center gap-3 px-6">
                     <CardTitle className="text-xl font-bold">
                       Build Your Future
                     </CardTitle>
@@ -391,7 +342,7 @@ export const CourseDetail = () => {
                     <div className="border border-border w-full" />
                     <div className=" grid grid-cols-2 gap-4 w-full ">
                       <div className="flex flex-col items-center">
-                        <CardTitle>24K</CardTitle>
+                        <CardTitle>10K</CardTitle>
                         <CardDescription>STUDENTS</CardDescription>
                       </div>
                       <div className="flex flex-col border-l border-border items-center">
@@ -400,40 +351,6 @@ export const CourseDetail = () => {
                       </div>
                     </div>
                   </Card>
-                  {/* <Card
-                  className="h-58 flex flex-col gap-4 pt-4
-          px-6"
-                >
-                  <Label className="text-xs font-semibold text-primary">
-                    COURSE INSTRUCTOR
-                  </Label>
-                  <div className="grid grid-cols-[32%_65%] gap-3">
-                    <div>
-                      {" "}
-                      <img
-                        className="w-24 h-24 rounded-2xl object-cover"
-                        src="/COURSEINSTRUCTOR.png"
-                        alt="Instructor"
-                      />
-                    </div>
-                    <div className="pl-2">
-                      <CardTitle className="text-lg font-bold ">
-                        Dr. Alan Turing
-                      </CardTitle>
-                      <CardDescription className="text-xs max-h-26 text-justify line-clamp-6  mt-2  leading-4.5 text-muted-foreground">
-                        Former Senior Staff Engineer at major tech firm with
-                        over 15 years of experience in distributed systems. Dr.
-                        Turing specializes in algorithmic optimization and has
-                        been teaching advanced computer science concepts to
-                        bridge the gap between academic theory and industry
-                        practice.
-                      </CardDescription>
-                      <Link className="mt-1 h-10 flex items-center gap-2 text-primary">
-                        View Profile <ArrowRight size={18} />
-                      </Link>
-                    </div>
-                  </div>
-                </Card> */}
                 </div>
               )}
             </div>

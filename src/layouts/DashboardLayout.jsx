@@ -30,7 +30,7 @@ function DashboardLayout() {
   }
 
   return (
-    <div className="flex h-dvh w-full flex-col overflow-hidden bg-pink-900 xl:flex-row">
+    <div className="flex h-dvh w-full flex-col overflow-hidden  xl:flex-row">
       <div className="hidden w-56 shrink-0 text-primary-foreground bg-sidebar xl:block xl:h-full">
         <SideBar />
       </div>
@@ -39,7 +39,7 @@ function DashboardLayout() {
           <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
         </div>
         <div
-          className={`min-h-0 min-w-0 scrollbar-thin flex-1 text-2xl ${isUsersPage ? "overflow-hidden scrollbar-thin" : "overflow-x-hidden overflow-y-auto scrollbar-thin"}`}
+          className={`min-h-0 min-w-0 bg-white dark:bg-sidebar scrollbar-thin flex-1 text-2xl ${isUsersPage ? "overflow-hidden scrollbar-thin" : "overflow-x-hidden overflow-y-auto scrollbar-thin"}`}
         >
           <Outlet />
         </div>

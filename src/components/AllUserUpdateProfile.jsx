@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
+import UpdateProfileSkeleton from "@/skeleton/UpdateProfileSkeleton";
 function AllUserUpdateProfile({
   values,
   errors,
@@ -26,41 +27,10 @@ function AllUserUpdateProfile({
   return (
     <div>
       {isLoading ? (
-        <Card className="flex flex-col w-full h-fit! gap-y-4 px-6 py-6 pb-4">
-          <div>
-            <Skeleton className="h-5 w-44 rounded-md" />
-
-            <Skeleton className="h-4 w-80 mt-2 rounded-md" />
-
-            <hr className="mt-4" />
-          </div>
-
-          <CardContent className="mt-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-4">
-              <Field>
-                <Skeleton className="h-4 w-20 mb-2 rounded-md" />
-                <Skeleton className="h-10 w-full rounded-md" />
-              </Field>
-
-              <Field>
-                <Skeleton className="h-4 w-20 mb-2 rounded-md" />
-                <Skeleton className="h-10 w-full rounded-md" />
-              </Field>
-            </div>
-
-            <Field className="mt-4">
-              <Skeleton className="h-4 w-12 mb-2 rounded-md" />
-              <Skeleton className="h-10 w-full rounded-md" />
-            </Field>
-          </CardContent>
-
-          <CardFooter className="pb-5 flex justify-end gap-2">
-            <Skeleton className="h-9 w-28 rounded-md" />
-          </CardFooter>
-        </Card>
+        <UpdateProfileSkeleton />
       ) : (
         <div>
-          <Card className="flex flex-col w-full h-fit! gap-y-4 px-6 py-6 pb-4">
+          <Card className="flex border border-border flex-col w-full h-fit! gap-y-4 px-6 py-6 pb-4">
             <div>
               <CardTitle className={"text-lg"}>
                 {t("ui.personalInfo")}

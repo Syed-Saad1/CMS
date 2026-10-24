@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, CardTitle } from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { FieldDescription } from "./ui/field";
-import { Textarea } from "./ui/textarea";
+import { Card, CardTitle } from "../components/ui/card";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
+import { FieldDescription } from "../components/ui/field";
+import { Textarea } from "../components/ui/textarea";
 import MultiSelect from "@/container/MultiSelect";
 import MarkdownEditor from "@/container/MarkDown";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { ImagePlus, Loader, Plus, Save, Upload, X } from "lucide-react";
-import TimeRangePicker from "./TimePicker";
+import TimeRangePicker from "../components/TimePicker";
 import { createCourse } from "@/mutations/createCourse";
 import { editCourse } from "@/mutations/editCourse";
 import { getCourseById } from "@/query/getCourseById";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../components/ui/skeleton";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import CourseFormSkeleton from "@/skeleton/CourseFormSkeleton";
 
 const options = [
   { value: "Programing", label: "Programing" },
@@ -31,7 +32,6 @@ const options = [
   { value: "Finance", label: "Finance" },
   { value: "Marketing", label: "Marketing" },
   { value: "DataScience", label: "Data Science" },
-  { value: "DataScience", label: "Data Science" },
 ];
 const Daysoptions = [
   { value: "Monday", label: "Monday" },
@@ -40,10 +40,10 @@ const Daysoptions = [
   { value: "Thursday", label: "Thursday" },
   { value: "Friday", label: "Friday" },
   { value: "Saturday", label: "Saturday" },
+  { value: "Sunday", label: "Sunday" },
 ];
-function CourseForm({ isEditPending, editCourseMutation, courseId }) {
+function CourseForm({ isEditPending, editCourseMutation }) {
   const { t } = useTranslation();
-  const [courseOverview, setCourseOverview] = useState("");
   const navigate = useNavigate();
   const ImgRef = useRef(null);
   const [thumbnail, setThumbnail] = useState(null);
@@ -71,12 +71,12 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
     description: courseData?.data?.description || "",
     price: courseData?.data?.price || "",
     category: courseData?.data?.category || "",
-    content: courseData?.data?.content || "",
+    courseOverview: courseData?.data?.courseOverview || "",
     thumbnail: courseData?.data?.thumbnail || null,
 
     courseTime: {
-      startTime: "",
-      endTime: "",
+      startTime: courseData?.data?.startTime,
+      endTime: courseData?.data?.endTime,
     },
   };
 
@@ -101,26 +101,8 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
     });
 
   async function onSubmit(values, { resetForm }) {
-    if (isEdit) {
-      await editCourseMutation({ courseId, ...values });
-    } else {
-      await createCourseMutation(values);
-    }
+    console.log("values____", values);
     try {
-      const payload = {
-        title: values.title,
-        description: values.description,
-        price: values.price,
-        category: values.category,
-        content: values.content,
-        thumbnail: values.thumbnail,
-        tags: values.tags,
-        courseDays: values.courseDays,
-        courseTime: values.courseTime.startTime,
-        courseTime: values.courseTime.endTime,
-      };
-
-      await editCourseMutation(payload);
       const formData = new FormData();
 
       formData.append("tags", JSON.stringify(values.tags || []));
@@ -135,8 +117,11 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
 
       formData.append("category", values.category || "");
 
-      formData.append("content", values.content || "");
+      formData.append("content", values.courseOverview || "");
 
+      if (values.thumbnail instanceof File) {
+        formData.append("thumbnail", values.thumbnail);
+      }
       formData.append(
         "courseTime",
         JSON.stringify(
@@ -147,13 +132,14 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
         ),
       );
 
-      navigate("/courses");
+      console.log("formData", formData);
 
-      if (isEdit === false) {
+      if (!isEdit) {
         const CreateCourse = await createCourseMutation(formData);
         const CreateResult = CreateCourse;
         console.log("Error", CreateResult);
-        toast.success(createCourse?.message || t("ui.courseCreateSuccess"));
+        toast.success(CreateResult?.message || t("ui.courseCreateSuccess"));
+        navigate("/courses");
       } else {
         const EditResponse = await editCourseMutation(formData);
 
@@ -161,7 +147,6 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
 
         toast.success(Editresult?.message || t("ui.courseUpdateSuccess"));
       }
-      resetForm();
 
       if (values.thumbnail instanceof File) {
         formData.append("thumbnail", values.thumbnail);
@@ -179,6 +164,7 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
       if (ImgRef.current) {
         ImgRef.current.value = "";
       }
+      resetForm();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -269,81 +255,15 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
   return (
     <>
       <form
-        className="w-full min-w-0 min-h-full px-3 sm:px-6 mt-4 md:mb-6 mb-18
-    "
+        className="w-full min-w-0 min-h-full px-3 sm:px-6 mt-4 md:mb-6 mb-18"
         onSubmit={handleSubmit}
       >
         {isCourseLoading ? (
-          <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68fr)_minmax(0,30fr)] items-start justify-center gap-6">
-            <Card className="flex flex-col w-full py-6 px-4 overflow-hidden">
-              <div>
-                <Skeleton className="h-8 w-52" />
-                <Skeleton className="h-4 w-72 mt-2" />
-              </div>
-
-              <Skeleton className="h-px w-full mt-4" />
-
-              <div className="mt-4">
-                <Skeleton className="h-4 w-28" />
-                <Skeleton className="h-10 w-full mt-2 rounded-md" />
-              </div>
-
-              <div className="mt-4">
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-24 w-full mt-2 rounded-md" />
-              </div>
-
-              <Card className="grid grid-cols-2 mt-4 items-center w-full gap-4 p-4">
-                <div>
-                  <Skeleton className="h-4 w-28" />
-                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
-                </div>
-
-                <div>
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
-                </div>
-
-                <div>
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
-                </div>
-
-                <div>
-                  <Skeleton className="h-4 w-28" />
-                  <Skeleton className="h-8 w-full mt-2 rounded-md" />
-                </div>
-              </Card>
-
-              <div className="space-y-2 mt-6">
-                <div className="flex items-center justify-between">
-                  <Skeleton className="h-4 w-32" />
-                  <Skeleton className="h-6 w-20 rounded-md" />
-                </div>
-
-                <Skeleton className="h-64 w-full rounded-md" />
-              </div>
-
-              <div className="flex items-center justify-end gap-4 mt-4">
-                <Skeleton className="h-10 w-24 rounded-md" />
-                <Skeleton className="h-10 w-36 rounded-md" />
-              </div>
-            </Card>
-
-            <div>
-              <Card className="flex flex-col py-8 px-6 h-fit">
-                <Skeleton className="h-6 w-44" />
-
-                <div className="space-y-2 mt-6">
-                  <Skeleton className="h-64 w-full rounded-lg" />
-                </div>
-              </Card>
-            </div>
-          </div>
+          <CourseFormSkeleton />
         ) : (
           <div className="w-full min-w-0 grid grid-cols-1 xl:grid-cols-[minmax(0,68fr)_minmax(0,30fr)] items-start justify-center gap-6">
             {" "}
-            <Card className="flex min-w-0 flex-col w-full py-6 px-4">
+            <Card className="border border-border flex min-w-0 flex-col w-full py-6 px-4">
               <div>
                 <h1 className="text-dashboard-foreground text-2xl font-extrabold">
                   {location.pathname === "/courses-create"
@@ -468,8 +388,8 @@ function CourseForm({ isEditPending, editCourseMutation, courseId }) {
                 </div>
 
                 <MarkdownEditor
-                  value={values?.courseOverview}
-                  onChange={setCourseOverview}
+                  value={values?.courseOverview || ""}
+                  onChange={(value) => setFieldValue("courseOverview", value)}
                   placeholder={`## Course Overview
 
 Describe what students will learn in this course...
@@ -517,7 +437,7 @@ Describe what students will learn in this course...
               </div>
             </Card>
             <div>
-              <Card className="flex flex-col py-8 px-6 h-fit">
+              <Card className="border border-border flex flex-col py-8 px-6 h-fit">
                 <CardTitle className="text-xl">
                   {t("ui.courseThumbnail")}
                 </CardTitle>

@@ -128,10 +128,10 @@ export const SignupScreen = () => {
   });
   return (
     <form onSubmit={handleSubmit}>
-      <div className="bg-background lg:h-screen lg:mt-0 mt-20 flex flex-col justify-center items-center ">
+      <div className="bg-transparent lg:h-full lg:mt-0 mt-20 flex flex-col justify-center items-center overflow-hidden overflow-y-auto">
         <Card
           className={cn(
-            "w-[calc(100%-2rem)] max-w-110 min-w-0 flex flex-col p-6! border-red-600!",
+            "w-[calc(100%-2rem)] h-auto max-w-110 min-w-0 flex flex-col p-6!",
           )}
         >
           <CardHeader>

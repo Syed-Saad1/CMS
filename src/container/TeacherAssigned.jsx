@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardDescription, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardTitle } from "../components/ui/card";
 import { getCourseById } from "@/query/getCourseById";
 import Cookies from "js-cookie";
 import { Link, useParams } from "react-router-dom";
@@ -16,19 +16,19 @@ import {
   UserRoundCog,
   X,
 } from "lucide-react";
-import { Label } from "./ui/label";
-import { Skeleton } from "./ui/skeleton";
-import { Button } from "./ui/button";
+import { Label } from "../components/ui/label";
+import { Skeleton } from "../components/ui/skeleton";
+import { Button } from "../components/ui/button";
 import { useCreateAssigment } from "@/mutations/useCreateAssigment";
 import toast from "react-hot-toast";
-import UpdateAssignedTeacher from "./UpdateAssignedTeacherModal";
-import TeacherListDropDown from "./CreateTeacherListDropDown";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import UpdateAssignedTeacher from "../components/UpdateAssignedTeacherModal";
+import TeacherListDropDown from "../components/CreateTeacherListDropDown";
+import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog";
 import DeleteTeacherAssignedModal from "./DeleteTeacherAssignedModal";
 import { getAllTeacher } from "@/query/getAllTeacher";
 import { useTranslation } from "react-i18next";
-import { ScrollArea } from "./ui/scroll-area";
-import CourseDataAssignedTeacher from "./CourseDataAssignedTeacher";
+import { ScrollArea } from "../components/ui/scroll-area";
+import CourseDataAssignedTeacher from "../components/CourseDataAssignedTeacher";
 import axios from "axios";
 function TeacherAssigned() {
   const { t } = useTranslation();
@@ -67,7 +67,7 @@ function TeacherAssigned() {
       <CardDescription>{t("ui.assignTeacherDescription")}</CardDescription>
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] w-full min-w-0 gap-4 mt-4 pb-2">
         <CourseDataAssignedTeacher Data={Data} isLoading={isLoading} />
-        <Card className={"h- p-4 flex flex-col"}>
+        <Card className={"border h-fit border-border p-4 flex flex-col"}>
           <div>
             <div className="flex gap-2">
               <UserRoundCog />
@@ -146,7 +146,7 @@ function TeacherAssigned() {
         </Card>
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,58%)_minmax(0,38%)] gap-4 w-full min-w-0 mt-8">
-        <div className="p-4 h-fit w-full rounded-xl bg-card mb-6">
+        <div className="border border-border p-4 h-fit w-full rounded-xl bg-card mb-6">
           <CardTitle>{t("ui.availableTeacher")}</CardTitle>
           <CardDescription>
             Here's are a list of teacher's you can assign this Course
@@ -215,7 +215,9 @@ function TeacherAssigned() {
         </div>
         <ScrollArea
           orientation="vertically"
-          className={"h-fit bg-card max-h-fit p-4 md:mb-6 mb-24  rounded-xl"}
+          className={
+            "border border-border h-fit bg-card max-h-fit p-4 md:mb-6 mb-24  rounded-xl"
+          }
         >
           <CardTitle>{t("ui.manageAssignments")}</CardTitle>
           <CardDescription className={"text-xs"}>
@@ -272,15 +274,16 @@ function TeacherAssigned() {
                           Change Teacher
                         </Button>
                       </DialogTrigger>
-
-                      <DialogContent className="">
-                        <UpdateAssignedTeacher
-                          TeacherData={TeacherData}
-                          setSelectedTeacher={setSelectedTeacher}
-                          selectedTeacher={selectedTeacher}
-                          Data={Data}
-                          selectedTeacherId={selectedTeacherId}
-                        />
+                      <DialogContent>
+                        <div className={"w-100!"}>
+                          <UpdateAssignedTeacher
+                            TeacherData={TeacherData}
+                            setSelectedTeacher={setSelectedTeacher}
+                            selectedTeacher={selectedTeacher}
+                            Data={Data}
+                            selectedTeacherId={selectedTeacherId}
+                          />
+                        </div>
                       </DialogContent>
                     </Dialog>
                     <Dialog>

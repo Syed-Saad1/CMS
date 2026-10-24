@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import Cookies from "js-cookie";
-import SidebarNavigation from "../container/SidebarNavigation";
+import SidebarNavigation from "./MockData/SidebarNavigation";
 import { useTranslation } from "react-i18next";
 function SideBar({ onClose }) {
   const { t } = useTranslation();

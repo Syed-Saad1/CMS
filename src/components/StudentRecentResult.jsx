@@ -58,7 +58,7 @@ function StudentRecentResult() {
   return (
     <div>
       {" "}
-      <Card className="block! h-72! w-full rounded-xl p-4">
+      <Card className="block! border border-border h-72! w-full rounded-xl p-4">
         {" "}
         <div className="w-full px-2 flex justify-between items-center">
           {" "}

@@ -15,13 +15,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { RoleBadge } from "./RoleBadge";
 import { StatusBadge } from "./ui/status";
 import { useTranslation } from "react-i18next";
+import RecentAddedUserSkeleton from "@/skeleton/RecentAddedUserSkeleton";
 
 function RecentlyAddedUsers({ UserLoading, userData }) {
   const { t } = useTranslation();
   return (
     <div>
       {" "}
-      <Card className="block! h-100 w-full rounded-xl p-4 ">
+      <Card className="block! border border-border h-100 w-full rounded-xl p-4 ">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 justify-end text-lg items-end font-semibold text-shadow-muted">
             <User className="text-primary size-6" strokeWidth={1.4} />
@@ -58,27 +59,7 @@ function RecentlyAddedUsers({ UserLoading, userData }) {
               </TableRow>
             </TableHeader>
             {UserLoading ? (
-              <TableBody>
-                {[...Array(5)].map((_, index) => (
-                  <TableRow key={index} className="animate-pulse">
-                    <TableCell>
-                      <div className="h-4 w-28 bg-muted/80 rounded" />
-                    </TableCell>
-
-                    <TableCell>
-                      <div className="h-4 w-24 bg-muted/50 rounded" />
-                    </TableCell>
-
-                    <TableCell>
-                      <div className="h-6 w-16 bg-muted/60 rounded-full" />
-                    </TableCell>
-
-                    <TableCell>
-                      <div className="h-4 w-8 bg-muted/40 rounded" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+              <RecentAddedUserSkeleton />
             ) : (
               <TableBody>
                 {userData.length ? (

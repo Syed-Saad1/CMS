@@ -24,6 +24,7 @@ import { getUserById } from "@/query/getUserById";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
 import PaginationControls from "@/container/Pagination";
+import AllUserSkeleton from "@/skeleton/AllUserSkeleton";
 
 export const UserDashboard = () => {
   const { t } = useTranslation();
@@ -76,8 +77,7 @@ export const UserDashboard = () => {
   }, [search]);
 
   return (
-    <div className=" h-full min-h-full w-full min-w-0 overflow-y-auto overflow-hidden scrollbar-thin p-3 pb-20 sm:p-6 sm:pb-20 lg:pb-6 md:mb-4 mb-10">
-      {" "}
+    <div className="h-full min-h-full w-full min-w-0 overflow-y-auto overflow-hidden scrollbar-thin p-3 pb-20 sm:p-6 sm:pb-20 lg:pb-6 md:mb-4 mb-10">
       <div className="flex flex-wrap justify-between items-end gap-3">
         <div>
           {" "}
@@ -88,13 +88,8 @@ export const UserDashboard = () => {
             {t("ui.userManage")}{" "}
           </p>
         </div>
-        <div className="flex gap-3">
-          {/* <Button variant={"button"} className="text-[13px]  py-4">
-            <ListSortAscending /> {t("ui.filter")}
-          </Button> */}
-        </div>
       </div>
-      <Card className="mt-2 flex w-full flex-1 flex-col  rounded-xl p-6 ">
+      <Card className="bg-transparent mt-4 flex w-full flex-1 flex-col  rounded-xl ">
         {" "}
         <div className="w-full flex justify-between items-center">
           {" "}
@@ -125,31 +120,7 @@ export const UserDashboard = () => {
             </TableRow>
           </TableHeader>
           {isLoading ? (
-            <TableBody>
-              {[...Array(5)].map((_, index) => (
-                <TableRow key={index} className="animate-pulse">
-                  <TableCell>
-                    <div className="h-4 w-24 bg-muted/80 rounded" />
-                  </TableCell>
-
-                  <TableCell>
-                    <div className="h-4 w-40 bg-muted/50 rounded" />
-                  </TableCell>
-
-                  <TableCell>
-                    <div className="h-4 w-32 bg-muted/50 rounded" />
-                  </TableCell>
-
-                  <TableCell>
-                    <div className="h-6 w-16 bg-muted/60 rounded-full" />
-                  </TableCell>
-
-                  <TableCell>
-                    <div className="h-4 w-10 bg-muted/40 rounded" />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            <AllUserSkeleton />
           ) : (
             <TableBody>
               {currentUser.length ? (

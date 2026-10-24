@@ -8,6 +8,7 @@ import {
   FileText,
   GraduationCap,
 } from "lucide-react";
+import StudentMatrixSkeleton from "@/skeleton/StudentMatrixSkeleton";
 function StudentDashboardMatrix() {
   const [loading, setLoading] = useState(false);
   const StudentDashboardMatrix = [
@@ -51,31 +52,16 @@ function StudentDashboardMatrix() {
   return (
     <div>
       {" "}
-      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mt-3  grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
         {loading
           ? Array.from({ length: StudentDashboardMatrix?.length || 4 }).map(
-              (_, index) => (
-                <Card
-                  key={index}
-                  className="w-full h-28 flex items-center justify-between gap-4 p-4"
-                >
-                  <Skeleton className="size-14 shrink-0 rounded-md" />
-
-                  <div className="flex flex-col flex-1 gap-1.5">
-                    <Skeleton className="h-5 w-28 rounded-sm" />
-
-                    <Skeleton className="h-6 w-16 rounded-sm" />
-
-                    <Skeleton className="h-4 w-24 rounded-sm" />
-                  </div>
-                </Card>
-              ),
+              (_, index) => <StudentMatrixSkeleton />,
             )
           : StudentDashboardMatrix.map((item) => {
               const IconCom = item.icon;
               return (
                 <Card
-                  className="relative w-full h-28 flex items-center justify-between gap-4 p-4 "
+                  className="border border-border relative w-full h-28 flex items-center justify-between gap-4 p-4 "
                   key={item?.id}
                 >
                   <div className="flex flex-col gap-1">

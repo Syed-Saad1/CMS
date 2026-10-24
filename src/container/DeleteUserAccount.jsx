@@ -1,8 +1,8 @@
 import React, { useState, useTransition } from "react";
-import { Card, CardDescription, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
+import { Card, CardDescription, CardTitle } from "../components/ui/card";
+import { Button } from "../components/ui/button";
 import { CircleCheckBig, Loader, Trash } from "lucide-react";
-import { DeletePoints } from "@/container/AdminDashboardCard";
+import { DeletePoints } from "@/container/MockData/AdminDashboardCard";
 import Cookies from "js-cookie";
 import { deleteUser } from "@/mutations/deleteUser";
 import { useNavigate, useParams } from "react-router-dom";
@@ -35,7 +35,7 @@ function DeleteUserAccount({ item }) {
     }
   };
   return (
-    <Card className={"h-auto flex flex-col w-full p-4"}>
+    <Card className={"border border-border h-auto flex flex-col w-full p-4"}>
       <div className="flex gap-4 ">
         <Button
           onClick={() => setselectItem(item)}

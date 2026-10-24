@@ -12,13 +12,11 @@ export const getCourseById = (id) => {
     queryFn: async () => {
       const url = `${import.meta.env.VITE_API_URL}/course/${id}`;
 
-
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
 
       return data;
     },

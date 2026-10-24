@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import BottomItems from "@/container/BottomNavigation";
+import BottomItems from "@/container/MockData/BottomNavigation";
 import Cookies from "js-cookie";
 
 export default function DashboardBottom() {
