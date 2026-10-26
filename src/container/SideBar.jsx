@@ -20,7 +20,7 @@ function SideBar({ onClose }) {
   const location = useLocation();
 
   return (
-    <aside className="flex h-full w-full flex-col items-stretch border border-r-border">
+    <aside className="flex h-full w-full flex-col items-stretch border border-r-border/40">
       <div className="flex items-center justify-between">
         <img
           className="h-14 w-44 ml-2 object-contain mt-3 text-primary! cursor-pointer"

@@ -1,6 +1,6 @@
+import api from "@/lib/axios.js";
 import { QueryKey } from "@/constant/query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 export const deleteUser = () => {
@@ -15,8 +15,7 @@ export const deleteUser = () => {
 
       const url = `${import.meta.env.VITE_API_URL}/auth/users/${id}`;
 
-
-      const { data } = await axios.delete(url, {
+      const { data } = await api.delete(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

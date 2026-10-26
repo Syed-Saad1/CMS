@@ -1,3 +1,4 @@
+import api from "@/lib/axios.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -14,7 +15,7 @@ export const useUploadAvatar = (userId) => {
 
       const url = `${import.meta.env.VITE_API_URL}/auth/upload-avatar`;
 
-      const { data } = await axios.post(url, formData, {
+      const { data } = await api.post(url, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

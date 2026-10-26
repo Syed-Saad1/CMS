@@ -84,16 +84,16 @@ export const CourseCard = ({ item }) => {
                 $ {item?.price}
               </CardTitle>
 
-              {UserRole === "admin" && (
-                <div className="flex gap-1 mr-2">
-                  {" "}
-                  <Button
-                    className={
-                      "text-xs border-2 text-primary cursor-pointer border-primary/40 bg-primary/5"
-                    }
-                  >
-                    View Details
-                  </Button>
+              <div className="flex gap-1 mr-2">
+                {" "}
+                <Button
+                  className={
+                    "text-xs border-2 text-primary cursor-pointer border-primary/40 bg-primary/5"
+                  }
+                >
+                  View Details
+                </Button>
+                {UserRole === "admin" && (
                   <Link to={`/courses/edit/${item?.id}`}>
                     <Button
                       onClick={(event) => {
@@ -105,8 +105,8 @@ export const CourseCard = ({ item }) => {
                       <Pencil /> Edit{" "}
                     </Button>{" "}
                   </Link>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </Card>

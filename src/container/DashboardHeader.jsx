@@ -253,46 +253,99 @@ function DashboardHeader({ onMenuClick }) {
                   </CardDescription>
                 </PopoverTrigger>
 
-                <PopoverContent className="w-fit">
-                  <div className="flex flex-col justify-center items-center gap-2 bg-transparent">
-                    {role === "admin" && (
-                      <Link to={"/admin/profile"}>
-                        <Button variant="button" className={" w-30"}>
+                <PopoverContent className="w-50 mr-6">
+                  {" "}
+                  <div className="flex flex-col">
+                    {" "}
+                    <div className="min-w-0">
+                      {" "}
+                      <CardTitle className={"truncate text-sm -mt-1"}>
+                        {UserProfileData?.firstName}
+                        {UserProfileData?.lastName}
+                      </CardTitle>
+                    </div>
+                    <div className="min-w-0">
+                      {" "}
+                      <CardDescription className="truncate text-xs -mt-1">
+                        {UserProfileData?.email || "---"}
+                      </CardDescription>
+                    </div>
+                  </div>
+                  <div className="flex gap-1 flex-col">
+                    <div className="mt-2 flex flex-col justify-start gap-2 items-start">
+                      {role === "admin" && (
+                        <Link
+                          className="flex gap-2 items-center"
+                          to={"/admin/profile"}
+                        >
+                          {" "}
+                          <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                            <User className="size-4.5" />
+                          </div>
                           Profile
-                        </Button>
-                      </Link>
-                    )}
-                    {role === "user" && (
-                      <Link to={"/user/profile"}>
-                        <Button variant="button" className={" w-30"}>
+                        </Link>
+                      )}
+                      {role === "user" && (
+                        <Link
+                          className="flex gap-2 items-center"
+                          to={"/user/profile"}
+                        >
+                          {" "}
+                          <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                            <User className="size-4.5" />
+                          </div>
                           Profile
-                        </Button>
-                      </Link>
-                    )}
-
-                    <Button
-                      onClick={() => {
-                        Cookies.remove("token");
-                        Cookies.remove("role");
-                        navigate("/auth/login");
-                      }}
-                      className=" group flex w-full items-center gap-3
-    rounded-lg px-4 py-3
-    text-sm font-medium
-    text-red-600
-    transition-all duration-200 ease-in-out
-    hover:bg-red-200 hover:text-red-700
-    active:scale-[0.98]
-    focus-visible:outline-none
-    focus-visible:ring-2
-    focus-visible:ring-red-500
-    dark:text-red-400
-    dark:hover:bg-red-950/50
-    dark:hover:text-red-300"
-                      variant="ghost"
-                    >
-                      Logout
-                    </Button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex gap-1 flex-col">
+                    <div className="flex justify-start gap-2 items-center">
+                      {" "}
+                      <button
+                        onClick={() => setTheme("light")}
+                        className="flex items-center gap-2"
+                      >
+                        <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                          <Icon
+                            className="size-4.5 cursor-pointer"
+                            icon={"akar-icons:sun"}
+                          />
+                        </div>
+                        <CardTitle>Light</CardTitle>
+                      </button>
+                    </div>
+                    <div className="flex justify-start gap-2 items-center">
+                      {" "}
+                      <button
+                        className="flex gap-2 items-center"
+                        onClick={() => setTheme("dark")}
+                      >
+                        <div className="shrink-0 bg-muted! size-8 rounded-full flex justify-center items-center">
+                          <Icon
+                            className="size-4.5 cursor-pointer"
+                            icon={"boxicons:moon"}
+                          />
+                        </div>
+                        <CardTitle>Dark</CardTitle>
+                      </button>
+                    </div>
+                    <div>
+                      {" "}
+                      <button
+                        className="flex gap-2 items-center text-destructive"
+                        onClick={() => {
+                          Cookies.remove("token");
+                          Cookies.remove("role");
+                          navigate("/auth/login");
+                        }}
+                      >
+                        <div className="shrink-0 bg-muted! size-8 rounded-full text-destructive flex justify-center items-center">
+                          <LogOut className="size-4.5" />
+                        </div>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </PopoverContent>
               </Popover>

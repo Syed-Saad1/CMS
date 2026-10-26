@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import DashboardBottom from "@/components/DashboardBottom";
+import AIChatbot from "@/container/AiChatbot";
 
 function DashboardLayout() {
   const token = Cookies.get("token");
@@ -43,6 +44,8 @@ function DashboardLayout() {
         >
           <Outlet />
         </div>
+        <AIChatbot />
+
         <div className="fixed inset-x-0 bottom-0 z-50 bg-background pb-[env(safe-area-inset-bottom)] lg:hidden">
           <DashboardBottom />
         </div>

@@ -1,6 +1,6 @@
+import api from "@/lib/axios.js";
 import { QueryKey } from "@/constant/query";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 export const getCourseById = (id) => {
@@ -12,7 +12,7 @@ export const getCourseById = (id) => {
     queryFn: async () => {
       const url = `${import.meta.env.VITE_API_URL}/course/${id}`;
 
-      const { data } = await axios.get(url, {
+      const { data } = await api.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
