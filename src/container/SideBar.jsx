@@ -1,24 +1,52 @@
 import { Icon } from "@iconify/react";
-import { X } from "lucide-react";
-import React from "react";
+import {
+  ArrowDown,
+  ChevronDown,
+  ChevronUp,
+  LogOut,
+  User,
+  X,
+} from "lucide-react";
+
+// test the commint
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import Cookies from "js-cookie";
 import SidebarNavigation from "./MockData/SidebarNavigation";
 import { useTranslation } from "react-i18next";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { getUserById } from "@/query/getUserById";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 function SideBar({ onClose }) {
+  const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const navigation = useNavigate();
 
   const CurrentRole = Cookies.get("role") || "user";
-
   const NavigationItem = SidebarNavigation(CurrentRole, t);
 
   const location = useLocation();
+  const UserId = Cookies.get("userId");
 
+  const role = Cookies.get("role");
+  const { data, isLoading: Loading } = getUserById(UserId);
+  const UserProfileData = data?.data;
+  const IntialFirst = UserProfileData?.firstName
+    ?.trim()
+    .charAt(0)
+    .toUpperCase();
+  const LastFirst = UserProfileData?.lastName?.trim().charAt(0).toUpperCase();
   return (
     <aside className="flex h-full w-full flex-col items-stretch border border-r-border/40">
       <div className="flex items-center justify-between">
@@ -60,30 +88,143 @@ function SideBar({ onClose }) {
       </div>
       <div className="shrink-0 px-1 xl:mt-auto xl:ml-1 xl:mb-4 xl:mr-2">
         {" "}
-        <button
-          onClick={() => {
-            Cookies.remove("token");
-            navigation("/auth/login");
-            Cookies.remove("role");
-            Cookies.remove("userId");
-          }}
-          className=" group flex w-full items-center gap-3
-    rounded-lg px-4 py-3
-    text-sm font-medium
-    text-red-600
-    transition-all duration-200 ease-in-out
-    hover:bg-red-200 hover:text-red-700
-    active:scale-[0.98]
-    focus-visible:outline-none
-    focus-visible:ring-2
-    focus-visible:ring-red-500
-    dark:text-red-400
-    dark:hover:bg-red-950/50
-    dark:hover:text-red-300"
-        >
-          <Icon className="size-5" icon="ic:baseline-logout" />
-          {t("common.logout")}
-        </button>
+        <Popover>
+          <PopoverTrigger>
+            <CardDescription
+              onClick={() => setIsOpen((prev) => !prev)}
+              className={
+                "flex items-center justify-center border border-border rounded-xl gap-2 p-1 cursor-pointer"
+              }
+            >
+              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                {UserProfileData?.avatar ? (
+                  <img
+                    className="size-full rounded-full object-cover"
+                    src={UserProfileData?.avatar}
+                    alt="Profile"
+                  />
+                ) : (
+                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                    {IntialFirst}
+                    {LastFirst}
+                  </h1>
+                )}
+              </div>
+              <div className="flex items-start mt-1 flex-col">
+                {" "}
+                <div className="min-w-0">
+                  {" "}
+                  <CardTitle
+                    className={
+                      "text-black font-semibold truncate text-xs -mt-1"
+                    }
+                  >
+                    {UserProfileData?.firstName}
+                    {UserProfileData?.lastName}
+                  </CardTitle>
+                </div>
+                <div className="min-w-0">
+                  {" "}
+                  <CardDescription className="truncate text-xs -mt-1">
+                    {UserProfileData?.email || "---"}
+                  </CardDescription>
+                </div>
+              </div>{" "}
+              {!isOpen ? (
+                <ChevronDown className="text-xs size-4" />
+              ) : (
+                <ChevronUp className="text-xs size-4" />
+              )}
+            </CardDescription>
+          </PopoverTrigger>
+          <PopoverContent className={"w-50"}>
+            <div className="flex gap-2 items-center">
+              {" "}
+              {UserProfileData?.avatar ? (
+                <img
+                  className="size-10 rounded-full object-cover"
+                  src={UserProfileData?.avatar}
+                  alt="Profile"
+                />
+              ) : (
+                <h1 className="size-10 text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                  {IntialFirst}
+                  {LastFirst}
+                </h1>
+              )}
+              <div className="flex flex-col">
+                {" "}
+                <div className="min-w-0">
+                  {" "}
+                  <CardTitle className={"truncate text-sm -mt-1"}>
+                    {UserProfileData?.firstName}
+                    {UserProfileData?.lastName}
+                  </CardTitle>
+                </div>
+                <div className="min-w-0">
+                  {" "}
+                  <CardDescription className="truncate text-xs -mt-1">
+                    {UserProfileData?.email || "---"}
+                  </CardDescription>
+                </div>
+              </div>
+            </div>
+            <hr />
+
+            <div className="flex gap-1 flex-col">
+              <div className="flex flex-col justify-start  items-start">
+                {role === "admin" && (
+                  <Link
+                    className="flex gap-2 items-center"
+                    to={"/admin/profile"}
+                  >
+                    {" "}
+                    <div className="shrink-0  size-8 rounded-full flex justify-center items-center">
+                      <User className="size-4.5" />
+                    </div>
+                    Profile
+                  </Link>
+                )}
+                {role === "user" && (
+                  <Link className="flex items-center" to={"/user/profile"}>
+                    {" "}
+                    <div className="shrink-0  size-8 rounded-full flex justify-center items-center">
+                      <User className="size-4.5" />
+                    </div>
+                    Profile
+                  </Link>
+                )}
+              </div>
+              <hr />
+            </div>
+            <div>
+              <Switch
+                checked={theme === "dark"}
+                onCheckedChange={(checked) =>
+                  setTheme(checked ? "dark" : "light")
+                }
+              />
+            </div>
+            <div className="flex gap-1 flex-col">
+              <button
+                type="button"
+                className="flex gap-2 items-center text-destructive"
+                onClick={() => {
+                  Cookies.remove("token");
+                  Cookies.remove("role");
+                  Cookies.remove("userId");
+
+                  navigation("/auth/login");
+                }}
+              >
+                <div className="shrink-0 bg-muted! size-8 rounded-full text-destructive flex justify-center items-center">
+                  <LogOut className="size-4.5" />
+                </div>
+                Logout
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </aside>
   );
