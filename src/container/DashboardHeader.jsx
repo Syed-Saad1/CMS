@@ -65,7 +65,7 @@ function DashboardHeader({ onMenuClick }) {
                   )}
                 </div>
               </PopoverTrigger>
-              <PopoverContent className={"w-26"}>
+              <PopoverContent className={"w-50"}>
                 <div className="flex gap-2 items-center">
                   {" "}
                   {UserProfileData?.avatar ? (
@@ -195,7 +195,7 @@ function DashboardHeader({ onMenuClick }) {
           </DialogTrigger>
         )}
         <div className="md:flex hidden lg:gap-2 justify-center items-center shrink-0 ">
-          <LanguageSwitcher className="w-fit" />
+          <LanguageSwitcher className="" />
 
           <button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
