@@ -11,12 +11,12 @@ export const editCourse = (id) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload) => {
+    mutationFn: async (formData) => {
       const token = Cookies.get("token");
 
       const url = `${import.meta.env.VITE_API_URL}/course/update/${id}`;
 
-      const { data } = await api.patch(url, payload, {
+      const { data } = await api.patch(url, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

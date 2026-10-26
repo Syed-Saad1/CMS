@@ -25,6 +25,8 @@ const options = [
   { value: "Programing", label: "Programing" },
   { value: "Design", label: "Design" },
   { value: "E-Commerce", label: "E-Commerce" },
+  { value: "ComputerSkill", label: "ComputerSkill" },
+  { value: "Office", label: "Office" },
   { value: "Devlopment", label: "Devlopment" },
   { value: "AI(Artifical Intelligence)", label: "AI(Artifical Intelligence)" },
   { value: "React", label: "React" },
@@ -32,6 +34,8 @@ const options = [
   { value: "Finance", label: "Finance" },
   { value: "Marketing", label: "Marketing" },
   { value: "DataScience", label: "Data Science" },
+  { value: "Communication", label: "Communication" },
+  { value: "PublicSpeaking", label: "Public Speaking" },
 ];
 const Daysoptions = [
   { value: "Monday", label: "Monday" },
@@ -71,7 +75,7 @@ function CourseForm({ isEditPending, editCourseMutation }) {
     description: courseData?.data?.description || "",
     price: courseData?.data?.price || "",
     category: courseData?.data?.category || "",
-    courseOverview: courseData?.data?.courseOverview || "",
+    courseOverview: courseData?.data?.content || "",
     thumbnail: courseData?.data?.thumbnail || null,
 
     courseTime: {
@@ -101,7 +105,6 @@ function CourseForm({ isEditPending, editCourseMutation }) {
     });
 
   async function onSubmit(values, { resetForm }) {
-    console.log("values____", values);
     try {
       const formData = new FormData();
 
@@ -118,7 +121,6 @@ function CourseForm({ isEditPending, editCourseMutation }) {
       formData.append("category", values.category || "");
 
       formData.append("content", values.courseOverview || "");
-
       if (values.thumbnail instanceof File) {
         formData.append("thumbnail", values.thumbnail);
       }
@@ -132,20 +134,20 @@ function CourseForm({ isEditPending, editCourseMutation }) {
         ),
       );
 
-      console.log("formData", formData);
-
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
       if (!isEdit) {
         const CreateCourse = await createCourseMutation(formData);
         const CreateResult = CreateCourse;
-        console.log("Error", CreateResult);
         toast.success(CreateResult?.message || t("ui.courseCreateSuccess"));
         navigate("/courses");
       } else {
         const EditResponse = await editCourseMutation(formData);
 
         const Editresult = EditResponse;
-
         toast.success(Editresult?.message || t("ui.courseUpdateSuccess"));
+        navigate("/courses");
       }
 
       if (values.thumbnail instanceof File) {
@@ -378,9 +380,9 @@ function CourseForm({ isEditPending, editCourseMutation }) {
               </div>
               <div className="space-y-2 mt-6">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">
+                  <Label className="text-sm font-medium">
                     Course Overview <span className="text-destructive">*</span>
-                  </label>
+                  </Label>
 
                   <span className="rounded-md bg-primary/10 px-2 py-1 text-xs text-primary">
                     Markdown

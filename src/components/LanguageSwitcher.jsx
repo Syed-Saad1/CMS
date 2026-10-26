@@ -15,17 +15,17 @@ export default function LanguageSwitcher() {
     {
       icon: <img src="/united-states-of-america.png" alt="USOF" />,
       value: "en",
-      label: t("common.english"),
+      label: "en",
     },
     {
       icon: <img src="/flag.png" alt="GEF" />,
       value: "de",
-      label: t("common.german"),
+      label: "de",
     },
     {
       icon: <img src="/saudi-arabia.png" alt="SAF" />,
       value: "ar",
-      label: t("common.arabic"),
+      label: "ar",
     },
   ];
   return (
@@ -34,7 +34,7 @@ export default function LanguageSwitcher() {
       onValueChange={(language) => i18n.changeLanguage(language)}
     >
       <SelectTrigger className="w-24 md:w-20">
-        <div className="flex min-w-0 items-center gap-2">
+        <div className="flex min-w-0 items-center gap-1">
           <span className="flex size-5 shrink-0 items-center justify-center">
             {
               items.find(
@@ -47,8 +47,8 @@ export default function LanguageSwitcher() {
           <SelectValue placeholder={t("common.language")} />
         </div>
       </SelectTrigger>
-      <SelectContent className="w-32! min-w-22 md:w-20 md:min-w-16">
-        <SelectGroup className="w-34! min-w-22 md:w-30">
+      <SelectContent className="w-20 min-w-0 md:w-24">
+        <SelectGroup className="w-20 md:w-24 ">
           {items.map((item) => (
             <SelectItem key={item.value} value={item.value}>
               <div className="size-5"> {item?.icon}</div>

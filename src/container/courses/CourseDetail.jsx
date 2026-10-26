@@ -197,7 +197,7 @@ export const CourseDetail = () => {
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex gap-2 items-start">
                     <CardDescription className="text-[15px] leading-relaxed ">
-                      {data?.data?.courseOverview ? (
+                      {data?.data?.content ? (
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{

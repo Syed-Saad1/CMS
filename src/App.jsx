@@ -26,7 +26,7 @@ export const App = () => {
     <div className="">
       <QueryClientProvider client={queryClient}>
         <Route />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </div>
   );
