@@ -62,7 +62,7 @@ export default function UserChart({ UserLoading, userData = EMPTY_USERS }) {
               type="button"
               onClick={() => setPeriod(item.value)}
               aria-pressed={period === item.value}
-              className={`rounded-md md:px-3 px-2 py-1 md:py-1.5 md:text-sm text-xs transition-colors ${
+              className={`rounded-md md:px-2 px-2 py-1 md:py-1 md:text-sm text-xs transition-colors ${
                 period === item.value
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:bg-muted"
