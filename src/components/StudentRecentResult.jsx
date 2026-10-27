@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, CardTitle } from "./ui/card";
-import { ArrowRight, User } from "lucide-react";
+import { Card } from "./ui/card";
 import { Link } from "react-router-dom";
 import {
   Table,

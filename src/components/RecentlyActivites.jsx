@@ -5,13 +5,9 @@ import {
   FileIcon,
   GraduationCap,
   Megaphone,
-  Mic,
-  MicIcon,
-  Speaker,
   User,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Skeleton } from "./ui/skeleton";
 import RecentActivitySkeleton from "@/skeleton/RecentActivitySkeleton";
 
 function RecentlyActivites({ UserLoading }) {

@@ -1,13 +1,10 @@
-import { cn } from "@/lib/utils";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { BadgeCheck, Plus } from "lucide-react";
-import { Trash } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { getAllCourses } from "@/query/getAllCourses";
 import { Link } from "react-router-dom";
 import { CourseCard } from "@/container/courses/CourseCard";
 import { Button } from "@/components/ui/button";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
@@ -20,7 +17,6 @@ function CourseScreen() {
   const { t } = useTranslation();
   const { data, isLoading } = getAllCourses();
   const getCourses = data?.data;
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const userRole = Cookies.get("role");
   const FilterdCourse = getCourses?.filter((course) => {
     const SearchCourse = search?.toLowerCase();

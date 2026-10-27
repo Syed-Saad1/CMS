@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -10,17 +9,9 @@ import { getAllCourses } from "@/query/getAllCourses";
 import { getUserById } from "@/query/getUserById";
 
 import RecentlyAddedUsers from "@/components/RecentlyAddedUsers";
-import RecentlyAddedCourse from "@/components/RecentlyAddedCourse";
 
-import {
-  ArrowUp,
-  CopyCheck,
-  FileText,
-  GraduationCap,
-  IdCard,
-} from "lucide-react";
+import { CopyCheck, FileText, GraduationCap, IdCard } from "lucide-react";
 import WelcomeDashboardAdmin from "@/components/WelcomeDashboard";
-import RecentlyActivites from "@/components/RecentlyActivites";
 import UserChart from "@/charts/UserChart";
 import AdminMetrixSkeleton from "@/skeleton/AdminMetrixSkeleton";
 

@@ -1,9 +1,8 @@
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import { Card, CardDescription, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { CircleCheckBig, Loader, Trash } from "lucide-react";
 import { DeletePoints } from "@/container/MockData/AdminDashboardCard";
-import Cookies from "js-cookie";
 import { deleteUser } from "@/mutations/deleteUser";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";

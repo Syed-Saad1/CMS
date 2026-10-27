@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdatePassword } from "@/mutations/useUpdatePassword";
 import axios from "axios";
-import { useFormik, validateYupSchema } from "formik";
+import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { Loader } from "lucide-react";
 import React from "react";

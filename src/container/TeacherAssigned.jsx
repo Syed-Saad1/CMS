@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Card, CardDescription, CardTitle } from "../components/ui/card";
 import { getCourseById } from "@/query/getCourseById";
-import Cookies from "js-cookie";
 import { Link, useParams } from "react-router-dom";
 import {
-  ArrowBigUpDash,
-  ChartBarStacked,
-  Clock,
-  IdCardLanyard,
   Loader,
   Pencil,
   Trash,
@@ -16,8 +11,6 @@ import {
   UserRoundCog,
   X,
 } from "lucide-react";
-import { Label } from "../components/ui/label";
-import { Skeleton } from "../components/ui/skeleton";
 import { Button } from "../components/ui/button";
 import { useCreateAssigment } from "@/mutations/useCreateAssigment";
 import toast from "react-hot-toast";

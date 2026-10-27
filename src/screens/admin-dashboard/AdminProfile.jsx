@@ -6,12 +6,10 @@ import Cookies from "js-cookie";
 import { getUserById } from "@/query/getUserById";
 import { editUserData } from "@/mutations/editUserData";
 
-import UpdateRole from "@/container/UpdateRole";
 import AllUserUpdateProfile from "@/components/AllUserUpdateProfile";
 import PriviewProfileCard from "@/container/AllUserPriviewProfileCard";
 
 import toast from "react-hot-toast";
-import DeleteUserAccount from "@/container/DeleteUserAccount";
 import UpdatePassword from "@/container/UpdatePassword";
 import axios from "axios";
 

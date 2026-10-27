@@ -1,12 +1,5 @@
 import { Icon } from "@iconify/react";
-import {
-  ArrowDown,
-  ChevronDown,
-  ChevronUp,
-  LogOut,
-  User,
-  X,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, LogOut, User, X } from "lucide-react";
 
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -22,9 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getUserById } from "@/query/getUserById";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 function SideBar({ onClose }) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();

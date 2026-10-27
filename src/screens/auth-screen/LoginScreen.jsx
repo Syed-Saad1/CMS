@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
-import React, { useState } from "react";
+import React from "react";
 import * as Yup from "yup";
-import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFormik } from "formik";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"; // 1. Import useEffect
+import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

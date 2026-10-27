@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { DialogClose } from "@/components/ui/dialog";
 import { useUpdateAssigned } from "@/mutations/useUpdateAssigned";
-import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";

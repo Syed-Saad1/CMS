@@ -1,17 +1,4 @@
-import {
-  Award,
-  Calendar,
-  CircleCheckBig,
-  CopyCheck,
-  FileEdit,
-  FileText,
-  FolderPlus,
-  GraduationCap,
-  IdCard,
-  NotebookPen,
-  User,
-  UserCog,
-} from "lucide-react";
+import { CircleCheckBig, FolderPlus, NotebookPen, UserCog } from "lucide-react";
 
 // export const AdminDashboardCard = [
 //   {

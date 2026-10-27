@@ -10,9 +10,6 @@ import AllUserUpdateProfile from "@/components/AllUserUpdateProfile";
 import PriviewProfileCard from "@/container/AllUserPriviewProfileCard";
 import toast from "react-hot-toast";
 import DeleteUserAccount from "@/container/DeleteUserAccount";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "@/components/ui/card";
-import TeacherAssigned from "@/container/TeacherAssigned";
 import axios from "axios";
 import UpdateRoleSkeleton from "@/skeleton/UpdateRoleSkeleton";
 

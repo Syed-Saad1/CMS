@@ -1,6 +1,5 @@
 import api from "@/lib/axios.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 export const useUploadAvatar = (userId) => {
