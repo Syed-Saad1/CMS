@@ -14,7 +14,7 @@ import UpdatePassword from "@/container/UpdatePassword";
 
 function AdminProfile() {
   const userId = Cookies.get("userId");
-  const { data, isLoading, isError, error } = getUserById(userId);
+  const { data, isLoading } = getUserById(userId);
   const UserProfileData = data?.data;
   const ValidationScheme = Yup.object({
     firstName: Yup.string().required("First name is required"),

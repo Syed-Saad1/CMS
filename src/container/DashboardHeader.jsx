@@ -83,14 +83,14 @@ function DashboardHeader({ onMenuClick }) {
                     {" "}
                     <div className="min-w-0">
                       {" "}
-                      <CardTitle className={"truncate text-sm -mt-1"}>
+                      <CardTitle className={"truncate text-xs -mt-1"}>
                         {UserProfileData?.firstName}
                         {UserProfileData?.lastName}
                       </CardTitle>
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 w-32">
                       {" "}
-                      <CardDescription className="truncate text-xs -mt-1">
+                      <CardDescription className="truncate line-clamp-1 text-xs -mt-1">
                         {UserProfileData?.email || "---"}
                       </CardDescription>
                     </div>

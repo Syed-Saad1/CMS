@@ -104,18 +104,14 @@ function SideBar({ onClose }) {
                 {" "}
                 <div className="min-w-0">
                   {" "}
-                  <CardTitle
-                    className={
-                      "text-accent-foreground font-semibold truncate text-xs -mt-1"
-                    }
-                  >
+                  <CardTitle className={"truncate text-xs -mt-1"}>
                     {UserProfileData?.firstName}
                     {UserProfileData?.lastName}
                   </CardTitle>
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 w-32">
                   {" "}
-                  <CardDescription className="truncate text-xs -mt-1">
+                  <CardDescription className="truncate line-clamp-1 text-xs -mt-1">
                     {UserProfileData?.email || "---"}
                   </CardDescription>
                 </div>
@@ -128,32 +124,37 @@ function SideBar({ onClose }) {
             </CardDescription>
           </PopoverTrigger>
           <PopoverContent className={"w-50"}>
-            <div className="flex gap-2 items-center">
-              {" "}
-              {UserProfileData?.avatar ? (
-                <img
-                  className="size-10 rounded-full object-cover"
-                  src={UserProfileData?.avatar}
-                  alt="Profile"
-                />
-              ) : (
-                <h1 className="size-10 text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
-                  {IntialFirst}
-                  {LastFirst}
-                </h1>
-              )}
+            <div
+              className={
+                "flex items-center justify-center  gap-2 cursor-pointer"
+              }
+            >
+              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                {UserProfileData?.avatar ? (
+                  <img
+                    className="size-full rounded-full object-cover"
+                    src={UserProfileData?.avatar}
+                    alt="Profile"
+                  />
+                ) : (
+                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                    {IntialFirst}
+                    {LastFirst}
+                  </h1>
+                )}
+              </div>
               <div className="flex flex-col">
                 {" "}
                 <div className="min-w-0">
                   {" "}
-                  <CardTitle className={"truncate text-sm -mt-1"}>
+                  <CardTitle className={"truncate text-xs -mt-1"}>
                     {UserProfileData?.firstName}
                     {UserProfileData?.lastName}
                   </CardTitle>
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 w-32">
                   {" "}
-                  <CardDescription className="truncate text-xs -mt-1">
+                  <CardDescription className="truncate line-clamp-1 text-xs -mt-1">
                     {UserProfileData?.email || "---"}
                   </CardDescription>
                 </div>
