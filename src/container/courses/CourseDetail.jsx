@@ -2,11 +2,9 @@ import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCourseById } from "@/query/getCourseById";
 import {
-  ArrowRight,
   BookOpenCheck,
   CalendarSync,
   Loader,
@@ -31,7 +29,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useGetUser } from "@/query/useGetUser";
 import CourseDetailedSkeleton from "@/skeleton/CourseDetailedSkeleton";
 export const CourseDetail = () => {
   const { id } = useParams();

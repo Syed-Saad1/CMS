@@ -6,17 +6,15 @@ import Cookies from "js-cookie";
 import { getUserById } from "@/query/getUserById";
 import { editUserData } from "@/mutations/editUserData";
 
-import UpdateRole from "@/container/UpdateRole";
 import AllUserUpdateProfile from "@/components/AllUserUpdateProfile";
 import PriviewProfileCard from "@/container/AllUserPriviewProfileCard";
 
 import toast from "react-hot-toast";
-import DeleteUserAccount from "@/container/DeleteUserAccount";
 import UpdatePassword from "@/container/UpdatePassword";
 
 function AdminProfile() {
   const userId = Cookies.get("userId");
-  const { data, isLoading, isError, error } = getUserById(userId);
+  const { data, isLoading } = getUserById(userId);
   const UserProfileData = data?.data;
   const ValidationScheme = Yup.object({
     firstName: Yup.string().required("First name is required"),

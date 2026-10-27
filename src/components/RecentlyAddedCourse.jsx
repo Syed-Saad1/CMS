@@ -1,13 +1,7 @@
 import React from "react";
-import { Card, CardDescription, CardTitle } from "./ui/card";
-import {
-  ArrowRight,
-  BadgeCheck,
-  GraduationCap,
-  UserRoundCheck,
-} from "lucide-react";
+import { Card, CardTitle } from "./ui/card";
+import { ArrowRight, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -17,7 +11,6 @@ import {
   TableRow,
 } from "./ui/table";
 import { StatusBadge } from "./ui/status";
-import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
 import RecentlyAddedCourseSkeleton from "@/skeleton/RecentlyAddedCourseSkeleton";
 

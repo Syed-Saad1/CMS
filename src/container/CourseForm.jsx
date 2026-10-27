@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Card, CardTitle } from "../components/ui/card";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
@@ -11,12 +11,10 @@ import { Button } from "../components/ui/button";
 import { ImagePlus, Loader, Plus, Save, Upload, X } from "lucide-react";
 import TimeRangePicker from "../components/TimePicker";
 import { createCourse } from "@/mutations/createCourse";
-import { editCourse } from "@/mutations/editCourse";
 import { getCourseById } from "@/query/getCourseById";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { Skeleton } from "../components/ui/skeleton";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import CourseFormSkeleton from "@/skeleton/CourseFormSkeleton";

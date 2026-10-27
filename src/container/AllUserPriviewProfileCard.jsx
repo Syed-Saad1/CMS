@@ -1,12 +1,6 @@
-import React, { useId } from "react";
+import React from "react";
 
-import {
-  CalendarCheck,
-  IdCardLanyard,
-  Mail,
-  TrendingUp,
-  UserShield,
-} from "lucide-react";
+import { IdCardLanyard, Mail, TrendingUp, UserShield } from "lucide-react";
 import { Camera, Loader } from "lucide-react";
 import { useUploadAvatar } from "@/mutations/useUploadAvatar";
 import toast from "react-hot-toast";

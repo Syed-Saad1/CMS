@@ -1,28 +1,12 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import {
-  ArrowRight,
-  Calendar,
-  Clock,
-  EllipsisVertical,
-  Pencil,
-  Trash,
-} from "lucide-react";
-import React, { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { DeleteCourseModal } from "./DeleteCourseModal";
+import { Calendar, Clock, Pencil } from "lucide-react";
+import React from "react";
+import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { StatusBadge } from "@/components/ui/status";
 
 export const CourseCard = ({ item }) => {
-  const [selectItem, setselectItem] = useState(null);
-  const navigate = useNavigate();
   const UserRole = Cookies.get("role");
 
   return (

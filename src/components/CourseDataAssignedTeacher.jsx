@@ -7,7 +7,6 @@ import {
   Clock,
   IdCardLanyard,
 } from "lucide-react";
-import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
 import CourseDataAssignedSkeleton from "@/skeleton/CourseDataAssignedSkeleton";
 

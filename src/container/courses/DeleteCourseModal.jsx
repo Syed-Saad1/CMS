@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { DialogClose, DialogTrigger } from "@/components/ui/dialog";
+import { DialogClose } from "@/components/ui/dialog";
 import { deleteCourse } from "@/mutations/deleteCourse";
 import { Loader } from "lucide-react";
 import React from "react";

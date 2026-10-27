@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Award,
   Calendar,

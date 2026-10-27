@@ -6,14 +6,11 @@ import {
   CardFooter,
   CardTitle,
 } from "./ui/card";
-
 import { Field } from "./ui/field";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-
 import { Loader } from "lucide-react";
-import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
 import UpdateProfileSkeleton from "@/skeleton/UpdateProfileSkeleton";
 function AllUserUpdateProfile({

@@ -3,9 +3,8 @@ import React from "react";
 import Cookies from "js-cookie";
 import { Card, CardDescription, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Skeleton } from "./ui/skeleton";
 import { useTranslation } from "react-i18next";
 function WelcomeDashboard() {
   const { t } = useTranslation();

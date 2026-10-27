@@ -11,7 +11,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Skeleton } from "@/components/ui/skeleton";
 const chartConfig = {
   users: {
     label: "New Users",
@@ -27,7 +26,7 @@ const filters = [
   { label: "Monthly", value: "monthly" },
 ];
 
-export default function UserChart({ UserLoading, userData = EMPTY_USERS }) {
+export default function UserChart({ userData = EMPTY_USERS }) {
   const [period, setPeriod] = useState("weekly");
 
   const { chartData, currentTotal, previousTotal, growth } = useMemo(

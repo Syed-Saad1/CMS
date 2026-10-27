@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardTitle } from "./ui/card";
-import { ArrowRight, BadgeCheck, User } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {

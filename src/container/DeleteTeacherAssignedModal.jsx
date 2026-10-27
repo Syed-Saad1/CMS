@@ -1,4 +1,4 @@
-import React, { useTransition } from "react";
+import React from "react";
 import { CardDescription, CardTitle } from "../components/ui/card";
 import { DialogTrigger } from "../components/ui/dialog";
 import { Button } from "../components/ui/button";
@@ -6,7 +6,6 @@ import { Loader, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useDeleteAssigment } from "@/mutations/useDeleteAssigment";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function DeleteTeacherAssignedModal({

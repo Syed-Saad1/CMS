@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryKey } from "@/constant/query";
-import axios from "axios";
 import Cookies from "js-cookie";
 import api from "@/lib/axios.js";
 

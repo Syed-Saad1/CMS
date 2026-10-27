@@ -3,7 +3,7 @@ import StudentNoticedBoard from "@/components/StudentNoticedBoard";
 import StudentRecentResult from "@/components/StudentRecentResult";
 
 import WelcomeDashboard from "@/components/WelcomeDashboard";
-import React, { useState } from "react";
+import React from "react";
 
 function UserDashboard() {
   return (
