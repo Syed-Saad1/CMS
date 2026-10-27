@@ -8,7 +8,6 @@ import {
   X,
 } from "lucide-react";
 
-// test the commint
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -93,7 +92,7 @@ function SideBar({ onClose }) {
             <CardDescription
               onClick={() => setIsOpen((prev) => !prev)}
               className={
-                "flex items-center justify-center border border-border rounded-xl gap-2 p-1 cursor-pointer"
+                "flex items-center justify-center border border-border rounded-xl gap-2 h-14  w-52 cursor-pointer"
               }
             >
               <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
@@ -110,13 +109,13 @@ function SideBar({ onClose }) {
                   </h1>
                 )}
               </div>
-              <div className="flex items-start mt-1 flex-col">
+              <div className="flex gap-0.5 items-start mt-1 flex-col">
                 {" "}
                 <div className="min-w-0">
                   {" "}
                   <CardTitle
                     className={
-                      "text-black font-semibold truncate text-xs -mt-1"
+                      "text-accent-foreground font-semibold truncate text-xs -mt-1"
                     }
                   >
                     {UserProfileData?.firstName}
@@ -197,18 +196,27 @@ function SideBar({ onClose }) {
               </div>
               <hr />
             </div>
-            <div>
-              <Switch
-                checked={theme === "dark"}
-                onCheckedChange={(checked) =>
-                  setTheme(checked ? "dark" : "light")
-                }
-              />
+            <div className="flex flex-col rounded-sm justify-center items-start py-1 px-4 h-fit bg-accent w-full">
+              <CardDescription className={"text-xs"}>Theme </CardDescription>
+              <div className="flex mt-1 gap-8 items-center">
+                {" "}
+                <CardTitle className={"text-xs"}>
+                  {theme === "dark" ? "Dark Mode" : "Light Mode "}
+                </CardTitle>{" "}
+                <Switch
+                  className={"cursor-pointer"}
+                  checked={theme === "dark"}
+                  onCheckedChange={(checked) =>
+                    setTheme(checked ? "dark" : "light")
+                  }
+                />
+              </div>
             </div>
+            <hr />
             <div className="flex gap-1 flex-col">
               <button
                 type="button"
-                className="flex gap-2 items-center text-destructive"
+                className="flex gap-1 font-semibold pl-1 cursor-pointer items-center text-destructive"
                 onClick={() => {
                   Cookies.remove("token");
                   Cookies.remove("role");
@@ -217,7 +225,7 @@ function SideBar({ onClose }) {
                   navigation("/auth/login");
                 }}
               >
-                <div className="shrink-0 bg-muted! size-8 rounded-full text-destructive flex justify-center items-center">
+                <div className="shrink-0 size-8 rounded-full text-destructive flex justify-center items-center">
                   <LogOut className="size-4.5" />
                 </div>
                 Logout
