@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import { Loader, Plus } from "lucide-react";
+import React, { Suspense, useState } from "react";
 import { getAllCourses } from "@/query/getAllCourses";
 import { Link } from "react-router-dom";
 import { CourseCard } from "@/container/courses/CourseCard";
@@ -23,7 +23,7 @@ function CourseScreen() {
     return course?.title?.toLowerCase()?.includes(SearchCourse);
   });
   return (
-    <>
+    <React.Suspense fallback="loading..">
       <div className="w-full min-w-0 py-4 px-3 sm:px-6 mb-18 md:mb-4">
         <div className="flex flex-wrap justify-between items-end gap-4">
           <div>
@@ -71,7 +71,7 @@ function CourseScreen() {
           </div>
         </Card>
       </div>
-    </>
+    </React.Suspense>
   );
 }
 

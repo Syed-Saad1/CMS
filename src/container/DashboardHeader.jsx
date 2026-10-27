@@ -20,7 +20,6 @@ import { Switch } from "@/components/ui/switch";
 
 function DashboardHeader({ onMenuClick }) {
   const { theme, setTheme } = useTheme();
-
   const UserId = Cookies.get("userId");
   const { data, isLoading: Loading } = getUserById(UserId);
   const UserProfileData = data?.data;
@@ -32,7 +31,7 @@ function DashboardHeader({ onMenuClick }) {
   const LastFirst = UserProfileData?.lastName?.trim().charAt(0).toUpperCase();
   Cookies.get("token");
   const role = Cookies.get("role");
-  const navigate = useNavigate();
+  const navigation = useNavigate();
   return (
     <Dialog>
       <ItemHeader className="h-full min-w-0 px-2 sm:px-3 md:px-4 lg:px-8 flex justify-between items-center bg-sidebar gap-2 sm:gap-4">
