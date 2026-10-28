@@ -1,6 +1,6 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Calendar, Clock, Pencil } from "lucide-react";
-import React from "react";
+import React, { Suspense } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ export const CourseCard = ({ item }) => {
   const UserRole = Cookies.get("role");
 
   return (
-    <Dialog>
+    <Suspense fallback={<>"loading"</>}>
       <Link to={`${item?._id}`}>
         <Card
           key={item?._id}
@@ -95,6 +95,6 @@ export const CourseCard = ({ item }) => {
           </div>
         </Card>
       </Link>
-    </Dialog>
+    </Suspense>
   );
 };

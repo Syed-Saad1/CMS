@@ -243,7 +243,6 @@ function AiChatbot() {
 
   return (
     <>
-      {/* Floating Chat Button */}
       {!isOpen && (
         <button
           type="button"
@@ -255,13 +254,11 @@ function AiChatbot() {
         </button>
       )}
 
-      {/* Chat Window */}
       {isOpen && (
         <section
           aria-label="Course AI Assistant"
           className="fixed bottom-4 right-3 z-50 flex h-[min(650px,calc(100dvh-100px))] w-[calc(100vw-24px)] max-w-100 flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl sm:bottom-6 sm:right-6 sm:w-100"
         >
-          {/* Header */}
           <header className="flex shrink-0 items-center justify-between border-b border-border bg-primary px-4 py-4 text-primary-foreground">
             <div className="flex min-w-0 items-center gap-3">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15">
@@ -299,7 +296,6 @@ function AiChatbot() {
             </div>
           </header>
 
-          {/* Messages */}
           <div className="flex-1 space-y-4 overflow-y-auto p-4">
             {messages.map((message) => (
               <div
@@ -349,7 +345,6 @@ function AiChatbot() {
                     )}
                   </div>
 
-                  {/* Dynamic Course Options */}
                   {message.type === "welcome" && (
                     <button
                       type="button"
@@ -418,7 +413,6 @@ function AiChatbot() {
                     </div>
                   )}
 
-                  {/* Selected Course Follow-up Options */}
                   {message.type === "course-details" && (
                     <div className="space-y-2">
                       <p className="text-xs font-medium text-muted-foreground">

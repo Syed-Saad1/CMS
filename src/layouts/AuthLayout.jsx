@@ -5,13 +5,10 @@ export function AuthLayout() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden lg:h-screen lg:grid lg:grid-cols-2 justify-center items-center rounded-xl">
       {" "}
-      <div className="lg:flex hidden  bg-[url('/FormSide.png')] bg-cover  overflow-hidden  h-full bg-no-repeat  ">
+      {/* <div className="lg:flex hidden  bg-[url('/FormSide.png')]  bg-cover  overflow-hidden h-full bg-no-repeat">
         <div className="flex flex-col  to-transparent size-full justify-between px-14">
-          {" "}
           <div className="mt-4">
-            {" "}
             <Link to={"/"}>
-              {" "}
               <img
                 className="h-14! w-32  object-cover"
                 src="/logo.png"
@@ -20,10 +17,37 @@ export function AuthLayout() {
             </Link>
           </div>
           <div className="w-full mb-10 ">
-            <h1 className="text-4xl max-w-100! font-DmSans font-extrabold   text-primary">
+            <h1 className="text-4xl max-w-100! font-DmSans font-extrabold text-blue-600">
               Empower Your Academic Journey
             </h1>
-            <p className="max-w-112.5! text-md font-DmSans mt-5 text-gray-600">
+            <p className="max-w-112.5! text-md font-DmSans mt-5 text-muted-foreground">
+              A modern and user-friendly dashboard for managing courses,
+              students, instructors, enrollments, schedules, and academic
+              performance in one centralized system.
+            </p>
+          </div>
+        </div>
+      </div> */}
+      <div className="lg:flex hidden relative bg-[url('/FormSide.png')] bg-cover overflow-hidden h-full bg-no-repeat">
+        <div className="absolute inset-0 bg-linear-to-t from-white/95 via-white/60 to-transparent dark:from-background/95 dark:via-background/40 dark:to-transparent" />
+
+        <div className="relative z-10 flex flex-col size-full justify-between px-14">
+          <div className="mt-4">
+            <Link to="/">
+              <img
+                className="h-14! w-32 object-cover"
+                src="/logo.png"
+                alt="Logo"
+              />
+            </Link>
+          </div>
+
+          <div className="w-full mb-10">
+            <h1 className="text-4xl max-w-100! font-DmSans font-extrabold text-primary">
+              Empower Your Academic Journey
+            </h1>
+
+            <p className="max-w-112.5! text-md font-DmSans mt-5 text-muted-foreground">
               A modern and user-friendly dashboard for managing courses,
               students, instructors, enrollments, schedules, and academic
               performance in one centralized system.

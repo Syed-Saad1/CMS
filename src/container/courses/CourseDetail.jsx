@@ -16,8 +16,8 @@ import {
   Trash,
   UserRoundArrowLeft,
 } from "lucide-react";
-import React from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DeleteCourseModal } from "./DeleteCourseModal";
 import { useEnrollCourse } from "@/mutations/useEnrollCourse";
 import Cookies from "js-cookie";
@@ -30,9 +30,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import CourseDetailedSkeleton from "@/skeleton/CourseDetailedSkeleton";
+import EnrollResponseModal from "@/components/EnrollResponseModal";
+import EnrollCardSkeleton from "@/skeleton/EnrollCardSkeleton";
 export const CourseDetail = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-
   const { data, isLoading } = getCourseById(id);
   const { mutateAsync, isPending } = useEnrollCourse();
   const role = Cookies.get("role");
@@ -48,6 +50,7 @@ export const CourseDetail = () => {
 
       if (res.success === true) {
         toast.success(res.message);
+        setIsOpen(true);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -59,14 +62,8 @@ export const CourseDetail = () => {
     }
   };
   return (
-    <div className="w-full md:mb-4 mb-18 min-w-0 overflow-x-hidden p-3 sm:p-4">
-      <div
-        className={`relative grid min-w-0 grid-cols-1 items-start gap-4 ${
-          role === "admin"
-            ? "w-full"
-            : "xl:grid-cols-[minmax(0,72%)_minmax(0,27%)]"
-        }`}
-      >
+    <div className="overflow-hidden p-4 gap-4 overflow-y-auto h-full grid md:grid-cols-[68%_30%] w-full grid-cols-1">
+      <div className=" row-span-8">
         {isLoading ? (
           <CourseDetailedSkeleton />
         ) : (
@@ -129,7 +126,7 @@ export const CourseDetail = () => {
             </div>
 
             <div
-              className="max-h-fit w-fit pl-4 pr-8 mt-2 
+              className="max-h-fit w-fit pl-4 pr-8 mt-2
         "
             >
               <div className="flex flex-col ">
@@ -263,96 +260,68 @@ export const CourseDetail = () => {
             </div>
           </Card>
         )}
-        <div className="sticky top-0 right-0 self-start h-fit w-full">
-          {role === "user" && (
-            <div>
-              {" "}
-              {isLoading ? (
-                <div className="flex h-full lg:top-6  flex-col gap-2 animate-pulse">
-                  <Card className="h-70 flex border border-border lg:top-6 flex-col items-center justify-center gap-4 px-6">
-                    <Skeleton className="h-5 w-36" />
-                    <Skeleton className="h-9 w-28 my-1" />
-                    <div className="border border-border w-full" />
-
-                    <div className="grid grid-cols-2 gap-2 items-center w-full">
-                      <Skeleton className="h-10 w-full rounded-md" />
-                      <Skeleton className="h-10 w-full rounded-md" />
-                    </div>
-
-                    <Skeleton className="h-4 w-48 mt-1" />
-                    <div className="border border-border w-full" />
-
-                    <div className="grid grid-cols-2 gap-4 w-full">
-                      <div className="flex flex-col items-center gap-1.5">
-                        <Skeleton className="h-6 w-12" />
-                        <Skeleton className="h-3 w-16" />
-                      </div>
-                      <div className="flex flex-col  items-center gap-1.5 pl-4">
-                        <Skeleton className="h-6 w-12" />
-                        <Skeleton className="h-3 w-16" />
-                      </div>
-                    </div>
-                  </Card>
-                </div>
-              ) : (
-                <div className="flex  flex-col gap-2 w-full mt-1">
-                  <Card className="h-70 border border-border w-full flex flex-col items-center justify-center gap-3 px-6">
-                    <CardTitle className="text-xl font-bold">
-                      Build Your Future
-                    </CardTitle>
-                    <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
-                      <span className="pr-2 text-primary">$</span>
-                      {data?.data?.price}
-                    </CardTitle>
-                    <div className="border border-border w-full" />
-                    <div className="grid grid-cols-2 gap-2 items-center w-full">
-                      <Button
-                        variant="button"
-                        onClick={handleEnroll}
-                        disabled={isPending}
-                        className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
-                      >
-                        {" "}
-                        {isPending ? (
-                          <>
-                            <Loader className="size-4 animate-spin" />
-                            Enrolling...
-                          </>
-                        ) : (
-                          <>
-                            <Plus className="size-4" />
-                            Enroll{" "}
-                          </>
-                        )}{" "}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
-                      >
-                        Try ForFree
-                      </Button>
-                    </div>
-                    <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
-                      <Lock size={16} />
-                      Secure Payment. 100% Refundable
-                    </CardDescription>
-                    <div className="border border-border w-full" />
-                    <div className=" grid grid-cols-2 gap-4 w-full ">
-                      <div className="flex flex-col items-center">
-                        <CardTitle>10K</CardTitle>
-                        <CardDescription>STUDENTS</CardDescription>
-                      </div>
-                      <div className="flex flex-col border-l border-border items-center">
-                        <CardTitle>100%</CardTitle>
-                        <CardDescription>ONLINE</CardDescription>
-                      </div>
-                    </div>
-                  </Card>
-                </div>
-              )}
+      </div>
+      <div className="sticky top-0 row-span-4 md:mb-0 mb-20 h-70">
+        {isLoading ? (
+          <EnrollCardSkeleton />
+        ) : (
+          <Card className="h-full border border-border w-full pt-2 pb-2 flex flex-col items-center justify-center gap-3 px-6">
+            <CardTitle className="text-xl font-bold">
+              Build Your Future
+            </CardTitle>
+            <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
+              <span className="pr-2 text-primary">$</span>
+              {data?.data?.price}
+            </CardTitle>
+            <div className="border border-border w-full" />
+            <div className="grid grid-cols-2 gap-2 items-center w-full">
+              <Button
+                variant="button"
+                onClick={handleEnroll}
+                disabled={isPending}
+                className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
+              >
+                {isPending ? (
+                  <>
+                    <Loader className="size-4 animate-spin" />
+                    Enrolling...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="size-4" />
+                    Enroll
+                  </>
+                )}
+              </Button>
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogContent>
+                  <EnrollResponseModal />
+                </DialogContent>
+              </Dialog>
+              <Button
+                variant="outline"
+                className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
+              >
+                Try ForFree
+              </Button>
             </div>
-          )}
-        </div>
+            <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
+              <Lock size={16} />
+              Secure Payment. 100% Refundable
+            </CardDescription>
+            <div className="border border-border w-full" />
+            <div className=" grid grid-cols-2 gap-4 w-full ">
+              <div className="flex flex-col items-center">
+                <CardTitle>10K</CardTitle>
+                <CardDescription>STUDENTS</CardDescription>
+              </div>
+              <div className="flex flex-col border-l border-border items-center">
+                <CardTitle>100%</CardTitle>
+                <CardDescription>ONLINE</CardDescription>
+              </div>
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

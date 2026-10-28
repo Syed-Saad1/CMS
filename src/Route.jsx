@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignupScreen } from "./screens/auth-screen/SignupScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -16,12 +16,13 @@ import UserProfile from "./screens/user/UserProfile";
 import AdminDashboard from "./screens/admin-dashboard/AdminDashboard";
 import EditCourseCard from "./container/courses/EditCourseForm";
 import TeacherAssigned from "./container/TeacherAssigned";
+
+const CourseScreen = React.lazy(() => import("./screens/CourseScreen"));
 function RoutePack() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
-
         <Route element={<AuthLayout />}>
           <Route path="/auth/login" element={<LoginScreen />} />
           <Route path="/auth/signup" element={<SignupScreen />} />
@@ -29,7 +30,7 @@ function RoutePack() {
         <Route element={<DashboardLayout />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />
-          <Route path="/courses" element={<AdminCourses />} />
+          <Route path="/courses" element={<CourseScreen />} />
           <Route path="/admin/profile" element={<AdminProfile />} />
           <Route path="/user/all-users" element={<AdminUsers />} />
           <Route path="/courses/:id" element={<CourseDetail />} />{" "}
