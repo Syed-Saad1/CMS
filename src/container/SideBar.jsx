@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { getUserById } from "@/query/getUserById";
 import { Switch } from "@/components/ui/switch";
+import { Skeleton } from "@/components/ui/skeleton";
 function SideBar({ onClose }) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
@@ -80,48 +81,61 @@ function SideBar({ onClose }) {
         {" "}
         <Popover>
           <PopoverTrigger>
-            <CardDescription
-              onClick={() => setIsOpen((prev) => !prev)}
-              className={
-                "flex items-center justify-center border border-border rounded-xl gap-2 h-14  w-52 cursor-pointer"
-              }
-            >
-              <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
-                {UserProfileData?.avatar ? (
-                  <img
-                    className="size-full rounded-full object-cover"
-                    src={UserProfileData?.avatar}
-                    alt="Profile"
-                  />
+            {Loading ? (
+              <CardDescription className="flex items-center justify-center border border-border rounded-xl gap-2 h-14 w-52">
+                <Skeleton className="size-8 shrink-0 rounded-full" />
+
+                <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                  <Skeleton className="h-3 w-20 rounded-md" />
+                  <Skeleton className="h-3 w-28 rounded-md" />
+                </div>
+
+                <Skeleton className="size-4 rounded-sm mr-2" />
+              </CardDescription>
+            ) : (
+              <CardDescription
+                onClick={() => setIsOpen((prev) => !prev)}
+                className={
+                  "flex items-center justify-center border border-border rounded-xl gap-2 h-14  w-52 cursor-pointer"
+                }
+              >
+                <div className="flex size-8 shrink-0 gap-0 justify-center items-center">
+                  {UserProfileData?.avatar ? (
+                    <img
+                      className="size-full rounded-full object-cover"
+                      src={UserProfileData?.avatar}
+                      alt="Profile"
+                    />
+                  ) : (
+                    <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
+                      {IntialFirst}
+                      {LastFirst}
+                    </h1>
+                  )}
+                </div>
+                <div className="flex gap-0.5 justify-start items-start mt-1 flex-col">
+                  {" "}
+                  <div className="min-w-0">
+                    {" "}
+                    <CardTitle className={"truncate text-xs -mt-1"}>
+                      {UserProfileData?.firstName}
+                      {UserProfileData?.lastName}
+                    </CardTitle>
+                  </div>
+                  <div className="min-w-0">
+                    {" "}
+                    <CardDescription className="truncate line-clamp-1 text-xs -mt-1">
+                      {UserProfileData?.email || "---"}
+                    </CardDescription>
+                  </div>
+                </div>{" "}
+                {!isOpen ? (
+                  <ChevronDown className="text-xs size-4" />
                 ) : (
-                  <h1 className="size-full text-xs flex flex-col justify-center items-center bg-muted! rounded-full">
-                    {IntialFirst}
-                    {LastFirst}
-                  </h1>
+                  <ChevronUp className="text-xs size-4" />
                 )}
-              </div>
-              <div className="flex gap-0.5 items-start mt-1 flex-col">
-                {" "}
-                <div className="min-w-0">
-                  {" "}
-                  <CardTitle className={"truncate text-xs -mt-1"}>
-                    {UserProfileData?.firstName}
-                    {UserProfileData?.lastName}
-                  </CardTitle>
-                </div>
-                <div className="min-w-0 w-32">
-                  {" "}
-                  <CardDescription className="truncate line-clamp-1 text-xs -mt-1">
-                    {UserProfileData?.email || "---"}
-                  </CardDescription>
-                </div>
-              </div>{" "}
-              {!isOpen ? (
-                <ChevronDown className="text-xs size-4" />
-              ) : (
-                <ChevronUp className="text-xs size-4" />
-              )}
-            </CardDescription>
+              </CardDescription>
+            )}
           </PopoverTrigger>
           <PopoverContent className={"w-50"}>
             <div

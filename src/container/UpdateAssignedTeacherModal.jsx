@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  ArrowRight,
+  ArrowDownUp,
   Loader,
   Repeat,
   Save,
@@ -15,7 +15,7 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import UpdateTeacherListDropDown from "@/components/UpdateTeacherListDropDown";
 
-function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
+function UpdateAssignedTeacher({ onSuccess, TeacherData, selectedTeacherId }) {
   const [updateAssigned, setUpdateAssignedTeacher] = useState(null);
   const id = selectedTeacherId?.assignId;
   const { mutateAsync, isPending } = useUpdateAssigned(id);
@@ -27,7 +27,7 @@ function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
       const response = await mutateAsync(payload);
 
       toast.success(response.message || "");
-      onclose;
+      onSuccess?.();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -39,134 +39,150 @@ function UpdateAssignedTeacher({ Data, TeacherData, selectedTeacherId }) {
     }
   };
   return (
-    <div className="w-full min-w-0 max-w-120 shrink-0">
-      <div className="space-y-1">
-        <CardTitle>Update Teacher Assigned</CardTitle>
-        <CardDescription>
-          Update the teacher assigned to this course.
-        </CardDescription>
-      </div>
-
-      <div className="mt-4 flex min-w-0 items-start gap-3 rounded-xl border border-border bg-muted/60 p-3 sm:p-4">
-        <img
-          className="h-14 w-16 shrink-0 rounded-md object-cover sm:w-20"
-          src={Data?.thumbnail || "/DeafultThumbinal.png"}
-          alt={Data?.title || "Course thumbnail"}
-        />
-
-        <div className="min-w-0 flex-1 space-y-2">
-          <CardTitle className="truncate text-base font-medium sm:text-lg">
-            {Data?.title}
+    <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col  overflow-hidden">
+      <div className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain p-4 sm:p-6">
+        <div className="space-y-1">
+          <CardTitle className="text-lg font-semibold tracking-tight">
+            Update Teacher Assignment
           </CardTitle>
+          <CardDescription className="text-sm">
+            Update the teacher assigned to this course.
+          </CardDescription>
+        </div>
 
-          <div className="flex flex-wrap gap-1.5">
-            {Data?.tags?.slice(0, 2).map((item, index) => (
-              <span
-                key={`${item}-${index}`}
-                className="rounded-md bg-background px-2 py-1 text-xs text-muted-foreground"
-              >
-                {item}
-              </span>
-            ))}
-            {(Data?.tags?.length ?? 0) > 2 && (
-              <span className="text-xs text-muted-foreground">
-                +{Data.tags.length - 2} more
-              </span>
-            )}
+        <div className="mt-6 min-w-0 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0 space-y-1">
+              <CardTitle className="text-sm font-semibold">
+                Select New Teacher
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Choose the instructor for this course.
+              </CardDescription>
+            </div>
+
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/50">
+              <UserRoundCheck className="size-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <UpdateTeacherListDropDown
+            updateAssigned={updateAssigned}
+            setUpdateAssignedTeacher={setUpdateAssignedTeacher}
+            TeacherData={TeacherData}
+          />
+        </div>
+        <div className="mt-6 w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
+          <div className="flex min-w-0 items-center gap-3 border-b border-border bg-muted/30 px-3 py-3 sm:px-4">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <Repeat className="size-4 text-primary" />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-sm font-semibold">
+                Assignment Preview
+              </CardTitle>
+              <CardDescription className="mt-0.5 text-xs">
+                Review the teacher change before saving.
+              </CardDescription>
+            </div>
+          </div>
+
+          <div className="grid min-w-0 grid-cols-1 gap-3 p-3 sm:p-4">
+            <Card className="min-w-0 gap-3 rounded-xl border-border bg-muted/20 p-3 sm:p-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs font-semibold text-muted-foreground">
+                  Current Teacher
+                </span>
+
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-[10px] font-medium text-muted-foreground">
+                  <span className="size-1.5 rounded-full bg-muted-foreground" />
+                  Assigned
+                </span>
+              </div>
+
+              <div className="flex min-w-0 flex-col items-center gap-2 text-center">
+                <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-background sm:size-16">
+                  {selectedTeacherId?.teacher?.avatar ? (
+                    <img
+                      className="size-full object-cover"
+                      src={selectedTeacherId.teacher.avatar}
+                      alt="Current teacher"
+                    />
+                  ) : (
+                    <UserRoundCheck className="size-6 text-muted-foreground" />
+                  )}
+                </div>
+
+                <div className="w-full min-w-0 space-y-1">
+                  <CardTitle className="wrap-break-word text-sm font-semibold">
+                    {selectedTeacherId?.teacher?.firstName || "Current Teacher"}{" "}
+                    {selectedTeacherId?.teacher?.lastName}
+                  </CardTitle>
+
+                  <CardDescription className="break-all text-xs">
+                    {selectedTeacherId?.teacher?.email || "Email unavailable"}
+                  </CardDescription>
+                </div>
+              </div>
+            </Card>
+
+            <div className="flex items-center justify-center gap-2 py-1">
+              <div className="h-px min-w-0 flex-1 bg-border" />
+
+              <div className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5">
+                <ArrowDownUp className="size-3.5 text-primary" />
+                <span className="text-[10px] font-semibold text-primary">
+                  Teacher Change
+                </span>
+              </div>
+
+              <div className="h-px min-w-0 flex-1 bg-border" />
+            </div>
+
+            <Card className="min-w-0 gap-3 rounded-xl border-primary/30 bg-primary/4 p-3 sm:p-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs font-semibold text-foreground">
+                  New Teacher
+                </span>
+
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[10px] font-medium text-primary">
+                  <span className="size-1.5 rounded-full bg-primary" />
+                  {updateAssigned?._id ? "Selected" : "Awaiting Selection"}
+                </span>
+              </div>
+
+              <div className="flex min-w-0 flex-col items-center gap-2 text-center">
+                <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-primary/20 bg-background sm:size-16">
+                  {updateAssigned?.avatar ? (
+                    <img
+                      className="size-full object-cover"
+                      src={updateAssigned.avatar}
+                      alt="New teacher"
+                    />
+                  ) : (
+                    <UserRoundCheck className="size-6 text-muted-foreground" />
+                  )}
+                </div>
+
+                <div className="w-full min-w-0 space-y-1">
+                  <CardTitle className="wrap-break-word text-sm font-semibold">
+                    {updateAssigned?._id
+                      ? `${updateAssigned.firstName || ""} ${updateAssigned.lastName || ""}`.trim()
+                      : "No teacher selected"}
+                  </CardTitle>
+
+                  <CardDescription className="break-all text-xs">
+                    {updateAssigned?.email || "Select a teacher above"}
+                  </CardDescription>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 space-y-2">
-        <CardTitle className="text-base">Select New Teacher</CardTitle>
-
-        <UpdateTeacherListDropDown
-          updateAssigned={updateAssigned}
-          setUpdateAssignedTeacher={setUpdateAssignedTeacher}
-          TeacherData={TeacherData}
-        />
-
-        <CardDescription className="pl-1 text-xs">
-          Select an eligible teacher to replace the current teacher.
-        </CardDescription>
-      </div>
-
-      <div className="mt-5 rounded-xl border border-primary/20 bg-primary/5 p-3 sm:p-4">
-        <div className="flex items-center gap-2">
-          <Repeat className="size-5 shrink-0 text-primary" />
-          <CardTitle className="text-base">Assignment Preview</CardTitle>
-        </div>
-
-        <div className="mt-4 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-center sm:gap-2">
-          <Card className="min-w-0 gap-3 rounded-xl border-border bg-card p-3">
-            <span className="w-fit max-w-full rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-              Current Teacher
-            </span>
-
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent">
-                {selectedTeacherId?.teacher?.avatar ? (
-                  <img
-                    className="size-full object-cover"
-                    src={selectedTeacherId.teacher.avatar}
-                    alt="Current teacher"
-                  />
-                ) : (
-                  <UserRoundCheck className="size-5" />
-                )}
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <CardTitle className="truncate text-sm font-medium">
-                  {selectedTeacherId?.teacher?.firstName}{" "}
-                  {selectedTeacherId?.teacher?.lastName}
-                </CardTitle>
-
-                <CardDescription className="mt-1 truncate text-xs">
-                  {selectedTeacherId?.teacher?.email}
-                </CardDescription>
-              </div>
-            </div>
-          </Card>
-
-          <div className="flex items-center justify-center py-1">
-            <ArrowRight className="size-5 rotate-90 text-primary sm:rotate-0" />
-          </div>
-
-          <Card className="min-w-0 gap-3 rounded-xl border-primary/30 bg-card p-3">
-            <span className="w-fit max-w-full rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-              New Teacher
-            </span>
-
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent">
-                {updateAssigned?.avatar ? (
-                  <img
-                    className="size-full object-cover"
-                    src={updateAssigned.avatar}
-                    alt="New teacher"
-                  />
-                ) : (
-                  <UserRoundCheck className="size-5" />
-                )}
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <CardTitle className="truncate text-sm font-medium">
-                  {updateAssigned?.firstName || "No teacher selected"}{" "}
-                  {updateAssigned?.lastName}
-                </CardTitle>
-
-                <CardDescription className="mt-1 truncate text-xs">
-                  {updateAssigned?.email || "Select a teacher above"}
-                </CardDescription>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-border pt-4">
+      <div className="shrink-0 border-t border-border bg-background p-3 sm:px-6 sm:py-4">
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <DialogClose asChild>
             <Button

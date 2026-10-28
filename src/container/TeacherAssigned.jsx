@@ -26,7 +26,7 @@ import UpdateAssignedTeacher from "./UpdateAssignedTeacherModal";
 function TeacherAssigned() {
   const { t } = useTranslation();
   const [selectedTeacherId, setSelectedTeacherId] = useState(null);
-
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const { id } = useParams();
   const { data, isLoading } = getCourseById(id);
@@ -251,7 +251,10 @@ function TeacherAssigned() {
                     </div>
                   </div>
                   <div className="mt-6 flex gap-2 items-center">
-                    <Dialog>
+                    <Dialog
+                      open={isUpdateDialogOpen}
+                      onOpenChange={setIsUpdateDialogOpen}
+                    >
                       <DialogTrigger>
                         <Button
                           onClick={() =>
@@ -267,16 +270,27 @@ function TeacherAssigned() {
                           Change Teacher
                         </Button>
                       </DialogTrigger>
-                      <DialogContent>
-                        <div className={"w-100!"}>
-                          <UpdateAssignedTeacher
-                            TeacherData={TeacherData}
-                            setSelectedTeacher={setSelectedTeacher}
-                            selectedTeacher={selectedTeacher}
-                            Data={Data}
-                            selectedTeacherId={selectedTeacherId}
-                          />
-                        </div>
+
+                      <DialogContent
+                        className="
+    flex flex-col
+    w-[calc(100%-1rem)]
+    sm:w-[calc(100%-2rem)]
+    max-w-2xl
+    max-h-[90dvh]
+    overflow-hidden
+    gap-0
+    p-0
+  "
+                      >
+                        <UpdateAssignedTeacher
+                          onSuccess={() => setIsUpdateDialogOpen(false)}
+                          TeacherData={TeacherData}
+                          setSelectedTeacher={setSelectedTeacher}
+                          selectedTeacher={selectedTeacher}
+                          Data={Data}
+                          selectedTeacherId={selectedTeacherId}
+                        />
                       </DialogContent>
                     </Dialog>
                     <Dialog>
