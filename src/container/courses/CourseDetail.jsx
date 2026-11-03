@@ -32,6 +32,7 @@ import {
 import CourseDetailedSkeleton from "@/skeleton/CourseDetailedSkeleton";
 import EnrollResponseModal from "@/components/EnrollResponseModal";
 import EnrollCardSkeleton from "@/skeleton/EnrollCardSkeleton";
+import { cn } from "@/lib/utils.js";
 export const CourseDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
@@ -63,7 +64,12 @@ export const CourseDetail = () => {
   };
   return (
     <div className="overflow-hidden p-4 gap-4 overflow-y-auto h-full grid md:grid-cols-[68%_30%] w-full grid-cols-1">
-      <div className=" row-span-8">
+      <div
+        className={cn(
+          "row-span-8",
+          role === "user" ? "md:col-span-1" : "md:col-span-2",
+        )}
+      >
         {isLoading ? (
           <CourseDetailedSkeleton />
         ) : (
@@ -261,68 +267,70 @@ export const CourseDetail = () => {
           </Card>
         )}
       </div>
-      <div className="sticky top-0 row-span-4 md:mb-0 mb-20 h-70">
-        {isLoading ? (
-          <EnrollCardSkeleton />
-        ) : (
-          <Card className="h-full border border-border w-full pt-2 pb-2 flex flex-col items-center justify-center gap-3 px-6">
-            <CardTitle className="text-xl font-bold">
-              Build Your Future
-            </CardTitle>
-            <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
-              <span className="pr-2 text-primary">$</span>
-              {data?.data?.price}
-            </CardTitle>
-            <div className="border border-border w-full" />
-            <div className="grid grid-cols-2 gap-2 items-center w-full">
-              <Button
-                variant="button"
-                onClick={handleEnroll}
-                disabled={isPending}
-                className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
-              >
-                {isPending ? (
-                  <>
-                    <Loader className="size-4 animate-spin" />
-                    Enrolling...
-                  </>
-                ) : (
-                  <>
-                    <Plus className="size-4" />
-                    Enroll
-                  </>
-                )}
-              </Button>
-              <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent>
-                  <EnrollResponseModal />
-                </DialogContent>
-              </Dialog>
-              <Button
-                variant="outline"
-                className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
-              >
-                Try ForFree
-              </Button>
-            </div>
-            <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
-              <Lock size={16} />
-              Secure Payment. 100% Refundable
-            </CardDescription>
-            <div className="border border-border w-full" />
-            <div className=" grid grid-cols-2 gap-4 w-full ">
-              <div className="flex flex-col items-center">
-                <CardTitle>10K</CardTitle>
-                <CardDescription>STUDENTS</CardDescription>
+      {role === "user" && (
+        <div className="sticky top-0 row-span-4 md:mb-0 mb-20 h-70">
+          {isLoading ? (
+            <EnrollCardSkeleton />
+          ) : (
+            <Card className="h-full border border-border w-full pt-2 pb-2 flex flex-col items-center justify-center gap-3 px-6">
+              <CardTitle className="text-xl font-bold">
+                Build Your Future
+              </CardTitle>
+              <CardTitle className="text-3xl text-center font-semibold text-accent-foreground">
+                <span className="pr-2 text-primary">$</span>
+                {data?.data?.price}
+              </CardTitle>
+              <div className="border border-border w-full" />
+              <div className="grid grid-cols-2 gap-2 items-center w-full">
+                <Button
+                  variant="button"
+                  onClick={handleEnroll}
+                  disabled={isPending}
+                  className="w-full h-10 hover:bg-primary/90 hover:text-primary-foreground"
+                >
+                  {isPending ? (
+                    <>
+                      <Loader className="size-4 animate-spin" />
+                      Enrolling...
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="size-4" />
+                      Enroll
+                    </>
+                  )}
+                </Button>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogContent>
+                    <EnrollResponseModal />
+                  </DialogContent>
+                </Dialog>
+                <Button
+                  variant="outline"
+                  className="w-full h-10 hover:bg-outline hover:text-accent-foreground"
+                >
+                  Try ForFree
+                </Button>
               </div>
-              <div className="flex flex-col border-l border-border items-center">
-                <CardTitle>100%</CardTitle>
-                <CardDescription>ONLINE</CardDescription>
+              <CardDescription className="text-xs flex gap-2 items-center text-muted-foreground">
+                <Lock size={16} />
+                Secure Payment. 100% Refundable
+              </CardDescription>
+              <div className="border border-border w-full" />
+              <div className=" grid grid-cols-2 gap-4 w-full ">
+                <div className="flex flex-col items-center">
+                  <CardTitle>10K</CardTitle>
+                  <CardDescription>STUDENTS</CardDescription>
+                </div>
+                <div className="flex flex-col border-l border-border items-center">
+                  <CardTitle>100%</CardTitle>
+                  <CardDescription>ONLINE</CardDescription>
+                </div>
               </div>
-            </div>
-          </Card>
-        )}
-      </div>
+            </Card>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Field, FieldDescription } from "@/components/ui/field";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -17,13 +17,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
+import { cn, getDashboardPath } from "@/lib/utils";
 
 import { Icon } from "@iconify/react";
 import Cookies from "js-cookie";
 import { useLogin } from "@/mutations/useLogin";
 import { useTranslation } from "react-i18next";
-
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { googleLogin } from "@/mutations/useGoogleAuthentication";
+import { FcGoogle } from "react-icons/fc";
 export const LoginScreen = () => {
   const { t } = useTranslation();
   const ValidationScheme = Yup.object({
@@ -38,7 +40,7 @@ export const LoginScreen = () => {
     email: "",
     password: "",
   };
-
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useLogin();
@@ -78,6 +80,34 @@ export const LoginScreen = () => {
     }
   };
 
+  const GoogleAuth = async (response) => {
+    try {
+      const credential = response.credential;
+
+      if (!credential) {
+        throw new Error("Google ID token not received");
+      }
+
+      const result = await googleLogin(credential);
+
+      const { user, accessToken } = result.data || {};
+
+      if (!user || !accessToken) {
+        throw new Error("Invalid backend response");
+      }
+
+      sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("user", JSON.stringify(user));
+
+      navigate(getDashboardPath(user.role), {
+        replace: true,
+      });
+    } catch (error) {
+      setError(
+        error.response?.data?.message || error.message || "Google login failed",
+      );
+    }
+  };
   const { errors, values, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: ValidationScheme,
@@ -178,6 +208,16 @@ export const LoginScreen = () => {
                   "Sign in"
                 )}
               </Button>
+              <div className="mt-2 mx-4">
+                {" "}
+                <GoogleLogin
+                  className={
+                    "w-full flex items-center justify-center bg-accent gap-2 py-2 rounded-sm"
+                  }
+                  onError={() => setError("Google login failed")}
+                  onSuccess={GoogleAuth}
+                />
+              </div>
               <p className="text-center text-xs md:text-sm text-gray-500 font-medium mt-4 cursor-pointer">
                 Don't have an account?{" "}
                 <Link to={"/auth/signup"} className="text-primary">
