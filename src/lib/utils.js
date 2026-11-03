@@ -7,10 +7,9 @@ export function cn(...inputs) {
 
 export const ROLE_DASHBOARDS = {
   ADMIN: "/admin/dashboard",
-  USER: "/dashboard",
-  TEACHER: "/teacher/dashboard",
+  USER: "/user/dashboard",
 };
 
 export const getDashboardPath = (role) => {
-  return ROLE_DASHBOARDS[role] || "/";
+  return ROLE_DASHBOARDS[role] || "/auth/login";
 };
