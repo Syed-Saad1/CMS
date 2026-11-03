@@ -18,9 +18,11 @@ import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
-import { cn } from "@/lib/utils";
+import { cn, getDashboardPath } from "@/lib/utils";
 import { useSignup } from "@/mutations/useSignup";
 import { useTranslation } from "react-i18next";
+import { GoogleLogin } from "@react-oauth/google";
+import { googleLogin } from "@/mutations/useGoogleAuthentication";
 
 export const SignupScreen = () => {
   const navigate = useNavigate();
@@ -44,7 +46,29 @@ export const SignupScreen = () => {
       .required(t("auth.passwordRequired"))
       .oneOf([Yup.ref("password")], t("auth.passwordsMatch")),
   });
+  const GoogleAuth = async (response) => {
+    try {
+      const credential = response.access_token;
+      console.log("credential", credential);
+      const result = await googleLogin(credential);
+      const { user, accessToken } = result.data || {};
+      if (!user || !accessToken) {
+        throw new Error("Invalid backend response");
+      }
 
+      sessionStorage.setItem("accessToken", accessToken);
+
+      sessionStorage.setItem("user", JSON.stringify(user));
+
+      navigate(getDashboardPath(user.role), {
+        replace: true,
+      });
+    } catch (error) {
+      setError(
+        error.response?.data?.message || error.message || "Google login failed",
+      );
+    }
+  };
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -54,9 +78,7 @@ export const SignupScreen = () => {
   };
   const { mutateAsync, isPending } = useSignup();
   const token = Cookies.get("token");
-  console.log("GetToken", token);
   const role = Cookies.get("role");
-  console.log("GetRole", role);
 
   if (token) {
     return (
@@ -245,6 +267,7 @@ export const SignupScreen = () => {
               )}
               <Icon icon="akar-icons:arrow-right" />
             </Button>
+            <GoogleLogin onSuccess={GoogleAuth} />
             <p className="text-center text-sm text-gray-500 font-medium mt-4 cursor-pointer">
               Already have an account?{" "}
               <Link to={"/auth/login"} className="text-[#180289]">

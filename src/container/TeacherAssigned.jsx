@@ -271,18 +271,7 @@ function TeacherAssigned() {
                         </Button>
                       </DialogTrigger>
 
-                      <DialogContent
-                        className="
-    flex flex-col
-    w-[calc(100%-1rem)]
-    sm:w-[calc(100%-2rem)]
-    max-w-2xl
-    max-h-[90dvh]
-    overflow-hidden
-    gap-0
-    p-0
-  "
-                      >
+                      <DialogContent className="flex flex-col w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-2xl max-h-[90dvh] overflow-hidden gap-0 p-0">
                         <UpdateAssignedTeacher
                           onSuccess={() => setIsUpdateDialogOpen(false)}
                           TeacherData={TeacherData}
