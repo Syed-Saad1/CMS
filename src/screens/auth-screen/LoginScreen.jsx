@@ -18,14 +18,12 @@ import { useFormik } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { cn, getDashboardPath } from "@/lib/utils";
-
 import { Icon } from "@iconify/react";
 import Cookies from "js-cookie";
 import { useLogin } from "@/mutations/useLogin";
 import { useTranslation } from "react-i18next";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { googleLogin } from "@/mutations/useGoogleAuthentication";
-import { FcGoogle } from "react-icons/fc";
 export const LoginScreen = () => {
   const { t } = useTranslation();
   const ValidationScheme = Yup.object({

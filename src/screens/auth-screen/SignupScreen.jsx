@@ -46,18 +46,24 @@ export const SignupScreen = () => {
       .required(t("auth.passwordRequired"))
       .oneOf([Yup.ref("password")], t("auth.passwordsMatch")),
   });
+
   const GoogleAuth = async (response) => {
     try {
-      const credential = response.access_token;
-      console.log("credential", credential);
+      const credential = response.credential;
+
+      if (!credential) {
+        throw new Error("Google ID token not received");
+      }
+
       const result = await googleLogin(credential);
+
       const { user, accessToken } = result.data || {};
+
       if (!user || !accessToken) {
         throw new Error("Invalid backend response");
       }
 
       sessionStorage.setItem("accessToken", accessToken);
-
       sessionStorage.setItem("user", JSON.stringify(user));
 
       navigate(getDashboardPath(user.role), {
@@ -267,10 +273,21 @@ export const SignupScreen = () => {
               )}
               <Icon icon="akar-icons:arrow-right" />
             </Button>
-            <GoogleLogin onSuccess={GoogleAuth} />
+            <div className="mx-4 mt-2">
+              {" "}
+              <GoogleLogin
+                theme="outline"
+                size="large"
+                shape="rectangular"
+                text="continue_with"
+                width="360"
+                onError={() => setError("Google login failed")}
+                onSuccess={GoogleAuth}
+              />
+            </div>{" "}
             <p className="text-center text-sm text-gray-500 font-medium mt-4 cursor-pointer">
               Already have an account?{" "}
-              <Link to={"/auth/login"} className="text-[#180289]">
+              <Link to={"/auth/login"} className="text-primary">
                 Log in here
               </Link>
             </p>
